@@ -3681,7 +3681,7 @@ void SavingSparseKmerGraph(hashtable *ht,string &fname)
 			bktptr=bktptr->nxt_bucket;
 			list_sz++;
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 	ofstream o_cov("CovHist.txt");
 
@@ -3726,7 +3726,7 @@ void SavingMergeHT(hashtable *ht)
 			bktptr=bktptr->nxt_bucket;
 			list_sz++;
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 
 
@@ -3777,7 +3777,7 @@ void SavingSparseKmerGraph_E2(hashtable *ht,string &fname)
 			bktptr=bktptr->nxt_bucket;
 			list_sz++;
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 	ofstream o_cov("CovHist.txt");
 
@@ -3842,7 +3842,7 @@ void SavingSparseKmerGraph2(hashtable2 *ht,string &fname)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 	ofstream o_cov("CovHist.txt");
 	map<int,int >::iterator mit;
@@ -3884,7 +3884,7 @@ void SavingMergeHT2(hashtable2 *ht)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 }
 
@@ -3936,7 +3936,7 @@ void SavingSparseKmerGraph3(hashtable3 *ht,string &fname)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 	ofstream o_cov("CovHist.txt");
 	map<int,int >::iterator mit;
@@ -3977,7 +3977,7 @@ void SavingMergeHT3(hashtable3 *ht)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 }
 
@@ -4027,7 +4027,7 @@ void SavingSparseKmerGraph4(hashtable4 *ht,string &fname)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 	ofstream o_cov("CovHist.txt");
 	map<int,int >::iterator mit;
@@ -4069,7 +4069,7 @@ void SavingMergeHT4(hashtable4 *ht)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 }
 
@@ -4127,7 +4127,7 @@ void SavingSparseKmerGraph0(hashtable0 *ht,string &fname,int Kmer_arr_sz)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 	ofstream o_cov("CovHist.txt");
 	map<int,int >::iterator mit;
@@ -4172,7 +4172,7 @@ void SavingMergeHT0(hashtable0 *ht,int Kmer_arr_sz)
 			else
 			{cout<<"Write error!"<<endl;}
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 }
 
@@ -4209,7 +4209,7 @@ void SavingSparseKmerIndex(hashtable *ht,read_index * read_index, string &fname)
 			bktptr=bktptr->nxt_bucket;
 			list_sz++;
 		}
-		o_ht_idx<<list_sz<<endl;
+		o_ht_idx<<list_sz<<'\n';
 	}
 	ofstream o_cov("CovHist.txt");
 
