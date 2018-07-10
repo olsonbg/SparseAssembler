@@ -1,14 +1,13 @@
-CC = g++
-CCFLAGS = -Wextra -Wall -march=native -O3
-LINKFLAGS = 
-SOURCES = SparseAssembler.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
-EXECUTABLE = SparseAssembler
+CC=g++
+CPPFLAGS=-Wextra -Wall -march=native -O3
+SOURCES=SparseAssembler.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=SparseAssembler
 
 all: $(SOURCES) $(EXECUTABLE)
 
-%.o:%.c
-	$(CC) $(CCFLAGS) -c $<
+%.o:%.cpp
+	$(CC) $(CPPFLAGS) -c $<
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LINKFLAGS) $(OBJECTS) -o $@
