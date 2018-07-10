@@ -4233,7 +4233,7 @@ void BacktrackBubbleRemoval_read(reads_overlap_info *reads_overlap_info,int last
 
 			BreakLinks_read(reads_overlap_info,stacked_nodes,current_read,previous_read);
 
-			if(Visited_Path[current_read].last_read==NULL)
+			if(Visited_Path[current_read].last_read==0)
 			{
 				break;
 			}
@@ -5774,7 +5774,7 @@ int BFSearchGapCloser_v2(struct hashtable* ht,struct hashtable* merge_ht, uint64
 
 	Visited_Path[new_node].depth=1;
 	Visited_Path[new_node].len=K_size;
-	Visited_Path[new_node].last_kmer=NULL;
+	Visited_Path[new_node].last_kmer=0;
 
 	map<int , list<uint64_t> >::iterator NB_it=dist_kmers.begin();
 	while(1)
