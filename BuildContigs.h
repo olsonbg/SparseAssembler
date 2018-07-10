@@ -30,7 +30,7 @@ void MarkBranches(hashtable *ht)
 
 			bkt_ptr->kmer_info.used=0;
 			bkt_ptr->kmer_info.marked=0;
-			
+
 
 
 
@@ -69,7 +69,7 @@ void MarkBranches2(hashtable2 *ht)
 		{
 			bkt_ptr->kmer_info.used=0;
 			bkt_ptr->kmer_info.marked=0;
-			
+
 
 			if(bkt_ptr->kmer_info.left!=NULL&&bkt_ptr->kmer_info.left->nxt_edge!=NULL)
 			{
@@ -104,7 +104,7 @@ void MarkBranches3(hashtable3 *ht)
 		{
 			bkt_ptr->kmer_info.used=0;
 			bkt_ptr->kmer_info.marked=0;
-			
+
 
 			if(bkt_ptr->kmer_info.left!=NULL&&bkt_ptr->kmer_info.left->nxt_edge!=NULL)
 			{
@@ -139,7 +139,7 @@ void MarkBranches4(hashtable4 *ht)
 		{
 			bkt_ptr->kmer_info.used=0;
 			bkt_ptr->kmer_info.marked=0;
-			
+
 
 			if(bkt_ptr->kmer_info.left!=NULL&&bkt_ptr->kmer_info.left->nxt_edge!=NULL)
 			{
@@ -175,7 +175,7 @@ void MarkBranches0(hashtable0 *ht)
 		{
 			bkt_ptr->kmer_info.used=0;
 			bkt_ptr->kmer_info.marked=0;
-			
+
 
 			if(bkt_ptr->kmer_info.left!=NULL&&bkt_ptr->kmer_info.left->nxt_edge!=NULL)
 			{
@@ -271,23 +271,23 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 				s_left.clear();
 				s_right.clear();
-				
+
 				int nLBranches=0,nRBranches=0;
 				uint64_t left_bits,right_bits;
 
 				bool Right=0,flag=0;
-				
-				
+
+
 				for(int it=1;it<=2;++it)
 				{
 					string sum_str,t_str;
-					
+
 					bool Free_End=0;
 					int nBranches=0;
 					sum_str.clear();
 					t_str.clear();
 					//right search
-				
+
 					if(it==1)
 					{
 						Right=1;
@@ -307,7 +307,7 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 						bkt_ptr->kmer_info.used=1;
 						if(Right==1)
 						{
-						
+
 							if(bkt_ptr->kmer_info.right==NULL)
 							{
 								Free_End=1;
@@ -323,7 +323,7 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 									nBranches++;
 									edge_ptr=edge_ptr->nxt_edge;
 								}
-							
+
 								break;
 							}
 							int edge_len=(bkt_ptr->kmer_info.right)->len;
@@ -379,7 +379,7 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 						}
 						else
 						{
-		
+
 							if(bkt_ptr->kmer_info.left==NULL)
 							{
 								Free_End=1;
@@ -455,11 +455,11 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 						found=look_up_in_a_list(t_kmer,&ptr);
 
 						bkt_ptr=*ptr;
-					
+
 						if(found==0)
 						{
 							Free_End=1;
-							
+
 							flag=1;
 
 							break;
@@ -495,7 +495,7 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 							kmer_cnt++;
 
 						}
-					
+
 						if((Right==0&&it==1)||(Right==1&&it==2))
 						{
 							bkt_ptr->kmer_info.flip=1;
@@ -522,17 +522,17 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 						complement_str(s_left);
 						t_str.clear();
 						sum_str.clear();
-						
+
 					}
 
-					
+
 				}
 				//left,rght search ended
 
 				bitsarr2str(&beg_kmer, K_size, c_seq,1);
-			
+
 				contig=s_left+c_seq+s_right;
-				
+
 				if(ScreenOffTips)
 				{
 					if((int)(contig.size())<TipLenTh&&((double(coverage)/double(kmer_cnt))<TipCovTh))
@@ -559,7 +559,7 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 				o_contigs<<endl;
 				o_contigs<<contig<<endl;
-			
+
 				o_nLB<<nLBranches<<endl;
 				o_nRB<<nRBranches<<endl;
 
@@ -662,11 +662,11 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 
 				s_left.clear();
 				s_right.clear();
-				
+
 				uint64_t left_bits,right_bits;
 				int nLBranches=0,nRBranches=0;
 				bool Right=0;
-				
+
 
 				for (int it=1;it<=2;++it)
 				{
@@ -676,12 +676,12 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 					bkt_ptr=beg_bkt_ptr;
 					t_kmer=bkt_ptr->kmer_t2;
 					string sum_str, t_str;
-					
+
 					int nBranches=0;
-	
+
 					if(it==1)
 					{
-						Right=1;	
+						Right=1;
 					}
 					else
 					{
@@ -701,7 +701,7 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 								nBranches=0;
 								break;
 							}
-						
+
 							if(bkt_ptr->kmer_info.right->nxt_edge!=NULL)
 							{
 								edge_node *edge_ptr=bkt_ptr->kmer_info.right;
@@ -767,7 +767,7 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 							}
 
 
-							
+
 						}
 						else
 						{
@@ -853,7 +853,7 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 						found=look_up_in_a_list2(&t_kmer,&ptr);
 
 						bkt_ptr=*ptr;
-					
+
 
 						if(found==0)
 						{
@@ -920,7 +920,7 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 					}
 
 					//left,rght search ended
-					
+
 					if(it==1)
 					{
 						nRBranches=nBranches;
@@ -940,7 +940,7 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 					if((int)(contig.size())<TipLenTh&&((double(coverage)/double(kmer_cnt))<TipCovTh))
 					{
 						num_contigs--;
-						
+
 						bkt_ptr=beg_bkt_ptr->nxt_bucket;
 						continue;
 					}
@@ -965,7 +965,7 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 				o_contigs<<contig<<endl;
 				o_nLB<<nLBranches<<endl;//" ";
 				o_nRB<<nRBranches<<endl;//" ";
-				
+
 				o_contig_info<<">Contig "<<num_contigs<< " ";
 				if(COVERAGE_STS)
 				{
@@ -1072,11 +1072,11 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 
 				s_left.clear();
 				s_right.clear();
-				
+
 				uint64_t left_bits,right_bits;
 				int nLBranches=0,nRBranches=0;
 				bool Right=0;
-				
+
 
 				for (int it=1;it<=2;++it)
 				{
@@ -1086,12 +1086,12 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 					bkt_ptr=beg_bkt_ptr;
 					t_kmer=bkt_ptr->kmer_t3;
 					string sum_str, t_str;
-					
+
 					int nBranches=0;
-	
+
 					if(it==1)
 					{
-						Right=1;	
+						Right=1;
 					}
 					else
 					{
@@ -1111,7 +1111,7 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 								nBranches=0;
 								break;
 							}
-						
+
 							if(bkt_ptr->kmer_info.right->nxt_edge!=NULL)
 							{
 								edge_node *edge_ptr=bkt_ptr->kmer_info.right;
@@ -1283,7 +1283,7 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 						found=look_up_in_a_list3(&t_kmer,&ptr);
 
 						bkt_ptr=*ptr;
-					
+
 
 						if(found==0)
 						{
@@ -1350,7 +1350,7 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 					}
 
 					//left,rght search ended
-					
+
 					if(it==1)
 					{
 						nRBranches=nBranches;
@@ -1370,7 +1370,7 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 					if((int)(contig.size())<TipLenTh&&((double(coverage)/double(kmer_cnt))<TipCovTh))
 					{
 						num_contigs--;
-						
+
 						bkt_ptr=beg_bkt_ptr->nxt_bucket;
 						continue;
 					}
@@ -1395,7 +1395,7 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 				o_contigs<<contig<<endl;
 				o_nLB<<nLBranches<<" ";
 				o_nRB<<nRBranches<<" ";
-				
+
 				o_contig_info<<">Contig "<<num_contigs<< " ";
 				if(COVERAGE_STS)
 				{
@@ -1501,11 +1501,11 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 
 				s_left.clear();
 				s_right.clear();
-				
+
 				uint64_t left_bits,right_bits;
 				int nLBranches=0,nRBranches=0;
 				bool Right=0;
-				
+
 
 				for (int it=1;it<=2;++it)
 				{
@@ -1515,12 +1515,12 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 					bkt_ptr=beg_bkt_ptr;
 					t_kmer=bkt_ptr->kmer_t4;
 					string sum_str, t_str;
-					
+
 					int nBranches=0;
-	
+
 					if(it==1)
 					{
-						Right=1;	
+						Right=1;
 					}
 					else
 					{
@@ -1540,7 +1540,7 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 								nBranches=0;
 								break;
 							}
-						
+
 							if(bkt_ptr->kmer_info.right->nxt_edge!=NULL)
 							{
 								edge_node *edge_ptr=bkt_ptr->kmer_info.right;
@@ -1712,7 +1712,7 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 						found=look_up_in_a_list4(&t_kmer,&ptr);
 
 						bkt_ptr=*ptr;
-					
+
 
 						if(found==0)
 						{
@@ -1730,7 +1730,7 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 							flag=1;
 							last_bkt_ptr->kmer_info.marked=1;
 							//t_str=t_str.substr(0,t_str.size()-1);
-							t_str.clear(); 
+							t_str.clear();
 							sum_str += t_str;
 							t_str.clear();
 							nBranches=1;
@@ -1779,7 +1779,7 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 					}
 
 					//left,rght search ended
-					
+
 					if(it==1)
 					{
 						nRBranches=nBranches;
@@ -1799,7 +1799,7 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 					if((int)(contig.size())<TipLenTh&&((double(coverage)/double(kmer_cnt))<TipCovTh))
 					{
 						num_contigs--;
-						
+
 						bkt_ptr=beg_bkt_ptr->nxt_bucket;
 						continue;
 					}
@@ -1824,7 +1824,7 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 				o_contigs<<contig<<endl;
 				o_nLB<<nLBranches<<" ";
 				o_nRB<<nRBranches<<" ";
-				
+
 				o_contig_info<<">Contig "<<num_contigs<< " ";
 				if(COVERAGE_STS)
 				{
@@ -1913,7 +1913,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 			if(bkt_ptr->kmer_info.used==0&&bkt_ptr->kmer_info.removed==0)
 			{
 				num_contigs++;
-				
+
 				FE_left=0;FE_right=0;
 
 				if(COVERAGE_STS)
@@ -1931,7 +1931,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 				//bkt_ptr->kmer_info.strand_visited|=1;
 				bkt_ptr->kmer_info.flip=0;
-				
+
 
 				memcpy(t_kmer,beg_kmer,sizeof(uint64_t)*Kmer_arr_sz);
 
@@ -1939,23 +1939,23 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 				s_left.clear();
 				s_right.clear();
-				
+
 				int nLBranches=0,nRBranches=0;
 				uint64_t left_bits,right_bits;
 
 				bool Right=0,flag=0;
-				
-				
+
+
 				for(int it=1;it<=2;++it)
 				{
 					string sum_str,t_str;
-					
+
 					bool Free_End=0;
 					int nBranches=0;
 					sum_str.clear();
 					t_str.clear();
 					//right search
-				
+
 					if(it==1)
 					{Right=1;}
 					else
@@ -1963,7 +1963,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 						Right=0;
 					}
 					bkt_ptr=beg_bkt_ptr;
-					
+
 
 					memcpy(t_kmer,bkt_ptr->kmer_t,sizeof(uint64_t)*Kmer_arr_sz);
 
@@ -1976,7 +1976,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 						bkt_ptr->kmer_info.used=1;
 						if(Right==1)
 						{
-						
+
 							if(bkt_ptr->kmer_info.right==NULL)
 							{
 								Free_End=1;
@@ -1992,7 +1992,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 									nBranches++;
 									edge_ptr=edge_ptr->nxt_edge;
 								}
-							
+
 								break;
 							}
 							int edge_len=(bkt_ptr->kmer_info.right)->len;
@@ -2011,14 +2011,14 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 								//do the rest work
 								t_kmer[Kmer_arr_sz-1]|=b;
 								t_str.push_back(ACGT[b]);
-								
-								
+
+
 							}
 
 						}
 						else
 						{
-		
+
 							if(bkt_ptr->kmer_info.left==NULL)
 							{
 								Free_End=1;
@@ -2055,19 +2055,19 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 						}
 
-					
+
 
 						memcpy(f_kmer,t_kmer,sizeof(uint64_t)*Kmer_arr_sz);
 						get_rev_comp_seq_arr(f_kmer,K_size,Kmer_arr_sz);
 
 						if(uint64_t_cmp(t_kmer,f_kmer,Kmer_arr_sz)>0)
 						{
-							
+
 							memcpy(t_kmer,f_kmer,sizeof(uint64_t)*Kmer_arr_sz);
 							Right=!Right;
 						}
 
-						
+
 
 						hv=MurmurHash64A(t_kmer,sizeof(uint64_t)*Kmer_arr_sz,0);
 
@@ -2081,11 +2081,11 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 						found=look_up_in_a_list0(t_kmer,&ptr,Kmer_arr_sz);
 
 						bkt_ptr=*ptr;
-					
+
 						if(found==0)
 						{
 							Free_End=1;
-							
+
 							flag=1;
 
 							break;
@@ -2121,7 +2121,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 							kmer_cnt++;
 
 						}
-					
+
 						if((Right==0&&it==1)||(Right==1&&it==2))
 						{
 							bkt_ptr->kmer_info.flip=1;
@@ -2148,17 +2148,17 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 						complement_str(s_left);
 						t_str.clear();
 						sum_str.clear();
-						
+
 					}
 
-					
+
 				}
 				//left,rght search ended
 
 				bitsarr2str(beg_kmer, K_size, c_seq,Kmer_arr_sz);
-			
+
 				contig=s_left+c_seq+s_right;
-				
+
 				if(ScreenOffTips)
 				{
 					if((int)(contig.size())<TipLenTh&&((double(coverage)/double(kmer_cnt))<TipCovTh))
@@ -2185,7 +2185,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 				o_contigs<<endl;
 				o_contigs<<contig<<endl;
-			
+
 				o_nLB<<nLBranches<<endl;
 				o_nRB<<nRBranches<<endl;
 

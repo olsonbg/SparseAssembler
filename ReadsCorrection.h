@@ -18,7 +18,7 @@
 
 inline void replace_one_nc(uint64_t * bitsarr_in,int bitsarr_len,int begin_pos,uint64_t nt)
 {
-	
+
 	int arr_sz_in=bitsarr_len/32+1;
 	int rem=bitsarr_len%32;
 	if(rem==0)
@@ -28,7 +28,7 @@ inline void replace_one_nc(uint64_t * bitsarr_in,int bitsarr_len,int begin_pos,u
 	uint64_t temp_arr[10];
 	//memset(temp_arr,0,sizeof(temp_arr));
 
-	
+
 
 	int rem2=(32-rem+begin_pos)%32;
 	int block_beg=(32-rem+begin_pos)/32;
@@ -49,7 +49,7 @@ inline void replace_one_nc(uint64_t * bitsarr_in,int bitsarr_len,int begin_pos,u
 	int orig_sz=(block_end-block_beg+1);
 
 	//memcpy(temp_arr,&bitsarr_in[block_beg],orig_sz*sizeof(uint64_t));
-	
+
 
 	L_shift_NB(temp_arr,rem2*2,orig_sz);
 	bitsarr_in[block_beg]&=~(((uint64_t)0x3)<<(32-rem2-1)*2);
@@ -79,11 +79,11 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 	{
 		ht_sz=ht2->ht_sz;
 	}
-	
+
 	int offset_nt[1000][2];
 	//int dubious_nt[500][2];
 	int correction_cnt=0;
-	
+
 	int most_cov=0;
 	int first_edges_cnt=0;
 	bool first_edge_found=0;
@@ -123,11 +123,11 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 	}
 	else
 	{
-	
+
 		get_sub_arr(read->read_bits,read->readLen,*last_correct,K_size,ckey_t2.kmer);
 		f_ckey_t2=ckey_t2;
 		get_rev_comp_seq_arr(f_ckey_t2.kmer,K_size,2);
-		
+
 		if(uint64_t_cmp(ckey_t2.kmer,f_ckey_t2.kmer,2)>0)
 		{
 			flip_last_correct=1;
@@ -151,11 +151,11 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 		if(SEARCH_RIGHT)
 		{
 			//search_right
-		
+
 			//int correction_cnt=0;
 
-			//////////////////////////////BFS 
-			
+			//////////////////////////////BFS
+
 			for (int round=0;round<=2;++round)
 			{
 				edge_node* edge_ptr;
@@ -168,7 +168,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 					}
 					else
 					{
-						edge_ptr=(*bkt_last_correct_t2)->kmer_info.right;					
+						edge_ptr=(*bkt_last_correct_t2)->kmer_info.right;
 					}
 
 				}
@@ -180,9 +180,9 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 					}
 					else
 					{
-						edge_ptr=(*bkt_last_correct_t2)->kmer_info.left;					
+						edge_ptr=(*bkt_last_correct_t2)->kmer_info.left;
 					}
-			
+
 				}
 
 				while(edge_ptr!=NULL)
@@ -194,7 +194,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 						continue;
 					}
 					uint64_t read_bits,edge_bits;
-				
+
 					get_sub_arr(read->read_bits,read->readLen,*last_correct+K_size,edge_len,&read_bits);
 					edge_bits=edge_ptr->edge;
 					if(flip_last_correct)
@@ -203,7 +203,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 					}
 					int mod_cnt=0;
 					//int last_mod=-1;
-					
+
 					for(int l=0;l<edge_len;++l)
 					{
 						uint64_t mask=0x3;
@@ -213,7 +213,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 							mod_cnt++;
 						}
 					}
-				
+
 
 					if(mod_cnt>round)
 					{
@@ -227,13 +227,13 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 							first_edge=edge_ptr;
 							first_edges_cnt++;
 						}
-					
+
 					}
-				
+
 					if(K_size<=32)
 					{
 						uint64_t t_kmer,t,f_kmer;
-	
+
 						t_kmer=(*bkt_last_correct)->kmer_t.kmer;
 						if(flip_last_correct==0)
 						{
@@ -257,7 +257,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t_kmer<<=2;
 										t=1;
 										t_kmer|=t;
-							
+
 										break;
 									case 2:
 										t=3;
@@ -266,7 +266,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t_kmer<<=2;
 										t=2;
 										t_kmer|=t;
-								
+
 										break;
 									case 3:
 										t=3;
@@ -275,17 +275,17 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t_kmer<<=2;
 										t=3;
 										t_kmer|=t;
-									
+
 										break;
 								}
-							
-		
+
+
 							}
 
 						}
 						else
 						{
-						
+
 							for(int j=0;j<edge_len;++j)
 							{
 								uint64_t left_bits=(edge_bits>>(2*j));
@@ -295,31 +295,31 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t_kmer>>=2;
 										t=((uint64_t)0)<<((K_size-1)*2);
 										t_kmer|=t;
-									
+
 										break;
 									case 1:
 										t_kmer>>=2;
 										t=((uint64_t)1)<<((K_size-1)*2);
 										t_kmer|=t;
-								
+
 										break;
 									case 2:
 										t_kmer>>=2;
 										t=((uint64_t)2)<<(K_size-1)*2;
 										t_kmer|=t;
-								
+
 										break;
 									case 3:
 										t_kmer>>=2;
 										t=((uint64_t)3)<<((K_size-1)*2);
 										t_kmer|=t;
-								
+
 										break;
 
 								}
 							}
 
-						
+
 						}
 						f_kmer=get_rev_comp_seq(t_kmer,K_size);
 						if(t_kmer>f_kmer)
@@ -332,7 +332,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 						struct bucket ** ptr;
 
 						ptr= &(ht->store_pos[hash_idx]);
-						
+
 						found=look_up_in_a_list(t_kmer,&ptr);
 						if(found==0)
 						{
@@ -341,7 +341,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 						}
 						if((*ptr)->kmer_info.cov1>*CorrTh)
 						{
-							
+
 							if((!SELECT_OPTIMAL)&&most_cov>=*CovTh)
 							{
 								CORRECTABLE=0;return -1;
@@ -350,12 +350,12 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 							optimal_choice=correction_cnt;
 							opt_edge=edge_ptr;
 							correction_cnt++;
-							
-						
+
+
 						}
-						
-						
-					}	
+
+
+					}
 					else
 					{
 						if(K_size>32&&K_size<=64)
@@ -387,7 +387,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 											t=1;
 
 											t_kmer.kmer[1]|=t;
-									
+
 											break;
 										case 2:
 											t=3;
@@ -397,7 +397,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 											t=2;
 
 											t_kmer.kmer[1]|=t;
-								
+
 											break;
 										case 3:
 											t=3;
@@ -407,7 +407,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 											t=3;
 
 											t_kmer.kmer[1]|=t;
-								
+
 											break;
 
 
@@ -435,21 +435,21 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 											t=((uint64_t)1)<<((K_size-1-32)*2);
 											t_kmer.kmer[0]|=t;
-										
+
 											break;
 										case 2:
 											R_shift_NB(t_kmer.kmer,2,2);
 
 											t=((uint64_t)2)<<((K_size-1-32)*2);
 											t_kmer.kmer[0]|=t;
-										
+
 											break;
 										case 3:
 											R_shift_NB(t_kmer.kmer,2,2);
 
 											t=((uint64_t)3)<<((K_size-1-32)*2);
 											t_kmer.kmer[0]|=t;
-										
+
 											break;
 
 									}
@@ -468,7 +468,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 							struct bucket2 ** ptr;
 
 							ptr= &(ht2->store_pos[hash_idx]);
-						
+
 							found=look_up_in_a_list2(&t_kmer,&ptr);
 
 							if(found==0)
@@ -490,10 +490,10 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 								opt_edge=edge_ptr;
 								correction_cnt++;
 							}
-	
+
 						}
-					
-					
+
+
 					}
 
 					edge_ptr=edge_ptr->nxt_edge;
@@ -503,7 +503,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 				{
 					first_edge_found=1;
 				}
-					
+
 				if(correction_cnt>=1)
 				{
 					break;
@@ -511,21 +511,21 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 			}
 
-			
+
 		}
 
-		
+
 
 		if(!SEARCH_RIGHT)
 		{
 			//search left
 			uint64_t tt;
 			struct kmer_t2 temp_t2;
-	
-			//int correction_cnt=0;				
-	
 
-			//////////////////////////////BFS 
+			//int correction_cnt=0;
+
+
+			//////////////////////////////BFS
 			for (int round=0;round<=2;++round)
 			{
 				edge_node* edge_ptr;
@@ -538,7 +538,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 					}
 					else
 					{
-						edge_ptr=(*bkt_last_correct_t2)->kmer_info.right;					
+						edge_ptr=(*bkt_last_correct_t2)->kmer_info.right;
 					}
 
 				}
@@ -550,12 +550,12 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 					}
 					else
 					{
-						edge_ptr=(*bkt_last_correct_t2)->kmer_info.left;					
+						edge_ptr=(*bkt_last_correct_t2)->kmer_info.left;
 					}
-			
+
 				}
 
-				
+
 
 				while(edge_ptr!=NULL)
 				{
@@ -566,7 +566,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 						continue;
 					}
 					uint64_t read_bits,edge_bits;
-				
+
 					get_sub_arr(read->read_bits,read->readLen,*last_correct-edge_len,edge_len,&read_bits);
 					edge_bits=edge_ptr->edge;
 					if(flip_last_correct)
@@ -579,18 +579,18 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 					{
 						uint64_t mask=0x3;
 						mask<<=2*l;
-					
+
 						if((read_bits&mask)!=(edge_bits&mask))
 						{
 							mod_cnt++;
-							
+
 							//last_mod=l;
-							
+
 						}
 					}
 
-				
-				
+
+
 					if(mod_cnt>round)
 					{
 						edge_ptr=edge_ptr->nxt_edge;
@@ -603,10 +603,10 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 							first_edge=edge_ptr;
 							first_edges_cnt++;
 						}
-					
+
 					}
 
-					
+
 
 					if(K_size<=32)
 					{
@@ -634,7 +634,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t_kmer<<=2;
 										t=1;
 										t_kmer|=t;
-							
+
 										break;
 									case 2:
 										t=3;
@@ -644,7 +644,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t=2;
 
 										t_kmer|=t;
-								
+
 										break;
 									case 3:
 										t=3;
@@ -654,17 +654,17 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t=3;
 
 										t_kmer|=t;
-									
+
 										break;
 								}
-							
-		
+
+
 							}
 
 						}
 						else
 						{
-						
+
 							t_kmer=(*bkt_last_correct)->kmer_t.kmer;
 							for(int j=0;j<edge_len;++j)
 							{
@@ -675,37 +675,37 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 										t_kmer>>=2;
 										t=((uint64_t)0)<<((K_size-1)*2);
 										t_kmer|=t;
-									
+
 										break;
 									case 1:
 										t_kmer>>=2;
 										t=((uint64_t)1)<<((K_size-1)*2);
 										t_kmer|=t;
-								
+
 										break;
 									case 2:
 										t_kmer>>=2;
 										t=((uint64_t)2)<<(K_size-1)*2;
 										t_kmer|=t;
-								
+
 										break;
 									case 3:
 										t_kmer>>=2;
 										t=((uint64_t)3)<<((K_size-1)*2);
 										t_kmer|=t;
-								
+
 										break;
 
 								}
 							}
 
-						
+
 						}
 						f_kmer=get_rev_comp_seq(t_kmer,K_size);
 						if(t_kmer>f_kmer)
 						{
 							t_kmer=f_kmer;
-							
+
 						}
 						hv=MurmurHash64A(&t_kmer,sizeof(t_kmer),0);
 						hash_idx=(size_t) (hv%ht_sz);
@@ -713,7 +713,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 						struct bucket ** ptr;
 
 						ptr= &(ht->store_pos[hash_idx]);
-						
+
 						found=look_up_in_a_list(t_kmer,&ptr);
 						if(found==0)
 						{
@@ -722,7 +722,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 						}
 						if((*ptr)->kmer_info.cov1>*CorrTh)
 						{
-							
+
 							if((!SELECT_OPTIMAL)&&most_cov>=*CovTh)
 							{
 								CORRECTABLE=0;return -1;
@@ -731,13 +731,13 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 							optimal_choice=correction_cnt;
 							opt_edge=edge_ptr;
 							correction_cnt++;
-								
-						
+
+
 						}
-						
-							
-						
-					}	
+
+
+
+					}
 					else
 					{
 						if(K_size>32&&K_size<=64)
@@ -770,7 +770,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 											t=1;
 
 											t_kmer.kmer[1]|=t;
-									
+
 											break;
 										case 2:
 											t=3;
@@ -780,7 +780,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 											t=2;
 
 											t_kmer.kmer[1]|=t;
-								
+
 											break;
 										case 3:
 											t=3;
@@ -790,7 +790,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 											t=3;
 
 											t_kmer.kmer[1]|=t;
-								
+
 											break;
 
 
@@ -818,21 +818,21 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 											t=((uint64_t)1)<<((K_size-1-32)*2);
 											t_kmer.kmer[0]|=t;
-										
+
 											break;
 										case 2:
 											R_shift_NB(t_kmer.kmer,2,2);
 
 											t=((uint64_t)2)<<((K_size-1-32)*2);
 											t_kmer.kmer[0]|=t;
-										
+
 											break;
 										case 3:
 											R_shift_NB(t_kmer.kmer,2,2);
 
 											t=((uint64_t)3)<<((K_size-1-32)*2);
 											t_kmer.kmer[0]|=t;
-										
+
 											break;
 
 									}
@@ -852,7 +852,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 							struct bucket2 ** ptr;
 
 							ptr= &(ht2->store_pos[hash_idx]);
-						
+
 							found=look_up_in_a_list2(&t_kmer,&ptr);
 
 
@@ -866,7 +866,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 							if((*ptr)->kmer_info.cov1>=*CorrTh)
 							{
-							
+
 
 								if((!SELECT_OPTIMAL)&&most_cov>=*CovTh)
 								{
@@ -879,12 +879,12 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 							//	break;
 								//
-								
+
 							}
-	
+
 						}
-					
-					
+
+
 					}
 
 					edge_ptr=edge_ptr->nxt_edge;
@@ -918,7 +918,7 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 		if(!SEARCH_RIGHT)
 		{
-			
+
 			int edge_len=opt_edge->len+1;
 			uint64_t edge_bits=opt_edge->edge;
 
@@ -929,62 +929,62 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 			int mod_cnt=0;
 			for(int l=0;l<edge_len;++l)
 			{
-						
+
 				uint64_t read_bits;
 				get_sub_arr(read->read_bits,read->readLen,*last_correct-edge_len,edge_len,&read_bits);
-					
+
 				uint64_t mask=0x3;
 				mask<<=2*l;
-					
+
 				uint64_t nt;
 				if((read_bits&mask)!=(edge_bits&mask))
 				{
 					nt=(edge_bits>>2*l)&(0x3);
 					replace_one_nc(read->read_bits,read->readLen,(*last_correct)-1-l,nt);
-					
+
 					mod_cnt++;
 					if(mod_cnt>3)
 					{
 						return -1;
 					}
 				}
-					
-					
+
+
 
 
 			}
 			memset((&read->error_nt[(*last_correct)-edge_len]),0,edge_len*sizeof(bool));
 
-		
+
 		}
 		else
 		{
 			int edge_len=opt_edge->len+1;
 			uint64_t edge_bits=opt_edge->edge;
-				
+
 			if(flip_last_correct)
 			{
 				edge_bits=get_rev_comp_seq(edge_bits,edge_len);
-			}	
-				
+			}
+
 
 			int mod_cnt=0;
 			uint64_t read_bits;
 			get_sub_arr(read->read_bits,read->readLen,*last_correct+K_size,edge_len,&read_bits);
-					
+
 			for(int l=0;l<edge_len;++l)
 			{
-				
-						
+
+
 				uint64_t mask=0x3;
 				mask<<=2*l;
-					
+
 				uint64_t nt;
 				if((read_bits&mask)!=(edge_bits&mask))
 				{
 					nt=(edge_bits>>2*l)&(0x3);
 					replace_one_nc(read->read_bits,read->readLen,(edge_len-1-l)+(*last_correct)+K_size,nt);
-				
+
 					mod_cnt++;
 					if(mod_cnt>3)
 					{
@@ -992,24 +992,24 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 					}
 				}
-					
+
 			}
 			memset((&read->error_nt[(*last_correct)+K_size]),0,edge_len*sizeof(bool));
 
 
-					
-		
+
+
 		}
-		
+
 
 	}
-	
+
 	if(opt_edge!=NULL)
 	{
 		if(SEARCH_RIGHT)
 		{
-		
-			
+
+
 			int edge_len=opt_edge->len+1;
 			uint64_t edge_bits=opt_edge->edge;
 			if(flip_last_correct==1)
@@ -1018,27 +1018,27 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 			}
 			for(int l=0;l<edge_len;++l)
 			{
-				
+
 				uint64_t read_bits;
 				get_sub_arr(read->read_bits,read->readLen,*last_correct+K_size,edge_len,&read_bits);
-					
+
 				uint64_t mask=0x3;
 				mask<<=2*l;
-					
+
 				uint64_t nt;
 				if((read_bits&mask)!=(edge_bits&mask))
 				{
 					nt=(edge_bits>>2*l)&(0x3);
 					replace_one_nc(read->read_bits,read->readLen,(edge_len-1-l)+(*last_correct)+K_size,nt);
-				
+
 				}
-					
+
 
 
 
 			}
-			
-	
+
+
 
 		}
 		else
@@ -1052,27 +1052,27 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 			}
 			for(int l=0;l<edge_len;++l)
 			{
-				
+
 				uint64_t read_bits;
 				get_sub_arr(read->read_bits,read->readLen,*last_correct-edge_len,edge_len,&read_bits);
-					
+
 				uint64_t mask=0x3;
 				mask<<=2*l;
-					
+
 				uint64_t nt;
 				if((read_bits&mask)!=(edge_bits&mask))
 				{
 					nt=(edge_bits>>2*l)&(0x3);
 					replace_one_nc(read->read_bits,read->readLen,(*last_correct)-1-l,nt);
 				}
-					
+
 
 
 
 			}
-		
-			
-	
+
+
+
 		}
 	}
 	return 1;
@@ -1088,7 +1088,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 	bool CORRECT=1;
 	bool ALLOW_WEAK_COV=1;
 	bool SEARCH_LEFT=0,SEARCH_RIGHT=0;
-					
+
 	if(Hybrid)
 	{
 		Seq_Pad=1;
@@ -1133,21 +1133,21 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 	bucket ** bktptr[1000];
 	bucket2 ** bktptr_t2[1000];
 	char c_str[1000];
-	
+
 	int first_correct=-1,last_correct=-1;
 	int first_error=-1,second_error=-1;
 	//#pragma omp parallel for
 	for (int j=0;j<OverlapKmers;j++)
 	{
 		//uint64_t temp_bitsarr[5];
-	
-		
+
+
 		if(K_size<=32)
 		{
-			get_sub_arr(read->read_bits,read->readLen,j,K_size,&(seq[j]));	
-			
+			get_sub_arr(read->read_bits,read->readLen,j,K_size,&(seq[j]));
+
 			f_seq[j]=get_rev_comp_seq(seq[j],K_size);
-			
+
 			flip[j]=0;
 			if(seq[j]>f_seq[j])
 			{
@@ -1159,8 +1159,8 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 		}
 		else
 		{
-			
-			get_sub_arr(read->read_bits,read->readLen,j,K_size,seq_t2[j].kmer);	
+
+			get_sub_arr(read->read_bits,read->readLen,j,K_size,seq_t2[j].kmer);
 			f_seq_t2[j]=seq_t2[j];
 			get_rev_comp_seq_arr(f_seq_t2[j].kmer,K_size,2);
 			flip[j]=0;
@@ -1171,13 +1171,13 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				f_seq_t2[j]=t;
 				flip[j]=1;
 			}
-			
+
 		}
-		
+
 		if(K_size<=32)
 		{
 		hv[j]=MurmurHash64A(&seq[j],sizeof(seq[j]),0);
-		
+
 		hash_idx[j]=(size_t) (hv[j]%ht_sz);
 		}
 		else
@@ -1185,7 +1185,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 			if(K_size<=64)
 			{
 				hv[j]=MurmurHash64A(&seq_t2[j],sizeof(seq_t2[j]),0);
-		
+
 				hash_idx[j]=(size_t) (hv[j]%ht_sz);
 			}
 		}
@@ -1198,7 +1198,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 			found[j]=look_up_in_a_list(seq[j],&bktptr[j]);
 		}
 		else
-		{	
+		{
 			bktptr_t2[j]= &(ht2->store_pos[hash_idx[j]]);
 			found[j]=look_up_in_a_list2(&(seq_t2[j]),&bktptr_t2[j]);
 		}
@@ -1210,7 +1210,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				{
 					memset(&(read->error_nt[j+1]),0,(K_size-1)*sizeof(bool));
 				}
-		
+
 			}
 			else
 			{
@@ -1244,7 +1244,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 	if(first_correct>=gap)
 	{SEARCH_LEFT=1;}
 
-	
+
 	int l_success=0,r_success=0;
 	if(SEARCH_LEFT==1)
 	{
@@ -1257,7 +1257,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					SPLIT=(*bktptr[first_correct])->kmer_info.split_left;
 				else
 					SPLIT=(*bktptr_t2[first_correct])->kmer_info.split_left;
-			
+
 
 				if(!SPLIT)
 				{
@@ -1270,7 +1270,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					if(opt_edge==NULL)
 					{
 						break;
-					}	
+					}
 					int edge_len=opt_edge->len+1;
 					uint64_t edge_bits=opt_edge->edge;
 
@@ -1278,17 +1278,17 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					{
 						edge_bits=get_rev_comp_seq(edge_bits,edge_len);
 					}
-				
+
 					int mod_cnt=0;
 					for(int l=0;l<edge_len;++l)
 					{
-				
+
 						uint64_t read_bits;
 						get_sub_arr(read->read_bits,read->readLen,first_correct-edge_len,edge_len,&read_bits);
-					
+
 						uint64_t mask=0x3;
 						mask<<=2*l;
-					
+
 						uint64_t nt;
 						if((read_bits&mask)!=(edge_bits&mask))
 						{
@@ -1303,12 +1303,12 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 							}
 						}
-					
-						
+
+
 					}
 					memset((&read->error_nt[(first_correct)-edge_len]),0,edge_len*sizeof(bool));
 
-					
+
 				}
 
 
@@ -1319,7 +1319,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				SPLIT=(*bktptr[first_correct])->kmer_info.split_right;
 				else
 					SPLIT=(*bktptr_t2[first_correct])->kmer_info.split_right;
-		
+
 
 				if(!SPLIT)
 				{
@@ -1332,8 +1332,8 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					if(opt_edge==NULL)
 					{
 						break;
-					}	
-					
+					}
+
 					int edge_len=opt_edge->len+1;
 					uint64_t edge_bits=opt_edge->edge;
 
@@ -1344,13 +1344,13 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					int mod_cnt=0;
 					for(int l=0;l<edge_len;++l)
 					{
-						
+
 						uint64_t read_bits;
 						get_sub_arr(read->read_bits,read->readLen,first_correct-edge_len,edge_len,&read_bits);
-					
+
 						uint64_t mask=0x3;
 						mask<<=2*l;
-					
+
 						uint64_t nt;
 						if((read_bits&mask)!=(edge_bits&mask))
 						{
@@ -1365,14 +1365,14 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 							}
 						}
-					
-					
+
+
 
 
 					}
 					memset((&read->error_nt[(first_correct)-edge_len]),0,edge_len*sizeof(bool));
 
-					
+
 				}
 
 
@@ -1385,7 +1385,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				if(l_success>0)
 				{(*correction_cnt)++;}
 			}
-			
+
 
 			if((!ALLOW_WEAK_COV)&&(!SPLIT))
 			{
@@ -1417,10 +1417,10 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 			for (int j=first_correct-1;j>=0;j--)
 			{
-				
+
 				if(K_size<=32)
 				{
-					
+
 					get_sub_arr(read->read_bits,read->readLen,j,K_size,&(seq[j]));
 					f_seq[j]=get_rev_comp_seq(seq[j],K_size);
 					flip[j]=0;
@@ -1445,14 +1445,14 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						f_seq_t2[j]=t;
 						flip[j]=1;
 					}
-			
+
 				}
-				
-				
+
+
 				if(K_size<=32)
 				{
 				hv[j]=MurmurHash64A(&seq[j],sizeof(seq[j]),0);
-		
+
 				hash_idx[j]=(size_t) (hv[j]%ht_sz);
 				}
 				else
@@ -1460,12 +1460,12 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					if(K_size<=64)
 					{
 						hv[j]=MurmurHash64A(&seq_t2[j],sizeof(seq_t2[j]),0);
-		
+
 						hash_idx[j]=(size_t) (hv[j]%ht_sz);
 					}
 				}
-		
-				
+
+
 
 				struct bucket ** ptr;
 				struct bucket2 ** ptr_t2;
@@ -1476,11 +1476,11 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				found[j]=look_up_in_a_list(seq[j],&bktptr[j]);
 				}
 				else
-				{	
+				{
 					bktptr_t2[j]= &(ht2->store_pos[hash_idx[j]]);
 
 					found[j]=look_up_in_a_list2(&(seq_t2[j]),&bktptr_t2[j]);
-			
+
 				}
 
 
@@ -1491,17 +1491,17 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						if((*bktptr[j])->kmer_info.cov1>=*CovTh)
 						{
 							memset(&(read->error_nt[j]),0,K_size*sizeof(bool));
-		
+
 						}
 					}
 					else
 					{
-					
+
 						if((*bktptr_t2[j])->kmer_info.cov1>=*CovTh)
 						{
-						
+
 							memset(&(read->error_nt[j]),0,K_size*sizeof(bool));
-		
+
 						}
 					}
 					if(flip[j]==1)
@@ -1520,7 +1520,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					}
 
 				}
-				
+
 			}
 			bool updated=0;
 			for (int i=first_correct-1;i>=0;--i)
@@ -1583,7 +1583,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					}
 					int edge_len=opt_edge->len+1;
 					uint64_t edge_bits=opt_edge->edge;
-				
+
 					if(flip[last_correct])
 					{
 						edge_bits=get_rev_comp_seq(edge_bits,edge_len);
@@ -1592,14 +1592,14 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					int mod_cnt=0;
 					uint64_t read_bits;
 					get_sub_arr(read->read_bits,read->readLen,last_correct+K_size,edge_len,&read_bits);
-					
+
 					for(int l=0;l<edge_len;++l)
 					{
-				
-						
+
+
 						uint64_t mask=0x3;
 						mask<<=2*l;
-					
+
 						uint64_t nt;
 						if((read_bits&mask)!=(edge_bits&mask))
 						{
@@ -1614,12 +1614,12 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 							}
 						}
-					
+
 //						read->error_nt[(edge_len-1-l)+(last_correct)+K_size]=0;
 					}
 					memset((&read->error_nt[(last_correct)+K_size]),0,edge_len*sizeof(bool));
 
-					
+
 				}
 
 			}
@@ -1630,7 +1630,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				else
 					SPLIT=(*bktptr_t2[last_correct])->kmer_info.split_right;
 			//bug here! Limit the # of modifications
-				
+
 				if(!SPLIT)
 				{
 					struct edge_node *opt_edge;
@@ -1642,28 +1642,28 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					if(opt_edge==NULL)
 					{
 						break;
-					}	
+					}
 
 					int edge_len=opt_edge->len+1;
 					uint64_t edge_bits=opt_edge->edge;
-				
+
 					if(flip[last_correct])
 					{
 						edge_bits=get_rev_comp_seq(edge_bits,edge_len);
 					}
-				
+
 
 					int mod_cnt=0;
 					uint64_t read_bits;
 					get_sub_arr(read->read_bits,read->readLen,last_correct+K_size,edge_len,&read_bits);
-					
+
 					for(int l=0;l<edge_len;++l)
 					{
-				
-						
+
+
 						uint64_t mask=0x3;
 						mask<<=2*l;
-					
+
 						uint64_t nt;
 						if((read_bits&mask)!=(edge_bits&mask))
 						{
@@ -1678,19 +1678,19 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 							}
 						}
-					
+
 					}
 					memset((&read->error_nt[(last_correct)+K_size]),0,edge_len*sizeof(bool));
 
 
-					
-					
+
+
 				}
 
 
 			}
 
-			
+
 
 
 			if(SPLIT)
@@ -1734,21 +1734,21 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					{
 						SPLIT=(*bktptr_t2[last_correct])->kmer_info.split_left;
 					}
-				
+
 				}
 				for (int j=last_correct+1;j<OverlapKmers;j++)
 				{
 
-					
-				
-					
+
+
+
 					if(K_size<=32)
 					{
 						get_sub_arr(read->read_bits,read->readLen,j,K_size,&(seq[j]));
-					
+
 					//	char c_str[300];
 						//bitsarr2str(&seq[j],K_size,c_str,1);
-						
+
 						f_seq[j]=get_rev_comp_seq(seq[j],K_size);
 						flip[j]=0;
 						if(seq[j]>f_seq[j])
@@ -1772,14 +1772,14 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 							f_seq_t2[j]=t;
 							flip[j]=1;
 						}
-			
+
 					}
 
-		
+
 					if(K_size<=32)
 					{
 					hv[j]=MurmurHash64A(&seq[j],sizeof(seq[j]),0);
-		
+
 					hash_idx[j]=(size_t) (hv[j]%ht_sz);
 					}
 					else
@@ -1787,7 +1787,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						if(K_size<=64)
 						{
 							hv[j]=MurmurHash64A(&seq_t2[j],sizeof(seq_t2[j]),0);
-		
+
 							hash_idx[j]=(size_t) (hv[j]%ht_sz);
 						}
 					}
@@ -1801,35 +1801,35 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 					found[j]=look_up_in_a_list(seq[j],&bktptr[j]);
 					}
 					else
-					{	
+					{
 						bktptr_t2[j]= &(ht2->store_pos[hash_idx[j]]);
 
 						found[j]=look_up_in_a_list2(&(seq_t2[j]),&bktptr_t2[j]);
-			
+
 					}
-				
-					
+
+
 					if(found[j])
 					{
 						if(K_size<=32)
 						{
 							if((*bktptr[j])->kmer_info.cov1>=*CovTh)
 							{
-								
+
 								//memset(&(error_nt[j]),0,K_size*sizeof(bool));
 								memset(&(read->error_nt[j+1]),0,(K_size-1)*sizeof(bool));
-		
+
 							}
 						}
 						else
 						{
-					
+
 							if((*bktptr_t2[j])->kmer_info.cov1>=*CovTh)
 							{
-							
+
 //								memset(&(error_nt[j]),0,K_size*sizeof(bool));
 								memset(&(read->error_nt[j+1]),0,(K_size-1)*sizeof(bool));
-		
+
 							}
 						}
 						if(flip[j]==0)
@@ -1855,7 +1855,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				bool updated=0;
 				for (int i=last_correct+1;i<OverlapKmers;++i)
 				{
-					
+
 
 					if(read->error_nt[i+K_size]==1&&read->error_nt[i+K_size-1]==0)
 					{
@@ -1899,7 +1899,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 	}
 	bool start_print=0;
 
-	
+
 	if(Seq_Pad)
 	{
 
@@ -1909,7 +1909,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 			if((read->error_nt[i]==0&&start_print==0&&found[i]==1))
 			{
 				start_print=1;
-				
+
 				first_correct=i;
 			}
 			if((start_print&&read->error_nt[i]))
@@ -1926,8 +1926,8 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				{break;}
 			}
 		}
-		
-		
+
+
 		if(first_correct>0)
 		{
 			bool Padding=0;
@@ -1941,18 +1941,18 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				if((*bktptr_t2[first_correct])->kmer_info.cov1>*CorrTh)
 				{Padding=1;}
 			}
-			
-			
+
+
 
 			bool SPLIT=0;
-			
+
 			if(Padding)
 			{
-				
+
 				int correction_cnt=0;
 				edge_node *opt_edge;
 				int opt_pad_len=0;
-				
+
 				for (int round=1;round<=1;++round)
 				{
 					edge_node *edge_ptr;
@@ -1965,7 +1965,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						}
 						else
 						{
-							edge_ptr=(*bktptr_t2[first_correct])->kmer_info.right;					
+							edge_ptr=(*bktptr_t2[first_correct])->kmer_info.right;
 						}
 
 					}
@@ -1977,9 +1977,9 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						}
 						else
 						{
-							edge_ptr=(*bktptr_t2[first_correct])->kmer_info.left;					
+							edge_ptr=(*bktptr_t2[first_correct])->kmer_info.left;
 						}
-			
+
 					}
 
 					int opt_edge_len=0;
@@ -1993,7 +1993,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 							continue;
 						}
 						edge_len=edge_ptr->len+1;
-						
+
 						if(first_correct<edge_len)
 						{
 							pad_len=first_correct;
@@ -2004,7 +2004,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						}
 
 						uint64_t read_bits,edge_bits;
-				
+
 						get_sub_arr(read->read_bits,read->readLen,first_correct-pad_len,pad_len,&read_bits);
 						edge_bits=edge_ptr->edge;
 						if(flip[first_correct])
@@ -2017,7 +2017,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						{
 							uint64_t mask=0x3;
 							mask<<=2*l;
-					
+
 							if((read_bits&mask)!=(edge_bits&mask))
 							{
 								mod_cnt++;
@@ -2029,8 +2029,8 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 							}
 						}
 
-					
-				
+
+
 						if(mod_cnt>round)
 						{
 							edge_ptr=edge_ptr->nxt_edge;
@@ -2078,12 +2078,12 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 					uint64_t read_bits;
 					get_sub_arr(read->read_bits,read->readLen,first_correct-opt_pad_len,opt_pad_len,&read_bits);
-					
+
 					for(int l=0;l<opt_pad_len;++l)
 					{
 						uint64_t mask=0x3;
 						mask<<=2*l;
-					
+
 						uint64_t nt;
 						if((read_bits&mask)!=(edge_bits&mask))
 						{
@@ -2092,12 +2092,12 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 						}
 						read->error_nt[first_correct-1-l]=0;
-					
+
 
 
 
 					}
-					
+
 				}
 
 			}
@@ -2123,18 +2123,18 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				if((*bktptr_t2[last_correct])->kmer_info.cov1>*CorrTh)
 				{Padding=1;}
 			}
-			
-			
+
+
 
 			bool SPLIT=0;
-			
+
 			if(Padding)
 			{
-				
+
 				int correction_cnt=0;
 				edge_node *opt_edge;
 				int opt_pad_len=0;
-				
+
 				for (int round=1;round<=1;++round)
 				{
 					edge_node *edge_ptr;
@@ -2147,7 +2147,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						}
 						else
 						{
-							edge_ptr=(*bktptr_t2[last_correct])->kmer_info.right;					
+							edge_ptr=(*bktptr_t2[last_correct])->kmer_info.right;
 						}
 
 					}
@@ -2159,9 +2159,9 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						}
 						else
 						{
-							edge_ptr=(*bktptr_t2[last_correct])->kmer_info.left;					
+							edge_ptr=(*bktptr_t2[last_correct])->kmer_info.left;
 						}
-			
+
 					}
 
 					int opt_edge_len=0;
@@ -2175,7 +2175,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 							continue;
 						}
 						edge_len=edge_ptr->len+1;
-						
+
 						if(edge_len<OverlapKmers-1-last_correct)
 						{
 							pad_len=edge_len;
@@ -2186,7 +2186,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						}
 
 						uint64_t read_bits,edge_bits;
-				
+
 						get_sub_arr(read->read_bits,read->readLen,last_correct+K_size,pad_len,&read_bits);
 						edge_bits=edge_ptr->edge;
 						if(flip[last_correct])
@@ -2200,7 +2200,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						{
 							uint64_t mask=0x3;
 							mask<<=2*l;
-					
+
 							if((read_bits&mask)!=(edge_bits&mask))
 							{
 								mod_cnt++;
@@ -2213,7 +2213,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 							}
 						}
 
-						
+
 						if(mod_cnt>round)
 						{
 							edge_ptr=edge_ptr->nxt_edge;
@@ -2239,13 +2239,13 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						{
 							correction_cnt++;
 						}
-					
+
 
 						edge_ptr=edge_ptr->nxt_edge;
 					}
 	///
 					if(correction_cnt>=1)
-					{	
+					{
 						break;
 					}
 
@@ -2263,12 +2263,12 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 					uint64_t read_bits;
 					get_sub_arr(read->read_bits,read->readLen,last_correct+K_size,opt_pad_len,&read_bits);
-					
+
 					for(int l=0;l<opt_pad_len;++l)
 					{
 						uint64_t mask=0x3;
 						mask<<=2*l;
-					
+
 						uint64_t nt;
 						if((read_bits&mask)!=(edge_bits&mask))
 						{
@@ -2277,25 +2277,25 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 						}
 						read->error_nt[last_correct+K_size+(opt_pad_len-1-l)]=0;
-					
+
 
 
 
 					}
-					
+
 				}
 
 			}
 
 		}
-		
-	
+
+
 
 	}
 	//memcpy(read->error_nt,error_nt,(read->readLen)*sizeof(bool));
 
 	bitsarr2str(read->read_bits,read->readLen,read->c_seq,Read_arr_sz);
-	
+
 	/*
 	for(int i=0;i<read->readLen;++i)
 	{
@@ -2308,11 +2308,11 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 		if(start_print)
 		{
-			o_dn<<read->c_seq[i];	
-		
+			o_dn<<read->c_seq[i];
+
 		}
 
-		
+
 	}
 	o_dn<<endl;
 	*/

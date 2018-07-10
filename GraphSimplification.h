@@ -804,7 +804,7 @@ void BreakLinks0( map<struct bucket0* ,int > &stacked_nodes, struct bucket0* bkt
 
 				}
 				uint64_t f_kmer[100];
-				
+
 				memcpy(f_kmer,kmer,sizeof(uint64_t)*Kmer_arr_sz);
 				get_rev_comp_seq_arr(f_kmer,K_size,Kmer_arr_sz);
 				if(uint64_t_cmp(kmer,f_kmer,Kmer_arr_sz)>0)
@@ -843,7 +843,7 @@ void BreakLinks0( map<struct bucket0* ,int > &stacked_nodes, struct bucket0* bkt
 			if(edge_ptr->len==edge_len-1)
 			{
 				uint64_t kmer[100];
-				
+
 				memcpy(kmer,(bktptr1)->kmer_t,sizeof(uint64_t)*Kmer_arr_sz);
 
 
@@ -857,7 +857,7 @@ void BreakLinks0( map<struct bucket0* ,int > &stacked_nodes, struct bucket0* bkt
 
 
 				uint64_t f_kmer[100];
-				
+
 				memcpy(f_kmer,kmer,sizeof(uint64_t)*Kmer_arr_sz);
 				get_rev_comp_seq_arr(f_kmer,K_size,Kmer_arr_sz);
 				if(uint64_t_cmp(kmer,f_kmer,Kmer_arr_sz)>0)
@@ -912,7 +912,7 @@ void BreakLinks0( map<struct bucket0* ,int > &stacked_nodes, struct bucket0* bkt
 
 
 				uint64_t f_kmer[100];
-				
+
 				memcpy(f_kmer,kmer,sizeof(uint64_t)*Kmer_arr_sz);
 				get_rev_comp_seq_arr(f_kmer,K_size,Kmer_arr_sz);
 				if(uint64_t_cmp(kmer,f_kmer,Kmer_arr_sz)>0)
@@ -963,7 +963,7 @@ void BreakLinks0( map<struct bucket0* ,int > &stacked_nodes, struct bucket0* bkt
 				}
 
 				uint64_t f_kmer[100];
-				
+
 				memcpy(f_kmer,kmer,sizeof(uint64_t)*Kmer_arr_sz);
 				get_rev_comp_seq_arr(f_kmer,K_size,Kmer_arr_sz);
 				if(uint64_t_cmp(kmer,f_kmer,Kmer_arr_sz)>0)
@@ -1011,7 +1011,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 	}
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		
+
 		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		bktp2p=&(ht->store_pos[i]);
@@ -1020,7 +1020,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 			bucket * n_bktptr;
 			struct edge_node *edge_ptr,*n_edge_ptr;
 			struct edge_node **edge_p2p;
-			
+
 			if(bktptr->kmer_info.cov1<=NodeCovTh||bktptr->kmer_info.removed==1)
 			{
 				if(1)//!ROBUST||(bktptr->kmer_info.removed==1))
@@ -1053,14 +1053,14 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 						bktptr=n_bktptr;
 						(*bktp2p)=n_bktptr;
 						Removed_Nodes_cnt++;
-					
+
 
 					}
 					else
 					{
 						bktp2p=&(bktptr->nxt_bucket);
 						bktptr=bktptr->nxt_bucket;
-				
+
 					}
 				}
 				else
@@ -1086,12 +1086,12 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 						//Removed_Edges_cnt++;
 						edge_ptr=n_edge_ptr;
 					}
-					
+
 					bktptr->kmer_info.masked=1;
 					bktp2p=&(bktptr->nxt_bucket);
 					bktptr=bktptr->nxt_bucket;
-				
-					
+
+
 				}
 			}
 			else
@@ -1117,7 +1117,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 					}
 
 				}
-				
+
 				edge_ptr=bktptr->kmer_info.left;
 				while((*edge_p2p)!=NULL)
 				{
@@ -1125,7 +1125,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 					if((*edge_p2p)->edge_cov<=EdgeCovTh_t)
 					{
 						removed=1;
-						
+
 					}
 					if(removed==0||(ROBUST&&removed))
 					{
@@ -1217,7 +1217,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 								}
 								else
 								{
-									edge_ptr->masked=1;	
+									edge_ptr->masked=1;
 									removed=0;
 								}
 
@@ -1245,7 +1245,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 
 
 
-				edge_ptr=bktptr->kmer_info.right;				
+				edge_ptr=bktptr->kmer_info.right;
 				edge_p2p=&(bktptr->kmer_info.right);
 
 				int r_max_cov=0;
@@ -1266,7 +1266,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 					}
 
 				}
-				
+
 
 				edge_ptr=bktptr->kmer_info.right;
 				while((*edge_p2p)!=NULL)
@@ -1381,7 +1381,7 @@ void RemovingWeakNodesAndEdges(hashtable *ht,int K_size,int NodeCovTh, int EdgeC
 							}
 							else
 							{
-								edge_ptr->masked=1;	
+								edge_ptr->masked=1;
 								removed=0;
 							}
 
@@ -1498,14 +1498,14 @@ void RemovingWeakNodesAndEdges2(hashtable2 *ht,int K_size,int NodeCovTh, int Edg
 						bktptr=n_bktptr;
 						(*bktp2p)=n_bktptr;
 						Removed_Nodes_cnt++;
-					
+
 
 					}
 					else
 					{
 						bktp2p=&(bktptr->nxt_bucket);
 						bktptr=bktptr->nxt_bucket;
-				
+
 					}
 				}
 				else
@@ -1531,12 +1531,12 @@ void RemovingWeakNodesAndEdges2(hashtable2 *ht,int K_size,int NodeCovTh, int Edg
 						//Removed_Edges_cnt++;
 						edge_ptr=n_edge_ptr;
 					}
-					
+
 					bktptr->kmer_info.masked=1;
 					bktp2p=&(bktptr->nxt_bucket);
 					bktptr=bktptr->nxt_bucket;
-				
-					
+
+
 				}
 
 			}
@@ -1662,7 +1662,7 @@ void RemovingWeakNodesAndEdges2(hashtable2 *ht,int K_size,int NodeCovTh, int Edg
 								}
 								else
 								{
-									edge_ptr->masked=1;	
+									edge_ptr->masked=1;
 									removed=0;
 								}
 
@@ -1828,7 +1828,7 @@ void RemovingWeakNodesAndEdges2(hashtable2 *ht,int K_size,int NodeCovTh, int Edg
 							}
 							else
 							{
-								edge_ptr->masked=1;	
+								edge_ptr->masked=1;
 								removed=0;
 							}
 
@@ -1935,7 +1935,7 @@ void RemovingWeakNodesAndEdges3(hashtable3 *ht,int K_size,int NodeCovTh, int Edg
 						free(edge_ptr);
 						Removed_Edges_cnt++;
 						edge_ptr=n_edge_ptr;
-					}	
+					}
 
 					//*edge_p2p=NULL;
 					if(1)//!bktptr->kmer_info.removed)///////////////////new....
@@ -1944,14 +1944,14 @@ void RemovingWeakNodesAndEdges3(hashtable3 *ht,int K_size,int NodeCovTh, int Edg
 						bktptr=n_bktptr;
 						(*bktp2p)=n_bktptr;
 						Removed_Nodes_cnt++;
-					
+
 
 					}
 					else
 					{
 						bktp2p=&(bktptr->nxt_bucket);
 						bktptr=bktptr->nxt_bucket;
-				
+
 					}
 				}
 				else
@@ -1977,12 +1977,12 @@ void RemovingWeakNodesAndEdges3(hashtable3 *ht,int K_size,int NodeCovTh, int Edg
 						//Removed_Edges_cnt++;
 						edge_ptr=n_edge_ptr;
 					}
-					
+
 					bktptr->kmer_info.masked=1;
 					bktp2p=&(bktptr->nxt_bucket);
 					bktptr=bktptr->nxt_bucket;
-				
-					
+
+
 				}
 			}
 			else
@@ -2106,7 +2106,7 @@ void RemovingWeakNodesAndEdges3(hashtable3 *ht,int K_size,int NodeCovTh, int Edg
 								}
 								else
 								{
-									edge_ptr->masked=1;	
+									edge_ptr->masked=1;
 									removed=0;
 								}
 
@@ -2273,7 +2273,7 @@ void RemovingWeakNodesAndEdges3(hashtable3 *ht,int K_size,int NodeCovTh, int Edg
 							}
 							else
 							{
-								edge_ptr->masked=1;	
+								edge_ptr->masked=1;
 								removed=0;
 							}
 
@@ -2388,14 +2388,14 @@ void RemovingWeakNodesAndEdges4(hashtable4 *ht,int K_size,int NodeCovTh, int Edg
 						bktptr=n_bktptr;
 						(*bktp2p)=n_bktptr;
 						Removed_Nodes_cnt++;
-					
+
 
 					}
 					else
 					{
 						bktp2p=&(bktptr->nxt_bucket);
 						bktptr=bktptr->nxt_bucket;
-				
+
 					}
 				}
 				else
@@ -2421,12 +2421,12 @@ void RemovingWeakNodesAndEdges4(hashtable4 *ht,int K_size,int NodeCovTh, int Edg
 						//Removed_Edges_cnt++;
 						edge_ptr=n_edge_ptr;
 					}
-					
+
 					bktptr->kmer_info.masked=1;
 					bktp2p=&(bktptr->nxt_bucket);
 					bktptr=bktptr->nxt_bucket;
-				
-					
+
+
 				}
 
 			}
@@ -2552,7 +2552,7 @@ void RemovingWeakNodesAndEdges4(hashtable4 *ht,int K_size,int NodeCovTh, int Edg
 								}
 								else
 								{
-									edge_ptr->masked=1;	
+									edge_ptr->masked=1;
 									removed=0;
 								}
 
@@ -2717,7 +2717,7 @@ void RemovingWeakNodesAndEdges4(hashtable4 *ht,int K_size,int NodeCovTh, int Edg
 							}
 							else
 							{
-								edge_ptr->masked=1;	
+								edge_ptr->masked=1;
 								removed=0;
 							}
 
@@ -2838,14 +2838,14 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 						bktptr=n_bktptr;
 						(*bktp2p)=n_bktptr;
 						Removed_Nodes_cnt++;
-					
+
 
 					}
 					else
 					{
 						bktp2p=&(bktptr->nxt_bucket);
 						bktptr=bktptr->nxt_bucket;
-				
+
 					}
 				}
 				else
@@ -2871,12 +2871,12 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 						//Removed_Edges_cnt++;
 						edge_ptr=n_edge_ptr;
 					}
-					
+
 					bktptr->kmer_info.masked=1;
 					bktp2p=&(bktptr->nxt_bucket);
 					bktptr=bktptr->nxt_bucket;
-				
-					
+
+
 				}
 
 			}
@@ -2915,8 +2915,8 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 					}
 					if(removed==0||(ROBUST&&removed))
 					{
-						
-							
+
+
 						uint64_t t_kmer[100],f_kmer[100];
 						memcpy(t_kmer,bktptr->kmer_t,sizeof(uint64_t)*Kmer_arr_sz);
 						uint64_t t=0;
@@ -2939,7 +2939,7 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 						if(uint64_t_cmp(t_kmer,f_kmer,Kmer_arr_sz)>0)
 						{
 							memcpy(t_kmer,f_kmer,sizeof(uint64_t)*Kmer_arr_sz);
-							
+
 							flip_nc=!flip_nc;
 						}
 
@@ -2980,7 +2980,7 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 								}
 								else
 								{
-									edge_ptr->masked=1;	
+									edge_ptr->masked=1;
 									removed=0;
 								}
 
@@ -3050,9 +3050,9 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 						uint64_t t=0;
 						bool flip_nc=0;
 
-				
 
-						
+
+
 
 						for(int j=edge_ptr->len;j>=0;--j)
 						{
@@ -3078,7 +3078,7 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 						if(uint64_t_cmp(t_kmer,f_kmer,Kmer_arr_sz)>0)
 						{
 							memcpy(t_kmer,f_kmer,sizeof(uint64_t)*Kmer_arr_sz);
-							
+
 							flip_nc=!flip_nc;
 						}
 
@@ -3119,7 +3119,7 @@ void RemovingWeakNodesAndEdges0(hashtable0 *ht,int K_size,int NodeCovTh, int Edg
 							}
 							else
 							{
-								edge_ptr->masked=1;	
+								edge_ptr->masked=1;
 								removed=0;
 							}
 
@@ -3196,13 +3196,13 @@ void RemovingWeakNodes_r1(hashtable *ht,hashtable2 *ht2,int K_size,int NodeCovTh
 			bucket_r1 **bktp2p=(bucket_r1 **) &(ht->store_pos[i]);
 			while(bktptr!=NULL)
 			{
-				
+
 				if( ((bucket_r1 *)bktptr)->kmer_info.cov1<=NodeCovTh)
 				{
 					bucket_r1 * n_bktptr;
-			
+
 					n_bktptr=((bucket_r1 *)bktptr)->nxt_bucket;
-	
+
 					free(bktptr);
 					bktptr=n_bktptr;
 					(*bktp2p)=n_bktptr;
@@ -3213,10 +3213,10 @@ void RemovingWeakNodes_r1(hashtable *ht,hashtable2 *ht2,int K_size,int NodeCovTh
 					bktp2p=&(bktptr->nxt_bucket);
 					bktptr=bktptr->nxt_bucket;
 				}
-				
-				
+
+
 			}
-		}	
+		}
 	}
 	else
 	{
@@ -3230,10 +3230,10 @@ void RemovingWeakNodes_r1(hashtable *ht,hashtable2 *ht2,int K_size,int NodeCovTh
 			bucket2_r1 **bktp2p=(bucket2_r1 **) &(ht2->store_pos[i]);
 			while(bktptr!=NULL)
 			{
-				
+
 				if( ((bucket2_r1 *)bktptr)->kmer_info.cov1<=NodeCovTh)
 				{
-	
+
 					bucket2_r1 * n_bktptr;
 					n_bktptr=((bucket2_r1 *)bktptr)->nxt_bucket;
 					free(bktptr);
@@ -3268,10 +3268,10 @@ void RemovingWeakNodes3_r1(hashtable3 *ht3,int K_size,int NodeCovTh, int64_t *bu
 			bucket3_r1 **bktp2p=(bucket3_r1 **) &(ht3->store_pos[i]);
 			while(bktptr!=NULL)
 			{
-				
+
 				if( ((bucket3_r1 *)bktptr)->kmer_info.cov1<=NodeCovTh)
 				{
-	
+
 					bucket3_r1 * n_bktptr;
 					n_bktptr=((bucket3_r1 *)bktptr)->nxt_bucket;
 					free(bktptr);
@@ -3307,10 +3307,10 @@ void RemovingWeakNodes4_r1(hashtable4 *ht4,int K_size,int NodeCovTh, int64_t *bu
 			bucket4_r1 **bktp2p=(bucket4_r1 **) &(ht4->store_pos[i]);
 			while(bktptr!=NULL)
 			{
-				
+
 				if( ((bucket4_r1 *)bktptr)->kmer_info.cov1<=NodeCovTh)
 				{
-	
+
 					bucket4_r1 * n_bktptr;
 					n_bktptr=((bucket4_r1 *)bktptr)->nxt_bucket;
 					free(bktptr);
@@ -3343,10 +3343,10 @@ void RemovingWeakNodes0_r1(hashtable0 *ht0,int K_size,int NodeCovTh, int64_t *bu
 		bucket0_r1 **bktp2p=(bucket0_r1 **) &(ht0->store_pos[i]);
 		while(bktptr!=NULL)
 		{
-				
+
 			if( ((bucket0_r1 *)bktptr)->kmer_info.cov1<=NodeCovTh)
 			{
-	
+
 				bucket0_r1 * n_bktptr;
 				n_bktptr=((bucket0_r1 *)bktptr)->nxt_bucket;
 				free(bktptr);
@@ -3361,14 +3361,14 @@ void RemovingWeakNodes0_r1(hashtable0 *ht0,int K_size,int NodeCovTh, int64_t *bu
 			}
 		}
 	}
-	
+
 	(*bucket_cnt)-=Removed_Nodes_cnt;
 
 }
 
 void MergeNode(hashtable *merge_ht,uint64_t kmer,uint64_t merge_kmer,bool flip)
 {
-	
+
 	uint64_t hv=MurmurHash64A(&kmer,sizeof(kmer),0);
 	uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -3399,18 +3399,18 @@ void MergeNode2(hashtable2 *merge_ht,kmer_t2 kmer,kmer_t2 merge_kmer,bool flip)
 
 	if(r_found==0)
 	{
-	
+
 		(*ptr)=(struct bucket_rm2*)malloc(sizeof(struct bucket_rm2));
 
 		memset(*ptr,0,sizeof(struct bucket_rm2));
 		(*ptr)->nxt_bucket=NULL;
-	
+
 		(*(ptr))->kmer_t2=kmer;
-	
+
 		(*(ptr))->merged_kmer=merge_kmer;
-		
+
 		(*(ptr))->flip=flip;
-	
+
 	}
 }
 
@@ -3418,7 +3418,7 @@ void MergeNode2(hashtable2 *merge_ht,kmer_t2 kmer,kmer_t2 merge_kmer,bool flip)
 
 void MergeNode3(hashtable3 *merge_ht,kmer_t3 kmer,kmer_t3 merge_kmer,bool flip)
 {
-	
+
 	uint64_t hv=MurmurHash64A(&kmer,sizeof(kmer),0);
 	uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -3438,7 +3438,7 @@ void MergeNode3(hashtable3 *merge_ht,kmer_t3 kmer,kmer_t3 merge_kmer,bool flip)
 
 void MergeNode4(hashtable4 *merge_ht,kmer_t4 kmer,kmer_t4 merge_kmer,bool flip)
 {
-	
+
 	uint64_t hv=MurmurHash64A(&kmer,sizeof(kmer),0);
 	uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -3457,7 +3457,7 @@ void MergeNode4(hashtable4 *merge_ht,kmer_t4 kmer,kmer_t4 merge_kmer,bool flip)
 
 void MergeNode0(hashtable0 *merge_ht,uint64_t *kmer,uint64_t *merge_kmer,bool flip,int Kmer_arr_sz)
 {
-	
+
 	uint64_t hv=MurmurHash64A(kmer,sizeof(uint64_t)*Kmer_arr_sz,0);
 	uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -3468,8 +3468,8 @@ void MergeNode0(hashtable0 *merge_ht,uint64_t *kmer,uint64_t *merge_kmer,bool fl
 	{
 		(*ptr)=(struct bucket_rm0*)malloc(sizeof(struct bucket_rm0));
 		memset(*ptr,0,sizeof( bucket_rm0));
-		
-		
+
+
 		((struct bucket_rm0*) *(ptr))->kmer_t=kmer;
 		((struct bucket_rm0*) *(ptr))->merged_kmer=merge_kmer;
 		(*(ptr))->flip=flip;
@@ -3492,20 +3492,20 @@ bool isSimplePath(hashtable *ht,struct bucket* bktptr,map<bucket*,struct BFS_pat
 		bktptr=Visited_Path[bktptr].last_bkt;
 		if(bktptr==NULL)
 		{return 1;}
-		
+
 		if(abs(stacked_nodes[bktptr])>2)
 		{
 			return 0;
 		}// complicated bubble.
 //		{return 1;}// only backtrack to here so return 1.
-		
-			
+
+
 		if(stacked_nodes[bktptr]>0&&(bktptr->kmer_info.left!=NULL&&bktptr->kmer_info.left->nxt_edge!=NULL))
 		{return 0;}
 		if(stacked_nodes[bktptr]<0&&(bktptr->kmer_info.right!=NULL&&bktptr->kmer_info.right->nxt_edge!=NULL))
 		{return 0;}
-				
-		
+
+
 
 	}
 	return 1;
@@ -3527,20 +3527,20 @@ bool isSimplePath2(hashtable2 *ht,struct bucket2* bktptr,map<bucket2*,struct BFS
 		bktptr=Visited_Path[bktptr].last_bkt;
 		if(bktptr==NULL)
 		{return 1;}
-		
+
 		if (abs(stacked_nodes[bktptr])>2)
 		{
 			return 0;
 		}// complicated bubble.
 		//		{return 1;}// only backtrack to here so return 1.
-		
-			
+
+
 		if(stacked_nodes[bktptr]>0&&(bktptr->kmer_info.left!=NULL&&bktptr->kmer_info.left->nxt_edge!=NULL))
 		{return 0;}
 		if(stacked_nodes[bktptr]<0&&(bktptr->kmer_info.right!=NULL&&bktptr->kmer_info.right->nxt_edge!=NULL))
 		{return 0;}
-				
-		
+
+
 
 	}
 	return 1;
@@ -3561,20 +3561,20 @@ bool isSimplePath3(hashtable3 *ht,struct bucket3* bktptr,map<bucket3*,struct BFS
 		bktptr=Visited_Path[bktptr].last_bkt;
 		if(bktptr==NULL)
 		{return 1;}
-		
+
 		if (abs(stacked_nodes[bktptr])>2)
 		{
 			return 0;
 		}// complicated bubble.
 		//		{return 1;}// only backtrack to here so return 1.
-		
-			
+
+
 		if(stacked_nodes[bktptr]>0&&(bktptr->kmer_info.left!=NULL&&bktptr->kmer_info.left->nxt_edge!=NULL))
 		{return 0;}
 		if(stacked_nodes[bktptr]<0&&(bktptr->kmer_info.right!=NULL&&bktptr->kmer_info.right->nxt_edge!=NULL))
 		{return 0;}
-				
-		
+
+
 
 	}
 	return 1;
@@ -3595,20 +3595,20 @@ bool isSimplePath4(hashtable4 *ht,struct bucket4* bktptr,map<bucket4*,struct BFS
 		bktptr=Visited_Path[bktptr].last_bkt;
 		if(bktptr==NULL)
 		{return 1;}
-		
+
 		if (abs(stacked_nodes[bktptr])>2)
 		{
 			return 0;
 		}// complicated bubble.
 		//		{return 1;}// only backtrack to here so return 1.
-		
-			
+
+
 		if(stacked_nodes[bktptr]>0&&(bktptr->kmer_info.left!=NULL&&bktptr->kmer_info.left->nxt_edge!=NULL))
 		{return 0;}
 		if(stacked_nodes[bktptr]<0&&(bktptr->kmer_info.right!=NULL&&bktptr->kmer_info.right->nxt_edge!=NULL))
 		{return 0;}
-				
-		
+
+
 
 	}
 	return 1;
@@ -3630,20 +3630,20 @@ bool isSimplePath0(hashtable0 *ht,struct bucket0* bktptr,map<bucket0*,struct BFS
 		bktptr=Visited_Path[bktptr].last_bkt;
 		if(bktptr==NULL)
 		{return 1;}
-		
+
 		if (abs(stacked_nodes[bktptr])>2)
 		{
 			return 0;
 		}// complicated bubble.
 		//		{return 1;}// only backtrack to here so return 1.
-		
-			
+
+
 		if(stacked_nodes[bktptr]>0&&(bktptr->kmer_info.left!=NULL&&bktptr->kmer_info.left->nxt_edge!=NULL))
 		{return 0;}
 		if(stacked_nodes[bktptr]<0&&(bktptr->kmer_info.right!=NULL&&bktptr->kmer_info.right->nxt_edge!=NULL))
 		{return 0;}
-				
-		
+
+
 
 	}
 	return 1;
@@ -3665,9 +3665,9 @@ void BacktrackBubbleRemoval(hashtable *ht,struct hashtable* merge_ht,struct buck
 		bktptr=Visited_Path[bktptr].last_bkt;
 		if(bktptr==NULL)
 		{return;}
-		
-		
-		
+
+
+
 		if(stacked_nodes[bktptr]>=1||stacked_nodes[bktptr]<=-1)
 		{
 			uint64_t edge_bits=Visited_Path[p_bktptr].last_bkt_edge->edge;
@@ -3679,9 +3679,9 @@ void BacktrackBubbleRemoval(hashtable *ht,struct hashtable* merge_ht,struct buck
 				break;
 			}
 			//else
-			
+
 			BreakLinks(stacked_nodes,bktptr,p_bktptr,K_size,edge_len);
-			
+
 
 			if(Visited_Path[bktptr].last_bkt==NULL)
 			{
@@ -3700,19 +3700,19 @@ void BacktrackBubbleRemoval(hashtable *ht,struct hashtable* merge_ht,struct buck
 	//			if(freebkt->kmer_t.kmer==1027722121587175282)
 		//		{cout<<"";}
 			//	Free_A_Node( ht, freebkt);
-		
+
 				stacked_nodes[freebkt]=stacked_nodes[freebkt]/abs(stacked_nodes[freebkt]);
-	
-				
+
+
 				freebkt->kmer_info.removed=1;
-				
+
 				bool flip_rm=0;
 				if(stacked_nodes[freebkt]*stacked_nodes[bktptr_merged]<0)//double check
 				{
 					flip_rm=1;
 				}
 				MergeNode(merge_ht,freebkt->kmer_t.kmer, bktptr_merged->kmer_t.kmer,flip_rm);
-				
+
 			}
 
 
@@ -3737,9 +3737,9 @@ bool BackCheckLoop(struct bucket* bktptr,struct bucket* end_bkt,map<bucket*,stru
 		{
 			return 1;
 		}
-		
+
 		cur_bkt=Visited_Path[cur_bkt].last_bkt;
-		
+
 		if(cur_bkt==NULL)
 		{break;}
 	}
@@ -3767,7 +3767,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 	int dist_searched=0;
 
 	bucket* new_node=stacked_bkt.bktptr;
-	
+
 	uint64_t kmer,f_kmer;
 	//char c_str[100],fc_str[100];
 	if(stacked_bkt.RightSearch)
@@ -3800,7 +3800,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 		}
 		stacked_bkt=NB_it->second.front();
 
-	/*	
+	/*
 		uint64_t kk=stacked_bkt.bktptr->kmer_t.kmer;
 		bitsarr2str(&kk,K_size,c_str,1);
 		uint64_t f_kk=get_rev_comp_seq(kk,K_size);
@@ -3818,9 +3818,9 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
+
 		}
-		
+
 		new_node=stacked_bkt.bktptr;
 
 		RIGHT=stacked_bkt.RightSearch;
@@ -3849,7 +3849,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 				stacked_nodes[new_node]=2;
 				struct bucket * freebkt=(new_node);
 				if(freebkt==beg_bkt)
-				{					
+				{
 					continue;
 				}
 				//tip end reached so backtrack to the branching position.
@@ -3858,7 +3858,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 					continue;
 				}
 				BacktrackBubbleRemoval(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path,stacked_nodes,K_size);
-				
+
 				edge_ptr=NULL;
 
 				stacked_nodes[new_node]=1;
@@ -3875,7 +3875,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 
 				f_kmer=kmer;
 				f_kmer=get_rev_comp_seq(kmer,K_size);
-				
+
 
 				int edge_len=(int)(edge_ptr->len+1);
 
@@ -3953,16 +3953,16 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 							stacked_nodes[*ptr]=-1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=0;
-							
-						
+
+
 						}
 						else
 						{
 							stacked_nodes[*ptr]=1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=1;
-							
-							
+
+
 						}
 						//kmer_stack.push_back(stacked_bkt);
 						dist_ctgs[cum_len].push_back(stacked_bkt);
@@ -3977,7 +3977,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 							if((Visited_Path[new_node].cov+edge_ptr->edge_cov<=Visited_Path[*ptr].cov)||( BackCheckLoop(*ptr,new_node,Visited_Path)==1))//loop
 							{
 								//if(0)
-									
+
 								if((((Visited_Path[new_node].cov+edge_ptr->edge_cov)/(Visited_Path[new_node].depth))>PathCovTh))
 								{
 									edge_ptr=edge_ptr->nxt_edge;
@@ -4023,12 +4023,12 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-													
+
 											continue;
 										}
 										edge_ptr=edge_ptr->nxt_edge;
@@ -4063,12 +4063,12 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 
 								}
 								BacktrackBubbleRemoval(ht,merge_ht,*ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-								
-								//marginal 
+
+								//marginal
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(int)(Visited_Path[new_node].len+edge_ptr->len+1);
-								//marginal 
+								//marginal
 
 								Visited_Path[*ptr].last_bkt=new_node;
 								Visited_Path[*ptr].last_bkt_edge=edge_ptr;
@@ -4106,7 +4106,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -4128,12 +4128,12 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 
 					if(freebkt==beg_bkt)
 					{
-						
+
 
 						continue;
 					}
 					if(!isSimplePath(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
 					BacktrackBubbleRemoval(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
@@ -4180,7 +4180,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 
 				if(freebkt==beg_bkt)
 				{
-							
+
 					continue;
 				}
 				if(!isSimplePath(ht,new_node,Visited_Path,stacked_nodes))
@@ -4348,12 +4348,12 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-														
+
 											continue;
 										}
 
@@ -4429,7 +4429,7 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -4449,12 +4449,12 @@ void BFSearchBubbleRemoval(struct hashtable* ht,struct hashtable* merge_ht, stru
 					struct bucket * freebkt=(new_node);
 					if(freebkt==beg_bkt)
 					{
-						
+
 						continue;
 					}
 					if(!isSimplePath(ht,new_node,Visited_Path,stacked_nodes))
 					{
-					
+
 						continue;
 
 					}
@@ -4560,9 +4560,9 @@ bool BackCheckLoop2(struct bucket2* bktptr,struct bucket2* end_bkt,map<bucket2*,
 		{
 			return 1;
 		}
-		
+
 		cur_bkt=Visited_Path[cur_bkt].last_bkt;
-		
+
 		if(cur_bkt==NULL)
 		{break;}
 	}
@@ -4631,7 +4631,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
+
 		}
 
 		new_node=stacked_bkt.bktptr;
@@ -4662,9 +4662,9 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 				stacked_nodes[new_node]=2;
 				struct bucket2 * freebkt=(new_node);
 				if(freebkt==beg_bkt)
-				{									
+				{
 					continue;
-			 	}
+				}
 				//tip end reached so backtrack to the branching position.
 
 				if(!isSimplePath2(ht,new_node,Visited_Path,stacked_nodes))
@@ -4725,12 +4725,12 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 
 				if(r_found)
 				{
-					// not in stack, put in stack 
+					// not in stack, put in stack
 					if(stacked_nodes[*ptr]==0)
 					{
 						Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 						Visited_Path[*ptr].depth=(Visited_Path[new_node].depth+1);
-						
+
 						int cum_len=(Visited_Path[new_node].len+edge_ptr->len+1);
 						Visited_Path[*ptr].len=cum_len;//(Visited_Path[new_node].len+edge_ptr->len+1);
 
@@ -4793,7 +4793,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 									{
 										edge_ptr=edge_ptr->nxt_edge;
 										BreakLinks2(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-							
+
 										continue;
 									}
 									else
@@ -4810,21 +4810,21 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-														
+
 											continue;
 										}
 										edge_ptr=edge_ptr->nxt_edge;
 										//free the node and edge.
-										
+
 										BreakLinks2(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-									
+
 										BacktrackBubbleRemoval2(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
-								
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -4836,7 +4836,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 							else
 							{
 								//backtrack the original path
-								
+
 								if(Visited_Path[*ptr].depth>1&&(((Visited_Path[*ptr].cov)/(Visited_Path[*ptr].depth-1))>PathCovTh))
 								{
 									edge_ptr=edge_ptr->nxt_edge;
@@ -4848,9 +4848,9 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 									continue;
 
 								}
-													
+
 								BacktrackBubbleRemoval2(ht,merge_ht,*ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-						
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(int)(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -4889,7 +4889,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -4911,14 +4911,14 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 
 					if(freebkt==beg_bkt)
 					{
-			
+
 						continue;
 					}
 					if(!isSimplePath2(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
-							
+
 					BacktrackBubbleRemoval2(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
 
 					freebkt->kmer_info.removed=1;
@@ -4961,8 +4961,8 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 
 				if(freebkt==beg_bkt)
 				{
-					
-							
+
+
 					continue;
 				}
 				if(!isSimplePath2(ht,new_node,Visited_Path,stacked_nodes))
@@ -4970,7 +4970,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 					continue;
 
 				}
-	
+
 				BacktrackBubbleRemoval2(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
 
 				stacked_nodes[new_node]=-1;
@@ -5056,7 +5056,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 					{
 						if((stacked_nodes[*ptr]>0&&l_flip==1)||(stacked_nodes[*ptr]<0&&l_flip==0))
 						{
-							
+
 
 							//backtrack if the same direction is found
 							if((Visited_Path[new_node].cov+edge_ptr->edge_cov<=Visited_Path[*ptr].cov)||(BackCheckLoop2(*ptr,new_node,Visited_Path)==1))
@@ -5082,9 +5082,9 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 								if(stacked_nodes[new_node]>2)
 								{
 									edge_ptr=edge_ptr->nxt_edge;
-			
+
 									BreakLinks2(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-					
+
 									continue;
 								}
 								else
@@ -5092,9 +5092,9 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 									if(stacked_nodes[new_node]<-2)
 									{
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks2(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-						
+
 										continue;
 									}
 									else
@@ -5109,21 +5109,21 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-											
+
 											continue;
 										}
 
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks2(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-			
+
 										BacktrackBubbleRemoval2(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-							
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -5148,9 +5148,9 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 									continue;
 
 								}
-								
+
 								BacktrackBubbleRemoval2(ht,merge_ht, *ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-					
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -5201,7 +5201,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -5221,8 +5221,8 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 					struct bucket2 * freebkt=(new_node);
 					if(freebkt==beg_bkt)
 					{
-						
-							
+
+
 						continue;
 					}
 
@@ -5233,7 +5233,7 @@ void BFSearchBubbleRemoval2(struct hashtable2* ht,struct hashtable2* merge_ht,st
 
 					}
 					BacktrackBubbleRemoval2(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-			
+
 
 					//Free_A_Node(ht,freebkt);
 					freebkt->kmer_info.removed=1;
@@ -5305,7 +5305,7 @@ void BacktrackBubbleRemoval3(hashtable3 *ht,struct hashtable3* merge_ht, struct 
 				freebkt->kmer_info.removed=1;
 				stacked_nodes[freebkt]=stacked_nodes[freebkt]/abs(stacked_nodes[freebkt]);
 
-				
+
 				bool flip_rm=0;
 				if(stacked_nodes[freebkt]*stacked_nodes[bktptr_merged]<0)//double check
 				{
@@ -5334,9 +5334,9 @@ bool BackCheckLoop3(struct bucket3* bktptr,struct bucket3* end_bkt,map<bucket3*,
 		{
 			return 1;
 		}
-		
+
 		cur_bkt=Visited_Path[cur_bkt].last_bkt;
-		
+
 		if(cur_bkt==NULL)
 		{break;}
 	}
@@ -5402,9 +5402,9 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
+
 		}
-		
+
 		new_node=stacked_bkt.bktptr;
 		RIGHT=stacked_bkt.RightSearch;
 		if(Visited_Path[new_node].depth>DepthTh||Visited_Path[new_node].len>LenTh)
@@ -5433,9 +5433,9 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 				stacked_nodes[new_node]=2;
 				struct bucket3 * freebkt=(new_node);
 				if(freebkt==beg_bkt)
-				{									
+				{
 					continue;
-			 	}
+				}
 				//tip end reached so backtrack to the branching position.
 				if(!isSimplePath3(ht,new_node,Visited_Path,stacked_nodes))
 				{
@@ -5492,7 +5492,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 
 				if(r_found)
 				{
-					// not in stack, put in stack 
+					// not in stack, put in stack
 					if(stacked_nodes[*ptr]==0)
 					{
 						Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
@@ -5500,7 +5500,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 						int cum_len=(Visited_Path[new_node].len+edge_ptr->len+1);
 						Visited_Path[*ptr].len=cum_len;//(Visited_Path[new_node].len+edge_ptr->len+1);
 
-						
+
 						Visited_Path[*ptr].last_bkt=new_node;
 						Visited_Path[*ptr].last_bkt_edge=edge_ptr;
 						if(r_flip)
@@ -5557,7 +5557,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 									{
 										edge_ptr=edge_ptr->nxt_edge;
 										BreakLinks3(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-							
+
 										continue;
 									}
 									else
@@ -5574,21 +5574,21 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-														
+
 											continue;
 										}
 										edge_ptr=edge_ptr->nxt_edge;
 										//free the node and edge.
-										
+
 										BreakLinks3(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-									
+
 										BacktrackBubbleRemoval3(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
-								
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -5600,7 +5600,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 							else
 							{
 								//backtrack the original path
-								
+
 								if(Visited_Path[*ptr].depth>1&&(((Visited_Path[*ptr].cov)/(Visited_Path[*ptr].depth-1))>PathCovTh))
 								{
 									edge_ptr=edge_ptr->nxt_edge;
@@ -5612,9 +5612,9 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 									continue;
 
 								}
-													
+
 								BacktrackBubbleRemoval3(ht,merge_ht,*ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-						
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -5653,7 +5653,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -5675,14 +5675,14 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 
 					if(freebkt==beg_bkt)
 					{
-			
+
 						continue;
 					}
 					if(!isSimplePath3(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
-							
+
 					BacktrackBubbleRemoval3(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
 
 					freebkt->kmer_info.removed=1;
@@ -5725,15 +5725,15 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 
 				if(freebkt==beg_bkt)
 				{
-					
-							
+
+
 					continue;
 				}
 				if(!isSimplePath3(ht,new_node,Visited_Path,stacked_nodes))
-				{					
+				{
 					continue;
 				}
-	
+
 				BacktrackBubbleRemoval3(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
 
 				stacked_nodes[new_node]=-1;
@@ -5797,7 +5797,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 							int cum_len=(Visited_Path[new_node].len+edge_ptr->len+1);
 						Visited_Path[*ptr].len=cum_len;//(Visited_Path[new_node].len+edge_ptr->len+1);
 
-						
+
 						Visited_Path[*ptr].last_bkt=new_node;
 						Visited_Path[*ptr].last_bkt_edge=edge_ptr;
 						if(l_flip)
@@ -5821,7 +5821,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 					{
 						if((stacked_nodes[*ptr]>0&&l_flip==1)||(stacked_nodes[*ptr]<0&&l_flip==0))
 						{
-							
+
 
 							//backtrack if the same direction is found
 							if((Visited_Path[new_node].cov+edge_ptr->edge_cov<=Visited_Path[*ptr].cov)||(BackCheckLoop3(*ptr,new_node,Visited_Path)==1))
@@ -5847,9 +5847,9 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 								if(stacked_nodes[new_node]>2)
 								{
 									edge_ptr=edge_ptr->nxt_edge;
-			
+
 									BreakLinks3(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-					
+
 									continue;
 								}
 								else
@@ -5857,9 +5857,9 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 									if(stacked_nodes[new_node]<-2)
 									{
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks3(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-						
+
 										continue;
 									}
 									else
@@ -5874,21 +5874,21 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-											
+
 											continue;
 										}
 
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks3(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-			
+
 										BacktrackBubbleRemoval3(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-							
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -5914,7 +5914,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 
 								}
 								BacktrackBubbleRemoval3(ht,merge_ht, *ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-					
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -5965,7 +5965,7 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -5985,16 +5985,16 @@ void BFSearchBubbleRemoval3(struct hashtable3* ht,struct hashtable3* merge_ht,st
 					struct bucket3 * freebkt=(new_node);
 					if(freebkt==beg_bkt)
 					{
-						
-							
+
+
 						continue;
 					}
 					if(!isSimplePath3(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
 					BacktrackBubbleRemoval3(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-			
+
 
 					//Free_A_Node(ht,freebkt);
 					freebkt->kmer_info.removed=1;
@@ -6063,7 +6063,7 @@ void BacktrackBubbleRemoval4(hashtable4 *ht,struct hashtable4* merge_ht,struct b
 			//	Free_A_Node( ht, freebkt);
 				freebkt->kmer_info.removed=1;
 				stacked_nodes[freebkt]=stacked_nodes[freebkt]/abs(stacked_nodes[freebkt]);
-				
+
 				bool flip_rm=0;
 				if(stacked_nodes[freebkt]*stacked_nodes[bktptr_merged]<0)//double check
 				{
@@ -6092,9 +6092,9 @@ bool BackCheckLoop4(struct bucket4* bktptr,struct bucket4* end_bkt,map<bucket4*,
 		{
 			return 1;
 		}
-		
+
 		cur_bkt=Visited_Path[cur_bkt].last_bkt;
-		
+
 		if(cur_bkt==NULL)
 		{break;}
 	}
@@ -6114,7 +6114,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 	int LenTh=300;
 	bool RIGHT=0;
 	struct stacked_bucket4 stacked_bkt=kmer_stack.front();
-	
+
 	map<int , list<stacked_bucket4> > dist_ctgs;//neighborset
 	dist_ctgs[0].push_back(kmer_stack.front());
 	int NBs=1;
@@ -6156,7 +6156,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 		//stacked_bkt=kmer_stack.front();
 		stacked_bkt=NB_it->second.front();
 
-		
+
 
 		//kmer_stack.pop_front();
 		NB_it->second.pop_front();
@@ -6164,7 +6164,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
+
 		}
 		new_node=stacked_bkt.bktptr;
 		RIGHT=stacked_bkt.RightSearch;
@@ -6194,9 +6194,9 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 				stacked_nodes[new_node]=2;
 				struct bucket4 * freebkt=(new_node);
 				if(freebkt==beg_bkt)
-				{									
+				{
 					continue;
-			 	}
+				}
 				//tip end reached so backtrack to the branching position.
 				if(!isSimplePath4(ht,new_node,Visited_Path,stacked_nodes))
 				{
@@ -6255,7 +6255,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 
 				if(r_found)
 				{
-					// not in stack, put in stack 
+					// not in stack, put in stack
 					if(stacked_nodes[*ptr]==0)
 					{
 						Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
@@ -6319,7 +6319,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 									{
 										edge_ptr=edge_ptr->nxt_edge;
 										BreakLinks4(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-							
+
 										continue;
 									}
 									else
@@ -6336,21 +6336,21 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-														
+
 											continue;
 										}
 										edge_ptr=edge_ptr->nxt_edge;
 										//free the node and edge.
-										
+
 										BreakLinks4(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-									
+
 										BacktrackBubbleRemoval4(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
-								
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -6362,7 +6362,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 							else
 							{
 								//backtrack the original path
-								
+
 								if(Visited_Path[*ptr].depth>1&&(((Visited_Path[*ptr].cov)/(Visited_Path[*ptr].depth-1))>PathCovTh))
 								{
 									edge_ptr=edge_ptr->nxt_edge;
@@ -6374,9 +6374,9 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 									continue;
 
 								}
-													
+
 								BacktrackBubbleRemoval4(ht,merge_ht,*ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-						
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -6415,7 +6415,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -6437,14 +6437,14 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 
 					if(freebkt==beg_bkt)
 					{
-			
+
 						continue;
 					}
 					if(!isSimplePath4(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
-							
+
 					BacktrackBubbleRemoval4(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
 
 					freebkt->kmer_info.removed=1;
@@ -6487,13 +6487,13 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 
 				if(freebkt==beg_bkt)
 				{
-					
-							
+
+
 					continue;
 				}
-	
+
 				if(!isSimplePath4(ht,new_node,Visited_Path,stacked_nodes))
-				{					
+				{
 					continue;
 				}
 				BacktrackBubbleRemoval4(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
@@ -6582,7 +6582,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 					{
 						if((stacked_nodes[*ptr]>0&&l_flip==1)||(stacked_nodes[*ptr]<0&&l_flip==0))
 						{
-							
+
 
 							//backtrack if the same direction is found
 							if((Visited_Path[new_node].cov+edge_ptr->edge_cov<=Visited_Path[*ptr].cov)||(BackCheckLoop4(*ptr,new_node,Visited_Path)==1))
@@ -6608,9 +6608,9 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 								if(stacked_nodes[new_node]>2)
 								{
 									edge_ptr=edge_ptr->nxt_edge;
-			
+
 									BreakLinks4(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-					
+
 									continue;
 								}
 								else
@@ -6618,9 +6618,9 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 									if(stacked_nodes[new_node]<-2)
 									{
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks4(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-						
+
 										continue;
 									}
 									else
@@ -6635,21 +6635,21 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-											
+
 											continue;
 										}
 
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks4(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-			
+
 										BacktrackBubbleRemoval4(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-							
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -6674,9 +6674,9 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 									continue;
 
 								}
-								
+
 								BacktrackBubbleRemoval4(ht,merge_ht, *ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-					
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(int)(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -6727,7 +6727,7 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -6747,17 +6747,17 @@ void BFSearchBubbleRemoval4(struct hashtable4* ht,struct hashtable4* merge_ht,st
 					struct bucket4 * freebkt=(new_node);
 					if(freebkt==beg_bkt)
 					{
-						
-							
+
+
 						continue;
 					}
 					if(!isSimplePath4(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
 
 					BacktrackBubbleRemoval4(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-			
+
 
 					//Free_A_Node(ht,freebkt);
 					freebkt->kmer_info.removed=1;
@@ -6835,7 +6835,7 @@ void BacktrackBubbleRemoval0(hashtable0 *ht,struct hashtable0* merge_ht,struct b
 			//	Free_A_Node( ht, freebkt);
 				freebkt->kmer_info.removed=1;
 				stacked_nodes[freebkt]=stacked_nodes[freebkt]/abs(stacked_nodes[freebkt]);
-				
+
 				bool flip_rm=0;
 				if(stacked_nodes[freebkt]*stacked_nodes[bktptr_merged]<0)//double check
 				{
@@ -6864,9 +6864,9 @@ bool BackCheckLoop0(struct bucket0* bktptr,struct bucket0* end_bkt,map<bucket0*,
 		{
 			return 1;
 		}
-		
+
 		cur_bkt=Visited_Path[cur_bkt].last_bkt;
-		
+
 		if(cur_bkt==NULL)
 		{break;}
 	}
@@ -6890,7 +6890,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 	int LenTh=300;
 	bool RIGHT=0;
 	struct stacked_bucket0 stacked_bkt=kmer_stack.front();
-	
+
 	map<int , list<stacked_bucket0> > dist_ctgs;//neighborset
 	dist_ctgs[0].push_back(kmer_stack.front());
 	int NBs=1;
@@ -6932,7 +6932,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 		//stacked_bkt=kmer_stack.front();
 		stacked_bkt=NB_it->second.front();
 
-		
+
 
 		//kmer_stack.pop_front();
 		NB_it->second.pop_front();
@@ -6940,7 +6940,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
+
 		}
 		new_node=stacked_bkt.bktptr;
 		RIGHT=stacked_bkt.RightSearch;
@@ -6970,9 +6970,9 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 				stacked_nodes[new_node]=2;
 				struct bucket0 * freebkt=(new_node);
 				if(freebkt==beg_bkt)
-				{									
+				{
 					continue;
-			 	}
+				}
 				//tip end reached so backtrack to the branching position.
 				if(!isSimplePath0(ht,new_node,Visited_Path,stacked_nodes))
 				{
@@ -7032,7 +7032,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 
 				if(r_found)
 				{
-					// not in stack, put in stack 
+					// not in stack, put in stack
 					if(stacked_nodes[*ptr]==0)
 					{
 						Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
@@ -7096,7 +7096,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 									{
 										edge_ptr=edge_ptr->nxt_edge;
 										BreakLinks0(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-							
+
 										continue;
 									}
 									else
@@ -7113,21 +7113,21 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-														
+
 											continue;
 										}
 										edge_ptr=edge_ptr->nxt_edge;
 										//free the node and edge.
-										
+
 										BreakLinks0(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-									
+
 										BacktrackBubbleRemoval0(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
-								
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -7139,7 +7139,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 							else
 							{
 								//backtrack the original path
-								
+
 								if(Visited_Path[*ptr].depth>1&&(((Visited_Path[*ptr].cov)/(Visited_Path[*ptr].depth-1))>PathCovTh))
 								{
 									edge_ptr=edge_ptr->nxt_edge;
@@ -7151,9 +7151,9 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 									continue;
 
 								}
-													
+
 								BacktrackBubbleRemoval0(ht,merge_ht,*ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-						
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -7192,7 +7192,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -7214,14 +7214,14 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 
 					if(freebkt==beg_bkt)
 					{
-			
+
 						continue;
 					}
 					if(!isSimplePath0(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
-							
+
 					BacktrackBubbleRemoval0(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path, stacked_nodes,K_size);
 
 					freebkt->kmer_info.removed=1;
@@ -7264,13 +7264,13 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 
 				if(freebkt==beg_bkt)
 				{
-					
-							
+
+
 					continue;
 				}
-	
+
 				if(!isSimplePath0(ht,new_node,Visited_Path,stacked_nodes))
-				{					
+				{
 					continue;
 				}
 				BacktrackBubbleRemoval0(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
@@ -7361,7 +7361,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 					{
 						if((stacked_nodes[*ptr]>0&&l_flip==1)||(stacked_nodes[*ptr]<0&&l_flip==0))
 						{
-							
+
 
 							//backtrack if the same direction is found
 							if((Visited_Path[new_node].cov+edge_ptr->edge_cov<=Visited_Path[*ptr].cov)||(BackCheckLoop0(*ptr,new_node,Visited_Path)==1))
@@ -7387,9 +7387,9 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 								if(stacked_nodes[new_node]>2)
 								{
 									edge_ptr=edge_ptr->nxt_edge;
-			
+
 									BreakLinks0(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-					
+
 									continue;
 								}
 								else
@@ -7397,9 +7397,9 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 									if(stacked_nodes[new_node]<-2)
 									{
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks0(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-						
+
 										continue;
 									}
 									else
@@ -7414,21 +7414,21 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 											}
 											if(*edge_p2p==edge_ptr)
 											{
-  												struct edge_node* f_edge_ptr=edge_ptr;
+												struct edge_node* f_edge_ptr=edge_ptr;
 												edge_ptr=edge_ptr->nxt_edge;
 												*edge_p2p=(*edge_p2p)->nxt_edge;
 												free(f_edge_ptr);
 											}
-											
+
 											continue;
 										}
 
 										edge_ptr=edge_ptr->nxt_edge;
-						
+
 										BreakLinks0(stacked_nodes,new_node,(*ptr),K_size,edge_len);
-			
+
 										BacktrackBubbleRemoval0(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-							
+
 										//Free_A_Node( ht, freebkt);
 										freebkt->kmer_info.removed=1;
 										//edge_ptr=NULL;
@@ -7453,9 +7453,9 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 									continue;
 
 								}
-								
+
 								BacktrackBubbleRemoval0(ht,merge_ht, *ptr,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-					
+
 								Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 								Visited_Path[*ptr].depth=Visited_Path[new_node].depth+1;
 								Visited_Path[*ptr].len=(int)(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -7506,7 +7506,7 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 					}
 					if(*edge_p2p==edge_ptr)
 					{
-  						struct edge_node* f_edge_ptr=edge_ptr;
+						struct edge_node* f_edge_ptr=edge_ptr;
 						edge_ptr=edge_ptr->nxt_edge;
 						*edge_p2p=(*edge_p2p)->nxt_edge;
 						free(f_edge_ptr);
@@ -7526,17 +7526,17 @@ void BFSearchBubbleRemoval0(struct hashtable0* ht,struct hashtable0* merge_ht,st
 					struct bucket0 * freebkt=(new_node);
 					if(freebkt==beg_bkt)
 					{
-						
-							
+
+
 						continue;
 					}
 					if(!isSimplePath0(ht,new_node,Visited_Path,stacked_nodes))
-					{					
+					{
 						continue;
 					}
 
 					BacktrackBubbleRemoval0(ht,merge_ht,new_node,beg_bkt,beg_bkt,Visited_Path , stacked_nodes,K_size);
-			
+
 
 					//Free_A_Node(ht,freebkt);
 					freebkt->kmer_info.removed=1;
@@ -7568,9 +7568,9 @@ void GraphSimplification(hashtable *ht,hashtable * merge_ht, hashtable2 *ht2, ha
 	{
 		for(size_t i=0;i<ht->ht_sz;++i)
 		{
-			
 
-		
+
+
 			if((i+1)%10000000==0)//||i>6000000)
 			{cout<<i+1<<endl;}
 
@@ -7578,7 +7578,7 @@ void GraphSimplification(hashtable *ht,hashtable * merge_ht, hashtable2 *ht2, ha
 
 			while(bktptr!=NULL)
 			{
-		
+
 				int lb=0,rb=0;
 				struct edge_node* left_edges=bktptr->kmer_info.left;
 				//345438006799503592
@@ -7661,7 +7661,7 @@ void GraphSimplification(hashtable *ht,hashtable * merge_ht, hashtable2 *ht2, ha
 						stacked_bkt.RightSearch=0;
 						list<struct stacked_bucket2> kmer_stack;
 						kmer_stack.push_back(stacked_bkt);
-						
+
 						BFSearchBubbleRemoval2(ht2,merge_ht2,bktptr,K_size,gap,kmer_stack,PathCovTh,max_depth,PathSim);
 
 					}
@@ -7689,7 +7689,7 @@ void GraphSimplification(hashtable *ht,hashtable * merge_ht, hashtable2 *ht2, ha
 
 void GraphSimplification3(hashtable3 *ht3, hashtable3 * merge_ht3,int K_size,int gap,int PathCovTh,int max_depth,int PathSim)
 {
-		
+
 	for(size_t i=0;i<ht3->ht_sz;++i)
 	{
 		if(i%10000000==0)//||i>6000000)
@@ -7721,7 +7721,7 @@ void GraphSimplification3(hashtable3 *ht3, hashtable3 * merge_ht3,int K_size,int
 				stacked_bkt.RightSearch=0;
 				list<struct stacked_bucket3> kmer_stack;
 				kmer_stack.push_back(stacked_bkt);
-						
+
 				BFSearchBubbleRemoval3(ht3,merge_ht3,bktptr,K_size,gap,kmer_stack,PathCovTh,max_depth,PathSim);
 
 			}
@@ -7745,8 +7745,8 @@ void GraphSimplification3(hashtable3 *ht3, hashtable3 * merge_ht3,int K_size,int
 
 void GraphSimplification4(hashtable4 *ht4, hashtable4 * merge_ht4,int K_size,int gap,int PathCovTh,int max_depth,int PathSim)
 {
-	
-	
+
+
 	for(size_t i=0;i<ht4->ht_sz;++i)
 	{
 		if(i%10000000==0)//||i>6000000)
@@ -7778,7 +7778,7 @@ void GraphSimplification4(hashtable4 *ht4, hashtable4 * merge_ht4,int K_size,int
 				stacked_bkt.RightSearch=0;
 				list<struct stacked_bucket4> kmer_stack;
 				kmer_stack.push_back(stacked_bkt);
-						
+
 				BFSearchBubbleRemoval4(ht4,merge_ht4,bktptr,K_size,gap,kmer_stack,PathCovTh,max_depth,PathSim);
 
 			}
@@ -7803,8 +7803,8 @@ void GraphSimplification4(hashtable4 *ht4, hashtable4 * merge_ht4,int K_size,int
 
 void GraphSimplification0(hashtable0 *ht, hashtable0 * merge_ht,int K_size,int gap,int PathCovTh,int max_depth,int PathSim)
 {
-	
-	
+
+
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
 		if(i%10000000==0&&i>0)//||i>6000000)
@@ -7836,7 +7836,7 @@ void GraphSimplification0(hashtable0 *ht, hashtable0 * merge_ht,int K_size,int g
 				stacked_bkt.RightSearch=0;
 				list<struct stacked_bucket0> kmer_stack;
 				kmer_stack.push_back(stacked_bkt);
-						
+
 				BFSearchBubbleRemoval0(ht,merge_ht,bktptr,K_size,gap,kmer_stack,PathCovTh,max_depth,PathSim);
 
 			}

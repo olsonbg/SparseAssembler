@@ -26,7 +26,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	//cout<<sizeof(kmer_info)<<endl;
-	// how to use:		
+	// how to use:
 	cout<<"Command: "<<endl;
 	cout<<"Programfile g GAP_VALUE k KMER_SIZE LD LOAD_SKG GS GENOME_SIZE TrimN TRIM_READS_WITH_N f INPUT_FILE1 f INPUT_FILE2 i1 INWARD_PAIR_END1 i2 INWARD_PAIR_END2 o1 OUTWARD_PAIR_END1 o2 OUTWARD_PAIR_END2"<<endl;
 	cout<<endl;
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	cout<<"For error correction:"<<endl;
 	cout<<"Denoise: use 1 to call the error correction module. (default 0)"<<endl;
 	cout<<"H: hybrid mode. 0 (Default): reads will be trimmed at the ends to ensure denoising accuracy (*MUST* set 0 for the last round). 1: reads will not be trimmed at the ends; "<<endl;
-	cout<<"CovTh: coverage threshold for an error. A k-mer with coverage < this value will be checked. Setting 0 will allow the program to choose a value based on the coverage histogram."<<endl;	
+	cout<<"CovTh: coverage threshold for an error. A k-mer with coverage < this value will be checked. Setting 0 will allow the program to choose a value based on the coverage histogram."<<endl;
 	cout<<"CorrTh: coverage threshold for a correct k-mer candidate. A k-mer with coverage >= this value will be considered a candidate for correction. Setting 0 will allow the program to choose a value based on the coverage histogram."<<endl;
 	cout<<endl;
 	cout<<"For scaffolding:"<<endl;
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 	cout<<"InsertSize: estimated insert size of the current pair."<<endl;
 	cout<<"i1_mp & i2_mp: inward mate paired reads (large insert sizes >10k, for shorter libraries omit \"_mp\")."<<endl;
 	cout<<"o1_mp & o2_mp : outward paired-end reads (large insert sizes >10k, for shorter libraries omit \"_mp\")."<<endl;
-	
+
 	///cout<<endl<<"Miscellaneous: "<<endl;
 
 	cout<<endl;
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 	string filename,ContigsForScaffolds="Contigs.txt",bfilename;
 	ofstream o_LogBases("BasesCount.txt");
 	vector<string > sp_filenames_vt,p_filenames_vt,p1_filenames_vt,p2_filenames_vt,in_filenames_vt,single_filenames_vt,mp1_filenames_vt,mp2_filenames_vt,mp_filenames_vt;
-	
+
 
 	struct contigs_info  contigs_info,scaffolds_info;
 	string ContigPrefix="";
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
 	// update the parameters using input arguments
 	for(int i=1;i<argc;++i)
 	{
-		
+
 		if(strcmp(argv[i],"g")==0)
 		{
 			i++;
@@ -182,7 +182,7 @@ int main(int argc, char* argv[])
 			Hybrid=atoi(argv[i]);
 			continue;
 		}
-		
+
 		if(strcmp(argv[i],"InsertSize")==0)
 		{
 			i++;
@@ -195,7 +195,7 @@ int main(int argc, char* argv[])
 		{
 			i++;
 			RESUME=atoi(argv[i]);
-			
+
 			continue;
 		}
 		if(strcmp(argv[i],"ExpCov")==0)
@@ -290,7 +290,7 @@ int main(int argc, char* argv[])
 			DBG2OLC=atoi(argv[i]);
 			continue;
 		}
-		
+
 		if(strcmp(argv[i],"k")==0)
 		{
 			i++;
@@ -398,8 +398,8 @@ int main(int argc, char* argv[])
 			p1_filenames_vt.push_back(filename);
 			in_filenames_vt.push_back(filename);
 			p_filenames_vt.push_back(filename);
-		
-			
+
+
 			SingleOutwardLib.push_back(0);
 			OutwardLib.push_back(0);
 
@@ -414,11 +414,11 @@ int main(int argc, char* argv[])
 			p2_filenames_vt.push_back(filename);
 			in_filenames_vt.push_back(filename);
 			p_filenames_vt.push_back(filename);
-			
+
 			continue;
 		}
 
-		
+
 		if(strcmp(argv[i],"i1_mp")==0)
 		{
 			i++;
@@ -447,8 +447,8 @@ int main(int argc, char* argv[])
 			p1_filenames_vt.push_back(filename);
 			in_filenames_vt.push_back(filename);
 			p_filenames_vt.push_back(filename);
-			
-			
+
+
 			OutwardLib.push_back(1);
 			continue;
 		}
@@ -459,7 +459,7 @@ int main(int argc, char* argv[])
 			p2_filenames_vt.push_back(filename);
 			in_filenames_vt.push_back(filename);
 			p_filenames_vt.push_back(filename);
-			
+
 			continue;
 		}
 
@@ -493,7 +493,7 @@ int main(int argc, char* argv[])
 			strValue >> GenomeSize;
 
 			//GenomeSize=atoi(argv[i]);
-			
+
 			continue;
 		}
 
@@ -505,7 +505,7 @@ int main(int argc, char* argv[])
 
 			strValue << argv[i];
 			strValue >> totReads;
-			
+
 			continue;
 		}
 
@@ -514,7 +514,7 @@ int main(int argc, char* argv[])
 		{
 			i++;
 			Resolving_Branches_PE=atoi(argv[i]);
-			
+
 			continue;
 		}
 
@@ -533,7 +533,7 @@ int main(int argc, char* argv[])
 		{
 			i++;
 			bfilename=(argv[i]);
-			
+
 			continue;
 		}
 
@@ -545,7 +545,7 @@ int main(int argc, char* argv[])
 	{
 		PathCovTh = NodeCovTh * 10;
 	}
-	
+
 
 
 	int num_inputs=0;
@@ -599,7 +599,7 @@ int main(int argc, char* argv[])
 			{
 				gap=16;
 			}
-	
+
 		}
 
 
@@ -607,7 +607,7 @@ int main(int argc, char* argv[])
 		int rem1=K_size%32;
 		if(rem1==0)
 		{Kmer_arr_sz--;}
-	
+
 		if((gap>25&&K_size>31)||gap>64)
 		{
 			cout<<"Gap value too large, set to 25."<<endl;
@@ -641,15 +641,15 @@ int main(int argc, char* argv[])
 		key_table.current_index=key_table.KeysPerBlock;
 		key_table.pblocks.clear();
 
-		
 
-	
+
+
 		time_t beg_time,read_time;
 		time(&beg_time);
 		int64_t bucket_count=0,edge_cnt=0;
-	
+
 		uint64_t KmerEstNo;
-	
+
 		struct BF_info BF_info;
 		BF_info.Bloom=0;
 		uint64_t numReads=0;
@@ -671,11 +671,11 @@ int main(int argc, char* argv[])
 				if(Coverage<=0)
 				{
 					ScanDataset(in_filenames_vt,&tot_bases,&numReads,&totReads,&MaxReadLen);
-			
+
 					cout<<"Scan finished."<<endl;
 					//cout<<numReads<<endl;
 				}
-			
+
 				if(numReads>0)
 				{
 					AvgLen=(tot_bases/numReads);
@@ -685,7 +685,7 @@ int main(int argc, char* argv[])
 					{AvgLen++;}
 					if(tot_bases/GenomeSize>Coverage)
 					{Coverage=tot_bases/GenomeSize;}
-			
+
 					o_Log<<"AvgLen: "<<AvgLen<<endl;
 					o_Log<<"tot_bases: "<<tot_bases<<endl;
 					o_Log<<"Coverage: "<<Coverage<<endl;
@@ -693,7 +693,7 @@ int main(int argc, char* argv[])
 				if(Coverage<=0)
 				{Coverage=10;}
 
-		
+
 				if(AvgLen<=K_size+gap)
 				{
 					cout<<"Error! K-mer size too large!"<<endl;
@@ -703,9 +703,9 @@ int main(int argc, char* argv[])
 
 
 				KmerEstNo=(uint64_t) (((double)(GenomeSize*Coverage*(AvgLen-K_size+1)/AvgLen))*(1-pow((1-ErrorRate),K_size))+GenomeSize);
-	
+
 				o_Log<<"KmerEstNo: "<<KmerEstNo<<endl;
-			
+
 				if (Bloom)
 				{
 
@@ -714,17 +714,17 @@ int main(int argc, char* argv[])
 					{
 						KmerEstNo2=KmerEstNo2;
 					}
-					BF_info.m=(uint64_t) (((double)KmerEstNo2/gap)*(-log(BF_FalsePositive)/log(two)/log(two))+100);		
+					BF_info.m=(uint64_t) (((double)KmerEstNo2/gap)*(-log(BF_FalsePositive)/log(two)/log(two))+100);
 					BF_info.BF_HT=(uint8_t *)calloc(BF_info.m/8+10,sizeof(uint8_t));
 					BF_info.d=min(max((int)(7*(BF_info.m)/KmerEstNo/10+0.5),2),2);
 					if(Bloom_d>0)
-					{	
+					{
 						BF_info.d=Bloom_d;
 					}
 
 					//cout<<BF_info.d<<endl;
 					BF_info.Bloom=1;
-		
+
 
 				}
 			}
@@ -733,7 +733,7 @@ int main(int argc, char* argv[])
 			//build the graph
 			if(GenomeSize==0)
 			{cout<<"Error! Genome size is not given."<<endl;return -1;}
-	
+
 			uint64_t ht_sz_tmp= KmerEstNo/max(gap-2,5);
 			if(Bloom==1)
 			{ht_sz_tmp= GenomeSize*2/max(gap-2,5);}
@@ -745,8 +745,8 @@ int main(int argc, char* argv[])
 			}
 
 			hashTableSZ=(size_t) ht_sz_tmp;
-		
-			uint64_t TotalSamplings=0;	
+
+			uint64_t TotalSamplings=0;
 			//allocate memory for the hashtable
 			if(!LOAD_GRAPH1)
 			{
@@ -758,30 +758,30 @@ int main(int argc, char* argv[])
 				{
 
 
-					Init_HT0(&ht0,hashTableSZ);	
+					Init_HT0(&ht0,hashTableSZ);
 					/*
 
 					if(K_size>32&&K_size<=64)
 					{
-						Init_HT2(&ht2,hashTableSZ);	
+						Init_HT2(&ht2,hashTableSZ);
 					}
 					else
 					{
 						if(K_size<=96)
 						{
-							Init_HT3(&ht3,hashTableSZ);	
+							Init_HT3(&ht3,hashTableSZ);
 						}
 						else
 						{
 							if(K_size<=128)
 							{
-								Init_HT4(&ht4,hashTableSZ);	
+								Init_HT4(&ht4,hashTableSZ);
 							}
 						}
 					}
 					*/
 				}
-		
+
 			}
 			else
 			{
@@ -819,13 +819,13 @@ int main(int argc, char* argv[])
 
 						*/
 					}
-	
+
 				}
 
 
-		
+
 			}
-	
+
 			struct read_t read;
 			read.read_bits =(uint64_t*) malloc(MaxReadLen/4+100);
 
@@ -841,17 +841,17 @@ int main(int argc, char* argv[])
 					round=2;
 				}
 				cout<<"Building the sparse k-mer graph, round: "<<round<<endl;
-				//scan files of fasta or fastq format. The below is long and trivial, skip it to the major function. 
+				//scan files of fasta or fastq format. The below is long and trivial, skip it to the major function.
 				for(size_t jj=0;jj<in_filenames_vt.size();++jj)
 				{
 					uint64_t nLines=0;
 					int seq_sz=0;
 
 					ifstream infile(in_filenames_vt[jj].c_str());
-		
+
 					cout<<jj+1<<"/"<<in_filenames_vt.size()<<" files."<<endl;
 					cout<<"Processing file: "<<in_filenames_vt[jj]<<endl;
-		
+
 					seq_s.clear();
 
 					bool fq_flag=0;
@@ -860,7 +860,7 @@ int main(int argc, char* argv[])
 					getline(infile,str);
 					if(fq_flag==0&&str[0]=='@')
 					{
-						fq_flag=1;	
+						fq_flag=1;
 					}
 					infile.close();
 
@@ -879,23 +879,23 @@ int main(int argc, char* argv[])
 						if(fq_flag)
 						{
 							read_success=get_a_fastq_read(infile,tag,seq_s,QS_s);
-					
+
 						}
 						else
 						{
 							read_success=get_a_fasta_read(infile,tag,seq_s,n_tag);
-			
-						}	
+
+						}
 						if(read_success==0)
 						{break;}
-				
+
 						seq_sz=seq_s.size();
 						if(TrimLen<seq_sz)
 						{
 							seq_s.resize(TrimLen);
 							seq_sz=TrimLen;
 						}
-					
+
 						if (seq_s.size()==0)
 						{
 							cout<<"Empty sequence!"<<endl;
@@ -919,18 +919,18 @@ int main(int argc, char* argv[])
 						{bad_flag=1;}
 						if(bad_flag)
 						{continue;}
-							
+
 
 						bad_flag=0;
-					
+
 						numReads++;
 						//cout<<numReads<<endl;
 
 						char QS_seq[1000];
-					
+
 						if(fq_flag)
 						{
-						
+
 							if(QS_s[QS_s.size()-1]=='\n'||QS_s[QS_s.size()-1]=='\r')
 							{
 								QS_s.resize(QS_s.size()-1);
@@ -945,10 +945,10 @@ int main(int argc, char* argv[])
 
 						if(totReads!=0&&numReads>totReads)
 						{
-						
+
 							numReads=0;
 							break;
-						
+
 						}
 
 						if(round==1)
@@ -971,12 +971,12 @@ int main(int argc, char* argv[])
 								}
 							}
 						}
-				
+
 
 						int nN=seq_sz-1,isN=-1;
 						for(int i=0;i<seq_sz;++i)
 						{
-						
+
 							if(seq_s[i]=='-'||seq_s[i]=='N')
 							{
 								if(i<=seq_sz/2)
@@ -996,7 +996,7 @@ int main(int argc, char* argv[])
 						{
 							bad_flag=1;
 						}
-					
+
 						if(bad_flag==1)
 						{
 							seq_s.clear();
@@ -1013,8 +1013,8 @@ int main(int argc, char* argv[])
 							seq_s[s]='\0';
 							seq_s.resize(s);
 						}
-					
-				
+
+
 						if(Compress)
 						{
 							string_shrinkage(seq_s);
@@ -1023,8 +1023,8 @@ int main(int argc, char* argv[])
 
 						if(bad_flag==1||seq_sz<(K_size+1))
 						{seq_s.clear();continue;}
-		
-					
+
+
 						//cout<<numReads<<endl;
 						Init_Read(seq_s,read);
 						//cout<<numReads<<endl;
@@ -1043,7 +1043,7 @@ int main(int argc, char* argv[])
 						//cout<<numReads<<endl;
 						int ref_pos=0;
 						//read.read_idx=numReads;
-						
+
 
 
 
@@ -1062,8 +1062,8 @@ int main(int argc, char* argv[])
 							Sparse_Kmer_Graph_Construction0(&read,&ht0,&key_table,&bucket_count,&edge_cnt,K_size, gap,&BF_info,round);
 
 						}
-				
-				
+
+
 						if (numReads%10000000==0)
 						//if (numReads%100000==0)
 						{
@@ -1075,7 +1075,7 @@ int main(int argc, char* argv[])
 								else
 								{
 									cout<<"Memory used: "<<((sizeof(struct bucket0_r1)+sizeof(uint64_t)*Kmer_arr_sz)*bucket_count)/1024/1024<<" MB."<<endl;
-									
+
 								}
 							}
 							else
@@ -1085,7 +1085,7 @@ int main(int argc, char* argv[])
 								else
 								{
 
-					
+
 								}
 							}
 
@@ -1094,20 +1094,20 @@ int main(int argc, char* argv[])
 							cout<<"Reading time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
 
 						}
-				
-			
+
+
 
 					}
 					//fclose(infile);
 					infile.close();
 					infile.clear();
-				 
-				 
+
+
 
 				}
 
 
-			
+
 				if(round==1)
 				{
 
@@ -1177,14 +1177,14 @@ int main(int argc, char* argv[])
 						}
 						SwitchBuckets0(&ht0,K_size);
 
-					
+
 					}
 				}
 				// save to disk
-			
+
 				if(MemoryEfficient&(K_size<=32))
 				{
-					
+
 					SavingSparseKmerGraph(&ht,FilePrefix);
 					if(KmerTable)
 					{
@@ -1197,41 +1197,41 @@ int main(int argc, char* argv[])
 
 					SavingSparseKmerGraph0(&ht0,FilePrefix,Kmer_arr_sz);
 
-				
+
 				}
 
-			
+
 				if(round==1)
 				{
 					if(MemoryEfficient&(K_size<=32))
 					{
 						for(size_t i=0;i<ht.ht_sz;++i)
-						{				
+						{
 							struct bucket* bktptr=ht.store_pos[i];
 							while(bktptr!=NULL)
 							{
-								bktptr->kmer_info.cov1=0;	
+								bktptr->kmer_info.cov1=0;
 								bktptr=bktptr->nxt_bucket;
 							}
-					
+
 						}
-				
+
 					}
 					else
 					{
 
 
 						for(size_t i=0;i<ht0.ht_sz;++i)
-						{				
+						{
 							struct bucket0* bktptr=ht0.store_pos[i];
 							while(bktptr!=NULL)
 							{
-								bktptr->kmer_info.cov1=0;	
+								bktptr->kmer_info.cov1=0;
 								bktptr=bktptr->nxt_bucket;
 							}
-					
+
 						}
-					
+
 					}
 				}
 
@@ -1241,19 +1241,19 @@ int main(int argc, char* argv[])
 
 
 			}
-	
+
 
 			//free(read.read_bits);
 
 			uint64_t MeanCov=TotalSamplings/GenomeSize;
-		
-		
+
+
 		}
 
 		hashtable merge_ht;
 		hashtable2 merge_ht2;
 		hashtable3 merge_ht3;
-		hashtable4 merge_ht4;		
+		hashtable4 merge_ht4;
 		hashtable0 merge_ht0;
 		merge_ht.ht_sz=0;
 		merge_ht2.ht_sz=0;
@@ -1267,16 +1267,16 @@ int main(int argc, char* argv[])
 		merge_key_table.current_index=key_table.KeysPerBlock;
 		merge_key_table.pblocks.clear();
 
-			
+
 
 		if(LOAD_GRAPH)
 		{
 			cout<<endl<<"Loading the graph..."<<endl;
 			if(MemoryEfficient&(K_size<=32))
 			{
-			
+
 				LoadingSparseKmerGraph(&ht,FilePrefix);
-				
+
 				if(!BFS)
 				{
 					LoadingMergeHT(&merge_ht);
@@ -1286,15 +1286,15 @@ int main(int argc, char* argv[])
 			{
 
 				LoadingSparseKmerGraph0(&ht0,&key_table,FilePrefix,Kmer_arr_sz);
-				
+
 				if(!BFS)
 				{
 					LoadingMergeHT0(&merge_ht0,&merge_key_table,Kmer_arr_sz);
 				}
 
-				
+
 			}
-	
+
 		}
 
 
@@ -1302,7 +1302,7 @@ int main(int argc, char* argv[])
 		{
 			cout<<"Screening off weak nodes and edges..."<<endl;
 
-		
+
 			if(MemoryEfficient&(K_size<=32))
 			{
 				RemovingWeakNodesAndEdges(&ht, K_size,NodeCovTh, EdgeCovTh,&bucket_count, &edge_cnt);
@@ -1310,7 +1310,7 @@ int main(int argc, char* argv[])
 			else
 			{
 				RemovingWeakNodesAndEdges0(&ht0, K_size,NodeCovTh, EdgeCovTh,&bucket_count, &edge_cnt);
-				
+
 			}
 		}
 
@@ -1332,7 +1332,7 @@ int main(int argc, char* argv[])
 			while(in_cov>>cov>>cnt)
 			{
 				cov_hist[cov]=cnt;
-			
+
 				if(cov<200)
 				{
 					cnt_vt[cov]=cnt;
@@ -1361,9 +1361,9 @@ int main(int argc, char* argv[])
 			cov_max_cnt=min(cov_max_cnt,100);
 			ofstream o_DnLog("DenoisingLog.txt",ios::app);
 			o_DnLog<<"max diversity: "<<cov_max_cnt<<endl;
-		
 
-		
+
+
 			for(int i=Th;i<cov_max_cnt;++i)
 			{
 				if((cnt_vt[i]<cnt_vt[i-1]||cnt_vt[i+1]<cnt_vt[i])||i<(cov_max_cnt/15))
@@ -1381,9 +1381,9 @@ int main(int argc, char* argv[])
 					cout<<"CovTh used: "<< CovTh<<endl;
 					break;
 				}
-			
+
 			}
-		
+
 
 
 			time(&read_time);
@@ -1401,9 +1401,9 @@ int main(int argc, char* argv[])
 				if(K_size>32&&K_size<=64)
 				{
 					MarkBranches2(&ht2);
-	
+
 				}
-		
+
 			}
 			numReads=0;
 			uint64_t correction_cnt=0;
@@ -1415,13 +1415,13 @@ int main(int argc, char* argv[])
 
 
 			string seq1,seq2,str,tag1,tag2,seq_s;
-	
+
 			uint64_t nLines=0;
 			int seq_sz=0;
-			
+
 			for(int jj=0;jj<single_filenames_vt.size();++jj)
 			{
-			
+
 				ifstream infile(single_filenames_vt[jj].c_str());
 				bool fq_flag=0;
 				nLines=0;
@@ -1440,19 +1440,19 @@ int main(int argc, char* argv[])
 				}
 				t_filename=single_filenames_vt[jj].substr(t,single_filenames_vt[jj].size());
 				string denoised_name="Denoised_"+t_filename;
-		
+
 
 				ofstream o_denoised(denoised_name.c_str());
 				cout<<jj+1<<"/"<<single_filenames_vt.size()<<" files."<<endl;
 				cout<<"Processing file: "<<single_filenames_vt[jj]<<endl;
-		
+
 
 				getline(infile,str);
 
 
 				if(fq_flag==0&&str[0]=='@')
 				{
-					fq_flag=1;	
+					fq_flag=1;
 				}
 				infile.close();
 
@@ -1471,28 +1471,28 @@ int main(int argc, char* argv[])
 					if(fq_flag)
 					{
 						read_success=get_a_fastq_read(infile,tag,seq_s,QS_s);
-					
+
 					}
 					else
 					{
 						read_success=get_a_fasta_read(infile,tag,seq_s,n_tag);
-			
-					}	
+
+					}
 
 
-					
+
 					if(read_success==0)
 					{break;}
-						
-						
-				
+
+
+
 					seq_sz=seq_s.size();
 					if(TrimLen<seq_sz)
 					{
 						seq_s.resize(TrimLen);
 						seq_sz=TrimLen;
 					}
-					
+
 					if (seq_s.size()==0)
 					{
 						cout<<"Empty sequence!"<<endl;
@@ -1516,17 +1516,17 @@ int main(int argc, char* argv[])
 					{bad_flag=1;}
 					if(bad_flag)
 					{continue;}
-							
+
 
 					bad_flag=0;
-					
+
 					numReads++;
 
 					char QS_seq[1000];
 					string QS_s;
 					if(fq_flag)
 					{
-					
+
 						//cout<<QS_s<<endl;
 						if(QS_s[QS_s.size()-1]=='\n'||QS_s[QS_s.size()-1]=='\r')
 						{
@@ -1542,13 +1542,13 @@ int main(int argc, char* argv[])
 
 					if(totReads!=0&&numReads>totReads)
 					{
-						
+
 						numReads=0;
 						break;
-						
+
 					}
 
-			
+
 					if(fq_flag&&TrimQual>0)
 					{
 						int QS_sz=strlen(QS_seq);
@@ -1563,13 +1563,13 @@ int main(int argc, char* argv[])
 							}
 						}
 					}
-				
 
-						
+
+
 					int nN=seq_sz-1,isN=-1;
 					for(int i=0;i<seq_sz;++i)
 					{
-						
+
 						if(seq_s[i]=='-'||seq_s[i]=='N')
 						{
 							if(i<=seq_sz/2)
@@ -1589,7 +1589,7 @@ int main(int argc, char* argv[])
 					{
 						bad_flag=1;
 					}
-					
+
 					if(bad_flag==1)
 					{
 						seq_s.clear();
@@ -1606,8 +1606,8 @@ int main(int argc, char* argv[])
 						seq_s[s]='\0';
 						seq_s.resize(s);
 					}
-					
-				
+
+
 					if(Compress)
 					{
 						string_shrinkage(seq_s);
@@ -1616,10 +1616,10 @@ int main(int argc, char* argv[])
 
 					if(bad_flag==1||seq_sz<(K_size+1))
 					{seq_s.clear();continue;}
-		
+
 					seq1=seq_s;
-		
-		
+
+
 					Init_Read(seq1,read1);
 					strcpy(read1.tag,tag1.c_str());
 					seq1.clear();
@@ -1633,15 +1633,15 @@ int main(int argc, char* argv[])
 					if(K_size<=32)
 					{
 						uint64_t OverlapKmers=read1.readLen-K_size+1;
-				
+
 						success_dn=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
 
 					}
 					else
 					{
-						uint64_t OverlapKmers=read1.readLen-K_size+1;				
+						uint64_t OverlapKmers=read1.readLen-K_size+1;
 						success_dn=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-	
+
 					}
 					bool start_print=0;
 					if(success_dn)
@@ -1660,36 +1660,36 @@ int main(int argc, char* argv[])
 
 							if(start_print)
 							{
-								o_denoised<<read1.c_seq[i];	
-		
+								o_denoised<<read1.c_seq[i];
+
 							}
 
-		
+
 						}
 						o_denoised<<endl;
 
-				
+
 					}
 	//				numReads++;
-	
 
-				
+
+
 					if (numReads%10000000==0)
 					{
 						cout<<"Denoised: "<<numReads<<endl;
-			
+
 						time(&read_time);
 						cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
-				
+
 					}
-				
-			
+
+
 
 				}
 
 				infile.close();
 				infile.clear();
-				
+
 			}
 
 			//free(read1.read_bits);
@@ -1697,14 +1697,14 @@ int main(int argc, char* argv[])
 
 			for(int jj=0;jj<p1_filenames_vt.size();jj+=1)
 			{
-			
+
 				ifstream in_pair1(p1_filenames_vt[jj].c_str());
 				ifstream in_pair2(p2_filenames_vt[jj].c_str());
 
 
 				string t_filename;
 
-		
+
 				int s,t=0;
 				for(s=(int) p1_filenames_vt[jj].size()-1;s>=0;--s)
 				{
@@ -1735,27 +1735,27 @@ int main(int argc, char* argv[])
 
 
 				ofstream o_denoised1(denoised_name1.c_str()),o_denoised2(denoised_name2.c_str()),o_denoised3(denoised_name3.c_str());
-		
+
 				cout<<jj+1<<"/"<<p1_filenames_vt.size()<<" pairs."<<endl;
 				cout<<"Processing file: "<<p1_filenames_vt[jj]<<" & "<<p2_filenames_vt[jj]<<endl;
 				//while(getline(infile,seq)&&seq.size()!=0)
 
 				bool tag_mismatch=0;
 				char lastLineFC1='0',lastLineFC2='0';
-		
+
 				bool fq_flag=0;
 				uint64_t nLines1=0,nLines2=0;
-		
+
 
 				string seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n,str1,str2;
 				int seq1_sz,seq2_sz;
 				string fq_tmp;
-	
+
 				struct read_t Read1,Read2;
 
 				Read1.read_bits =(uint64_t*) malloc(MaxReadLen/4+100);
 				Read2.read_bits =(uint64_t*) malloc(MaxReadLen/4+100);
-			
+
 
 				int readLen1,readLen2;
 				nLines1=0,nLines2=0;
@@ -1768,11 +1768,11 @@ int main(int argc, char* argv[])
 
 
 
-			
+
 				getline(in_pair1,str);
 				if(fq_flag==0&&str[0]=='@')
 				{
-					fq_flag=1;	
+					fq_flag=1;
 				}
 				in_pair1.close();
 
@@ -1792,28 +1792,28 @@ int main(int argc, char* argv[])
 						read_success1=get_a_fastq_read(in_pair1,tag1,seq_s1,QS_s1);
 						read_success2=get_a_fastq_read(in_pair2,tag2,seq_s2,QS_s2);
 
-					
+
 					}
 					else
 					{
 						read_success1=get_a_fasta_read(in_pair1,tag1,seq_s1,n_tag1);
 						read_success1=get_a_fasta_read(in_pair2,tag2,seq_s2,n_tag2);
-			
-					}	
+
+					}
 
 					bool bad_flag1=0,bad_flag2=0;
 					bool success_dn1=0,success_dn2=0;
-			
-				
 
-				
+
+
+
 					seq1_sz=seq_s1.size();
 					if(TrimLen<seq1_sz)
 					{
 						seq_s1.resize(TrimLen);
 						seq1_sz=TrimLen;
 					}
-					
+
 					if (seq_s1.size()==0)
 					{
 						cout<<"Empty sequence!"<<endl;
@@ -1836,8 +1836,8 @@ int main(int argc, char* argv[])
 					{bad_flag1=1;}
 			//		if(bad_flag1)
 		//			{continue;}
-							
-		
+
+
 					numReads++;
 					if(1)
 					{
@@ -1861,10 +1861,10 @@ int main(int argc, char* argv[])
 
 						if(totReads!=0&&numReads>totReads)
 						{
-						
+
 							numReads=0;
 							break;
-						
+
 						}
 
 						if(fq_flag&&TrimQual>0)
@@ -1881,13 +1881,13 @@ int main(int argc, char* argv[])
 								}
 							}
 						}
-				
 
-						
+
+
 						int nN=seq1_sz-1,isN=-1;
 						for(int i=0;i<seq1_sz;++i)
 						{
-						
+
 							if(seq_s1[i]=='-'||seq_s1[i]=='N')
 							{
 								if(i<=seq1_sz/2)
@@ -1907,7 +1907,7 @@ int main(int argc, char* argv[])
 						{
 							bad_flag1=1;
 						}
-					
+
 
 
 						if(!bad_flag1&&isN>=0)
@@ -1920,11 +1920,11 @@ int main(int argc, char* argv[])
 							seq_s1[s]='\0';
 							seq_s1.resize(s);
 						}
-					
-				
+
+
 
 					}
-				
+
 
 
 
@@ -1935,7 +1935,7 @@ int main(int argc, char* argv[])
 						seq_s2.resize(TrimLen);
 						seq2_sz=TrimLen;
 					}
-					
+
 					if (seq_s2.size()==0)
 					{
 						cout<<"Empty sequence!"<<endl;
@@ -1955,8 +1955,8 @@ int main(int argc, char* argv[])
 						}
 					}
 					if(numN>TrimN)
-					{bad_flag2=1;}	
-		
+					{bad_flag2=1;}
+
 					if(1)
 					{
 						char QS_seq2[1000];
@@ -1978,10 +1978,10 @@ int main(int argc, char* argv[])
 
 						if(totReads!=0&&numReads>totReads)
 						{
-						
+
 							numReads=0;
 							break;
-						
+
 						}
 
 						if(fq_flag&&TrimQual>0)
@@ -1998,13 +1998,13 @@ int main(int argc, char* argv[])
 								}
 							}
 						}
-				
 
-						
+
+
 						int nN=seq2_sz-1,isN=-1;
 						for(int i=0;i<seq2_sz;++i)
 						{
-						
+
 							if(seq_s2[i]=='-'||seq_s2[i]=='N')
 							{
 								if(i<=seq2_sz/2)
@@ -2024,7 +2024,7 @@ int main(int argc, char* argv[])
 						{
 							bad_flag2=1;
 						}
-					
+
 
 
 						if(!bad_flag2&&isN>=0)
@@ -2037,16 +2037,16 @@ int main(int argc, char* argv[])
 							seq_s2[s]='\0';
 							seq_s2.resize(s);
 						}
-					
-				
+
+
 
 					}
 					if(Compress)
 					{
 						string_shrinkage(seq_s1);
-					
+
 						string_shrinkage(seq_s2);
-					
+
 					}
 					readLen1=seq_s1.size();
 					readLen2=seq_s2.size();
@@ -2058,7 +2058,7 @@ int main(int argc, char* argv[])
 
 					if(bad_flag1==0)
 					{
-					
+
 						Init_Read(seq_s1,read1);
 						strcpy(read1.tag,tag_s1.c_str());
 						seq_s1.clear();
@@ -2066,7 +2066,7 @@ int main(int argc, char* argv[])
 						if(K_size<=32)
 						{
 							uint64_t OverlapKmers=read1.readLen-K_size+1;
-				
+
 							success_dn1=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
 
 
@@ -2074,41 +2074,41 @@ int main(int argc, char* argv[])
 						else
 						{
 							uint64_t OverlapKmers=read1.readLen-K_size+1;
-				
+
 							success_dn1=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-					
+
 						}
 					}
-		
-			
+
+
 					if(bad_flag2==0)
 					{
-			
-			
-					
+
+
+
 						Init_Read(seq_s2,read2);
 						strcpy(read2.tag,tag_s2.c_str());
 						seq_s2.clear();
 						size_t b2=bucket_count;
 
-				
+
 						if(K_size<=32)
 						{
 							uint64_t OverlapKmers=read2.readLen-K_size+1;
-				
+
 							success_dn2=Sparse_Denoising(&read2,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
 
 						}
 						else
 						{
 							uint64_t OverlapKmers=read2.readLen-K_size+1;
-				
+
 							success_dn2=Sparse_Denoising(&read2,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
 
-					
+
 						}
 					}
-		
+
 
 
 
@@ -2117,7 +2117,7 @@ int main(int argc, char* argv[])
 					{
 						read1.tag[0]='>';
 						o_denoised1<<read1.tag<<endl;
-				
+
 						for(int i=0;i<read1.readLen;++i)
 						{
 							if((read1.error_nt[i]==0&&start_print==0)||Hybrid)
@@ -2129,11 +2129,11 @@ int main(int argc, char* argv[])
 
 							if(start_print)
 							{
-								o_denoised1<<read1.c_seq[i];	
-		
+								o_denoised1<<read1.c_seq[i];
+
 							}
 
-		
+
 						}
 						o_denoised1<<endl;
 						start_print=0;
@@ -2150,11 +2150,11 @@ int main(int argc, char* argv[])
 
 							if(start_print)
 							{
-								o_denoised2<<read2.c_seq[i];	
-		
+								o_denoised2<<read2.c_seq[i];
+
 							}
 
-		
+
 						}
 						o_denoised2<<endl;
 
@@ -2179,11 +2179,11 @@ int main(int argc, char* argv[])
 
 								if(start_print)
 								{
-									o_denoised3<<read1.c_seq[i];	
-		
+									o_denoised3<<read1.c_seq[i];
+
 								}
 
-		
+
 							}
 							o_denoised3<<endl;
 						}
@@ -2203,41 +2203,41 @@ int main(int argc, char* argv[])
 
 								if(start_print)
 								{
-									o_denoised3<<read2.c_seq[i];	
-		
+									o_denoised3<<read2.c_seq[i];
+
 								}
 
-		
+
 							}
 							o_denoised3<<endl;
 						}
 
-				
+
 					}
-			
-				
+
+
 					//numReads++;
-				
+
 				//	if (numReads==180)
 				//	{cout<<numReads<<endl;}
-				
+
 					if (numReads%10000000==0)
 					{
 						cout<<"Denoised: "<<numReads<< " pairs."<<endl;
-			
+
 						time(&read_time);
 						cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
-				
+
 					}
-				
-				
-			
+
+
+
 
 				}
 
 				//free(Read1.read_bits);
 				//free(Read2.read_bits);
-	
+
 				in_pair1.close();
 				in_pair2.close();
 				in_pair1.clear();
@@ -2245,19 +2245,19 @@ int main(int argc, char* argv[])
 			}
 
 
-	
+
 			time(&read_time);
 
 			cout<<"Time to now: "<<difftime(read_time,beg_time)<<" secs."<<endl;
-	
-	
+
+
 			bool OUT_LOG=1;
 			if(OUT_LOG==1)
 			{
 				ofstream o_DnLog("DenoisingLog.txt",ios::app);
 				o_DnLog<<"Total corrections:"<<endl<<correction_cnt<<endl;;
 			}
-	
+
 
 
 		}
@@ -2276,7 +2276,7 @@ int main(int argc, char* argv[])
 				int TipLenTh=100;
 
 
-			
+
 				string Contig_Filename="Contigs.txt";
 
 				if(MemoryEfficient&(K_size<=32))
@@ -2285,23 +2285,23 @@ int main(int argc, char* argv[])
 				}
 				else
 				{
-					Init_HT0(&merge_ht0,hashTableSZ/50);	
+					Init_HT0(&merge_ht0,hashTableSZ/50);
 					/*
 					if(K_size>32&&K_size<=64)
 					{
-						Init_HT2(&merge_ht2,hashTableSZ/50);	
+						Init_HT2(&merge_ht2,hashTableSZ/50);
 					}
 					else
 					{
 						if(K_size<=96)
 						{
-							Init_HT3(&merge_ht3,hashTableSZ/50);	
+							Init_HT3(&merge_ht3,hashTableSZ/50);
 						}
 						else
 						{
 							if(K_size<=128)
 							{
-								Init_HT4(&merge_ht4,hashTableSZ/50);	
+								Init_HT4(&merge_ht4,hashTableSZ/50);
 							}
 						}
 					}
@@ -2312,7 +2312,7 @@ int main(int argc, char* argv[])
 
 
 				MaxDepth=max(MaxDepth,3*K_size/gap);
-				int MinDepth=max(3,(1*K_size/gap)+1);//MaxDepth;// 
+				int MinDepth=max(3,(1*K_size/gap)+1);//MaxDepth;//
 				int jmp=max((MaxDepth-MinDepth)/3,1);
 				cout<<"Min searching depth: "<<MinDepth<<endl;
 				cout<<"Max searching depth: "<<MaxDepth<<endl;
@@ -2322,20 +2322,20 @@ int main(int argc, char* argv[])
 				for(int depth=MinDepth;depth<=MaxDepth;depth+=jmp)
 				{
 					cout<<"Current depth: "<<depth<<endl;
-			
-			
+
+
 					if(1)
 					{
 						//use the below:
 						if(MemoryEfficient&(K_size<=32))
 						{
 							GraphSimplification(&ht,&merge_ht,&ht2, &merge_ht2,K_size, gap,PathCovTh,depth,PathSim);
-							
+
 						}
 						else
 						{
 							GraphSimplification0(&ht0,&merge_ht0,K_size, gap,PathCovTh,depth,PathSim);
-							
+
 							/*
 							if(K_size<=96)
 							{
@@ -2345,17 +2345,17 @@ int main(int argc, char* argv[])
 							{
 								if(K_size<=128)
 								{
-									GraphSimplification4(&ht4,&merge_ht4, K_size, gap,PathCovTh,depth,PathSim);	
+									GraphSimplification4(&ht4,&merge_ht4, K_size, gap,PathCovTh,depth,PathSim);
 								}
 							}
 							*/
 						}
-				
+
 						if(MemoryEfficient&(K_size<=32))
 						{
-							
+
 							RemovingWeakNodesAndEdges(&ht, K_size,0, 0,&bucket_count, &edge_cnt);
-							
+
 						}
 						else
 						{
@@ -2363,35 +2363,35 @@ int main(int argc, char* argv[])
 							/*
 							if(K_size>32&&K_size<=64)
 							{
-								RemovingWeakNodesAndEdges2(&ht2, K_size,0, 0,&bucket_count, &edge_cnt);	
+								RemovingWeakNodesAndEdges2(&ht2, K_size,0, 0,&bucket_count, &edge_cnt);
 							}
 							else
 							{
 								if(K_size<=96)
 								{
-									RemovingWeakNodesAndEdges3(&ht3, K_size,0, 0,&bucket_count, &edge_cnt);	
+									RemovingWeakNodesAndEdges3(&ht3, K_size,0, 0,&bucket_count, &edge_cnt);
 								}
 								else
 								{
 									if(K_size<=128)
 									{
-										RemovingWeakNodesAndEdges4(&ht4, K_size,0, 0,&bucket_count, &edge_cnt);	
+										RemovingWeakNodesAndEdges4(&ht4, K_size,0, 0,&bucket_count, &edge_cnt);
 									}
 								}
 							}
 							*/
 						}
 
-				
+
 					}
-		
+
 				}
-	
+
 				if(MemoryEfficient&(K_size<=32))
 				{
-			
+
 					SavingMergeHT(&merge_ht);
-			
+
 				}
 				else
 				{
@@ -2402,13 +2402,13 @@ int main(int argc, char* argv[])
 				{
 					SavingMergeHT2(&merge_ht2);
 				}
-		
+
 				if(K_size>64&&K_size<=96)
 				{
 					SavingMergeHT3(&merge_ht3);
 				}
-		
-		
+
+
 				if(K_size>96&&K_size<=128)
 				{
 					SavingMergeHT4(&merge_ht4);
@@ -2418,11 +2418,11 @@ int main(int argc, char* argv[])
 
 			//mark the branches in the simplified graph
 
-	
+
 			if(MemoryEfficient&(K_size<=32))
 			{
 				MarkBranches(&ht);
-			
+
 			}
 			else
 			{
@@ -2456,9 +2456,9 @@ int main(int argc, char* argv[])
 				bool ScreenOffTips=0;
 				if(MemoryEfficient&(K_size<=32))
 				{
-					
+
 					build_contigs(&ht,K_size, gap,Contig_Filename,ScreenOffTips);
-					
+
 				}
 				else
 				{
@@ -2492,11 +2492,11 @@ int main(int argc, char* argv[])
 				vector<size_t> contig_len_vt;
 				size_t cont_len;
 				bool contig_success=1;
-				
+
 				while(contig_success)
 				{
 					contig_success=get_a_fasta_read(in_long_contigs,tag,seq_s,n_tag);
-					
+
 					cont_len=seq_s.size();
 
 					contig_len_vt.push_back(cont_len);
@@ -2523,7 +2523,7 @@ int main(int argc, char* argv[])
 				double r=0.5;
 				o_stats<<"Total len: "<<sum<<endl;
 				TotLength_lst.push_back(sum);
-				
+
 				o_stats<<"Longest contig: "<<contig_len_vt[contig_len_vt.size()-1]<<endl;
 				MaxLen_lst.push_back(contig_len_vt[contig_len_vt.size()-1]);
 				if(GenomeSize>0)
@@ -2540,11 +2540,11 @@ int main(int argc, char* argv[])
 						o_stats<<"N50: "<<contig_len_vt[i]<<endl;
 						N50_lst.push_back(contig_len_vt[i]);
 						break;
-					}		
-		
+					}
+
 				}
 				*/
- 				if(K_size<=32)
+				if(K_size<=32)
 				{
 					ConstructContigGraph(&ht,&merge_ht, K_size, &contigs_info,Contig_Filename);
 				}
@@ -2555,24 +2555,24 @@ int main(int argc, char* argv[])
 
 			}
 
-			
+
 			if(p_filenames_vt.size()==0&&DBG2OLC)
 			{
 
 				cout<<"Collecting non-contained reads"<<endl;
-				
+
 				if(MemoryEfficient&(K_size<=32))
 				{
-					
+
 					CollectingNonContainedReadsSlow(&ht,&merge_ht, &ht2, &merge_ht2,K_size, in_filenames_vt,&contigs_info,Contig_Filename);
-					
+
 				}
 				else
 				{
 
-					
+
 					CollectingNonContainedReadsSlow0(&ht0,&merge_ht0,K_size, in_filenames_vt,&contigs_info,Contig_Filename);
-					
+
 				}
 
 			}
@@ -2596,9 +2596,9 @@ int main(int argc, char* argv[])
 					}
 
 				}
-				
+
 			}
-			
+
 
 			if(Resolving_Branches_PE&&(!Iter_Scaffold))
 			{
@@ -2622,7 +2622,7 @@ int main(int argc, char* argv[])
 					bool MatePair=0;
 					if(K_size<=64)
 					{
-					
+
 						ContigGapEst(&ht,&merge_ht, &ht2,&merge_ht2, K_size,insert_sz_vt, p_filenames_vt,OutwardLib,&contigs_info,ContigFilename,ResumePE,totReads,MatePair);
 					}
 					else
@@ -2655,8 +2655,8 @@ int main(int argc, char* argv[])
 						{
 							ContigsRemapping3(&ht3, K_size, &contigs_info,ContigFilename,0);
 							RemoveUnmappedNodes3(&ht3, K_size);
-							BuildContigAdjacency3(&ht3, &contigs_info, K_size,ContigFilename);	
-				
+							BuildContigAdjacency3(&ht3, &contigs_info, K_size,ContigFilename);
+
 						}
 						else
 						{
@@ -2664,13 +2664,13 @@ int main(int argc, char* argv[])
 							{
 								ContigsRemapping4(&ht4, K_size, &contigs_info,ContigFilename,0);
 								RemoveUnmappedNodes4(&ht4, K_size);
-								BuildContigAdjacency4(&ht4, &contigs_info, K_size,ContigFilename);		
-					
+								BuildContigAdjacency4(&ht4, &contigs_info, K_size,ContigFilename);
+
 							}
 						}
 					}
 				}
-		
+
 				//FindConnectedComponents(&contigs_info);
 
 				if(mp1_filenames_vt.size()==0)
@@ -2692,7 +2692,7 @@ int main(int argc, char* argv[])
 						FreeSparseKmerGraph4(&ht4);
 					}
 				}
-			
+
 				if(ExpCov==0)
 				{cout<<"Error! Expected contig coverage (ExpCov) is not given."<<endl;return -1;}
 				ResolvingRepeatsPE( insert_sz_vt, p_filenames_vt, &contigs_info,ContigFilename,LinkCovTh,UniqueLenTh,ExpCov);
@@ -2704,7 +2704,7 @@ int main(int argc, char* argv[])
 			if((MP_Scaffold&&(mp1_filenames_vt.size()>0))||Iter_Scaffold)
 			{
 				bool MatePair=1;
-				string ContigFilename="SuperContigs.txt";			
+				string ContigFilename="SuperContigs.txt";
 				if(mp1_filenames_vt.size()==0)
 				{
 					MatePair=0;
@@ -2714,9 +2714,9 @@ int main(int argc, char* argv[])
 
 				if(LOAD_PE_DIST==0)
 				{
-				
+
 					if(K_size<=64)
-					{					
+					{
 						ContigGapEst(&ht,&merge_ht, &ht2,&merge_ht2, K_size,insert_sz_vt, mp_filenames_vt,OutwardLibMP,&scaffolds_info,ContigFilename,ResumePE,totReads,MatePair);
 					}
 					else
@@ -2738,7 +2738,7 @@ int main(int argc, char* argv[])
 				{
 					if(K_size<=64)
 					{
-					
+
 
 
 						if(K_size<=32)
@@ -2760,8 +2760,8 @@ int main(int argc, char* argv[])
 						//	MarkUniqueKmers3(&ht3,K_size);
 							SuperContigsRemapping3(&ht3, K_size, &scaffolds_info,ContigFilename,0);
 							RemoveUnmappedNodes3(&ht3, K_size);
-							BuildContigAdjacency3(&ht3, &scaffolds_info, K_size,ContigFilename);	
-				
+							BuildContigAdjacency3(&ht3, &scaffolds_info, K_size,ContigFilename);
+
 						}
 						else
 						{
@@ -2770,8 +2770,8 @@ int main(int argc, char* argv[])
 							//	MarkUniqueKmers4(&ht4,K_size);
 								SuperContigsRemapping4(&ht4, K_size, &scaffolds_info,ContigFilename,0);
 								RemoveUnmappedNodes4(&ht4, K_size);
-								BuildContigAdjacency4(&ht4, &scaffolds_info, K_size,ContigFilename);		
-					
+								BuildContigAdjacency4(&ht4, &scaffolds_info, K_size,ContigFilename);
+
 							}
 						}
 					}
@@ -2780,9 +2780,9 @@ int main(int argc, char* argv[])
 				{
 					scaffolds_info.cov_vt.resize(scaffolds_info.total_contigs);
 				}
-		
+
 				//FindConnectedComponents(&scaffolds_info);
-		
+
 				if(K_size<=32)
 				{
 					FreeSparseKmerGraph(&ht);

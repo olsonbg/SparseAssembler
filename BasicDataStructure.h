@@ -59,12 +59,12 @@ struct edge_node2
 	struct edge_node2 *nxt_edge;
 };
 
-// information for a k-mer node 
+// information for a k-mer node
 struct kmer_info
 {
 	//flags, recording if the node is used in a search, whether the node have branches on its sides...
 	uint8_t used:1,split_left:1,split_right:1,removed:1,flip:1,marked:1,repeat:1,masked:1;
-	//pointers to edge links 
+	//pointers to edge links
 	struct edge_node *left;
 	struct edge_node *right;
 	uint16_t cov1;
@@ -76,7 +76,7 @@ struct kmer_info
 //split the above structure, round 1 of graph construction:
 struct kmer_info_r1
 {
-	uint16_t cov1;	
+	uint16_t cov1;
 };
 
 
@@ -106,14 +106,14 @@ struct bucket2
 
 struct bucket3
 {
-	struct kmer_t3 kmer_t3;	
+	struct kmer_t3 kmer_t3;
 	struct kmer_info kmer_info;
 	bucket3 *nxt_bucket;
 };
 
 struct bucket4
 {
-	struct kmer_t4 kmer_t4;	
+	struct kmer_t4 kmer_t4;
 	struct kmer_info kmer_info;
 	bucket4 *nxt_bucket;
 };
@@ -172,35 +172,35 @@ struct bucket_rm0
 //bucket in round 1
 struct bucket_r1
 {
-	struct kmer_t kmer_t;	
+	struct kmer_t kmer_t;
 	struct kmer_info_r1 kmer_info;
 	bucket_r1 *nxt_bucket;
 };
 
 struct bucket2_r1
 {
-	struct kmer_t2 kmer_t2;	
+	struct kmer_t2 kmer_t2;
 	struct kmer_info_r1 kmer_info;
 	bucket2_r1 *nxt_bucket;
 };
 
 struct bucket3_r1
 {
-	struct kmer_t3 kmer_t3;	
+	struct kmer_t3 kmer_t3;
 	struct kmer_info_r1 kmer_info;
 	bucket3_r1 *nxt_bucket;
 };
 
 struct bucket4_r1
 {
-	struct kmer_t4 kmer_t4;	
+	struct kmer_t4 kmer_t4;
 	struct kmer_info_r1 kmer_info;
 	bucket4_r1 *nxt_bucket;
 };
 
 struct bucket0_r1
 {
-	uint64_t * kmer_t;	
+	uint64_t * kmer_t;
 	struct kmer_info_r1 kmer_info;
 	bucket0_r1 *nxt_bucket;
 };
@@ -245,7 +245,7 @@ struct read_t
 	bool error_nt[1000];
 	char c_seq[10000];//char representation
 	//char *c_seq;//char representation
-	
+
 	//uint64_t read_bits[10000];//bit representation
 	uint64_t *read_bits;
 	//char read[1000];//char representation
@@ -308,7 +308,7 @@ struct contigs_info
 	vector<int> cov_vt;
 	vector<struct c_info> c_info_vt;
 	vector< map<int,struct scaffold_contig_info> > scaffold_adjacency_left,scaffold_adjacency_right;
-	vector< map<int,struct adjacent_contig_info> > contig_adjacency_left,contig_adjacency_right;	
+	vector< map<int,struct adjacent_contig_info> > contig_adjacency_left,contig_adjacency_right;
 };
 
 
@@ -374,7 +374,7 @@ struct BFS_path_info_ctg
 	int cov;
 	int depth;
 	int len;
-	int last_ctg;	
+	int last_ctg;
 };
 
 
@@ -410,7 +410,7 @@ struct stacked_bucket0
 
 bool get_a_fasta_read(ifstream & fasta_in, string &tag, string &str, string & n_tag)
 {
-	
+
 	ifstream tmp_ifstream;
 	string temp;
 	if(!getline(fasta_in,temp))
@@ -427,10 +427,10 @@ bool get_a_fasta_read(ifstream & fasta_in, string &tag, string &str, string & n_
 		str=temp;
 	}
 
-	
+
 	while(getline(fasta_in,temp))
 	{
-		
+
 		if(temp[temp.size()-1]=='\n'||temp[temp.size()-1]=='\r')
 		{temp.resize(temp.size()-1);}
 
@@ -442,9 +442,9 @@ bool get_a_fasta_read(ifstream & fasta_in, string &tag, string &str, string & n_
 		else
 		{
 			str+=temp;
-			
+
 		}
-		
+
 	}
 	return 1;
 }
@@ -452,7 +452,7 @@ bool get_a_fasta_read(ifstream & fasta_in, string &tag, string &str, string & n_
 
 bool get_a_fastq_read(ifstream & fastq_in, string &tag, string &seq, string & quality)
 {
-	
+
 	ifstream tmp_ifstream;
 	string temp;
 	if(!getline(fastq_in,temp))
@@ -493,7 +493,7 @@ bool basic_quality_check(string &seq_s)
 	int nN=seq_sz-1,isN=-1;
 	for(int i=0;i<seq_sz;++i)
 	{
-						
+
 		if(seq_s[i]=='-'||seq_s[i]=='N')
 		{
 			if(i<=seq_sz/2)
@@ -513,7 +513,7 @@ bool basic_quality_check(string &seq_s)
 	{
 		good_read=0;
 	}
-					
+
 	if(good_read==0)
 	{
 		seq_s.clear();
@@ -530,7 +530,7 @@ bool basic_quality_check(string &seq_s)
 		seq_s[s]='\0';
 		seq_s.resize(s);
 	}
-					
+
 	return good_read;
 }
 
@@ -887,7 +887,7 @@ void Init_Read(string &seq,struct read_t & read)
 
 
 
-//static 
+//static
 
 
 //get the complement of a string of nucleotide bases

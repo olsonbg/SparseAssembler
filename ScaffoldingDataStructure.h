@@ -46,12 +46,12 @@ struct scaffold_contig_info
 
 struct c_info
 {
-	 
+
 	uint8_t used:1,removed:1,unique:1,flip:1,marked:1,loc_unique:1,positive:1,rcomp:1;
 };
 
 
-//%} The above is for scaffolding, can be omitted first 
+//%} The above is for scaffolding, can be omitted first
 
 
 
@@ -165,7 +165,7 @@ void ContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_size,st
 	contigs_info->contig_sz_vt.push_back(0);
 	contigs_info->cov_vt.clear();
 	contigs_info->cov_vt.push_back(0);
-	
+
 	if(RecordKmerCnt)
 	{
 		contigs_info->kmer_cnt_vt.clear();
@@ -197,7 +197,7 @@ void ContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_size,st
 		//contigs_info->cov_vt.push_back(int(AvgCov+0.5));
 		struct contig_t Contig;
 		Init_Contig(cont_s,Contig);
-	
+
 		bool Begin=0;
 		int hp=0;
 		for(int i=0;i<Contig.contigLen-K_size+1;++i)
@@ -209,7 +209,7 @@ void ContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_size,st
 				get_sub_arr(Contig.contig_bits,Contig.contigLen,i,K_size,&seq);
 				f_seq=get_rev_comp_seq(seq,K_size);
 
-				
+
 				flip_c=0;
 				if(seq>f_seq)
 				{
@@ -232,7 +232,7 @@ void ContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_size,st
 						o_hit_pos<<hp<<" ";
 						Begin=1;
 					}
-					
+
 					nKmer++;
 					tot_Kmers++;
 					if(RecordKmerCnt)
@@ -382,11 +382,11 @@ void ContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info * co
 	size_t hash_idx;
 	bool flip_c;
 	size_t nKmer=0;
-	
+
 	size_t ht_sz;
-	
+
 	ht_sz=ht->ht_sz;
-	
+
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
 		size_t list_sz=0;
@@ -400,7 +400,7 @@ void ContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info * co
 			list_sz++;
 		}
 	}
-		
+
 
 
 	bool found;
@@ -411,7 +411,7 @@ void ContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info * co
 	contigs_info->contig_sz_vt.push_back(0);
 	contigs_info->cov_vt.clear();
 	contigs_info->cov_vt.push_back(0);
-	
+
 	if(RecordKmerCnt)
 	{
 		contigs_info->kmer_cnt_vt.clear();
@@ -442,7 +442,7 @@ void ContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info * co
 		contigs_info->contig_sz_vt.push_back(ContLen);
 		struct contig_t Contig;
 		Init_Contig(cont_s,Contig);
-		
+
 		bool Begin=0;
 		int hp=0;
 		for(int i=0;i<Contig.contigLen-K_size+1;++i)
@@ -494,7 +494,7 @@ void ContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info * co
 
 				(*ptr)->kmer_info.flip=flip_c;
 			}
-		
+
 
 			if(i==Contig.contigLen-K_size)
 			o_hit_pos<<hp<<endl;
@@ -550,11 +550,11 @@ void ContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info * co
 	size_t hash_idx;
 	bool flip_c;
 	size_t nKmer=0;
-	
+
 	size_t ht_sz;
-	
+
 	ht_sz=ht->ht_sz;
-	
+
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
 		size_t list_sz=0;
@@ -568,7 +568,7 @@ void ContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info * co
 			list_sz++;
 		}
 	}
-		
+
 
 
 	bool found;
@@ -579,7 +579,7 @@ void ContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info * co
 	contigs_info->contig_sz_vt.push_back(0);
 	contigs_info->cov_vt.clear();
 	contigs_info->cov_vt.push_back(0);
-	
+
 	if(RecordKmerCnt)
 	{
 		contigs_info->kmer_cnt_vt.clear();
@@ -610,7 +610,7 @@ void ContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info * co
 		contigs_info->contig_sz_vt.push_back(ContLen);
 		struct contig_t Contig;
 		Init_Contig(cont_s,Contig);
-		
+
 		bool Begin=0;
 		int hp=0;
 		for(int i=0;i<Contig.contigLen-K_size+1;++i)
@@ -662,7 +662,7 @@ void ContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info * co
 
 				(*ptr)->kmer_info.flip=flip_c;
 			}
-		
+
 
 			if(i==Contig.contigLen-K_size)
 			o_hit_pos<<hp<<endl;
@@ -700,7 +700,7 @@ void ContigsRemapping0(struct hashtable0 *ht,int K_size,struct contigs_info * co
 	time_t beg_time,read_time;
 	contigs_info->K_size=K_size;
 	string in_fname=Contig_Filename;
-	ifstream Contigs_in(in_fname.c_str());	
+	ifstream Contigs_in(in_fname.c_str());
 	string ctg_cov_fname="Contigs_Cov.txt",ctg_hp_fname="Contigs_HP.txt";
 
 	if(Contig_Filename=="SuperContigs.txt")
@@ -726,9 +726,9 @@ void ContigsRemapping0(struct hashtable0 *ht,int K_size,struct contigs_info * co
 	{Kmer_arr_sz--;}
 
 	size_t ht_sz;
-	
+
 	ht_sz=ht->ht_sz;
-	
+
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
 		size_t list_sz=0;
@@ -742,7 +742,7 @@ void ContigsRemapping0(struct hashtable0 *ht,int K_size,struct contigs_info * co
 			list_sz++;
 		}
 	}
-		
+
 
 
 	bool found;
@@ -753,7 +753,7 @@ void ContigsRemapping0(struct hashtable0 *ht,int K_size,struct contigs_info * co
 	contigs_info->contig_sz_vt.push_back(0);
 	contigs_info->cov_vt.clear();
 	contigs_info->cov_vt.push_back(0);
-	
+
 	if(RecordKmerCnt)
 	{
 		contigs_info->kmer_cnt_vt.clear();
@@ -785,25 +785,25 @@ void ContigsRemapping0(struct hashtable0 *ht,int K_size,struct contigs_info * co
 		contigs_info->contig_sz_vt.push_back(ContLen);
 		struct contig_t Contig;
 		Init_Contig(cont_s,Contig);
-		
+
 		bool Begin=0;
 		int hp=0;
 		for(int i=0;i<Contig.contigLen-K_size+1;++i)
 		{
-			
+
 			get_sub_arr(Contig.contig_bits,Contig.contigLen,i,K_size,seq);
 			memcpy(f_seq,seq,sizeof(uint64_t)*Kmer_arr_sz);
-			
+
 
 			get_rev_comp_seq_arr(f_seq,K_size,Kmer_arr_sz);
 
 
-			
+
 			flip_c=0;
 			if(uint64_t_cmp(seq,f_seq,Kmer_arr_sz) > 0)
 			{
 				flip_c=1;
-			
+
 				memcpy(seq,f_seq,sizeof(uint64_t)*Kmer_arr_sz);
 			}
 
@@ -856,7 +856,7 @@ void ContigsRemapping0(struct hashtable0 *ht,int K_size,struct contigs_info * co
 					(*ptr)->kmer_info.masked=0;
 				}
 			}
-		
+
 
 			if(i==Contig.contigLen-K_size)
 			o_hit_pos<<hp<<endl;
@@ -910,7 +910,7 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 	size_t hash_idx;
 	bool flip_c;
 	size_t nKmer=0;
-	
+
 	size_t ht_sz;
 	if(K_size<=32)
 	{
@@ -969,7 +969,7 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 	contigs_info->contig_sz_vt.push_back(0);
 	contigs_info->cov_vt.clear();
 	contigs_info->cov_vt.push_back(0);
-	
+
 	if(RecordKmerCnt)
 	{
 		contigs_info->kmer_cnt_vt.clear();
@@ -1000,7 +1000,7 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 		contigs_info->contig_sz_vt.push_back(ContLen);
 		//contigs_info->cov_vt.push_back(int(AvgCov+0.5));
 
-	
+
 		bool Begin=0;
 		int hp=0;
 		int k=0;
@@ -1013,19 +1013,19 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 			if(i==(ContLen-K_size+1))
 			{break;}
 
-			
+
 			for (k=i+1;k<ContLen-K_size+1;++k)
 			{
 				if(cont_s[k]=='N')
 				{break;}
 			}
-			
-			
+
+
 			string contig_subseq=cont_s.substr(i,k-i);
 
 			struct contig_t Contig;
 			Init_Contig(contig_subseq,Contig);
-			
+
 			if(K_size<=32)
 			{
 				for (int j=0;j<((int)contig_subseq.size())-K_size+1;++j)
@@ -1055,7 +1055,7 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 							o_hit_pos<<hp<<" ";
 							Begin=1;
 						}
-					
+
 						nKmer++;
 						if(RecordKmerCnt)
 						{
@@ -1075,7 +1075,7 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 							(*ptr)->kmer_info.contig_no=0;
 						}
 						(*ptr)->kmer_info.flip=flip_c;
-					
+
 					}
 				}
 
@@ -1135,11 +1135,11 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 					}
 				}
 
-			
+
 
 			}
 
-		
+
 		}
 		if(Begin==0)
 		{o_hit_pos<<hp<<" ";}
@@ -1187,11 +1187,11 @@ void SuperContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info
 	size_t hash_idx;
 	bool flip_c;
 	size_t nKmer=0;
-	
+
 	size_t ht_sz;
-	
+
 	ht_sz=ht->ht_sz;
-	
+
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
 		size_t list_sz=0;
@@ -1205,7 +1205,7 @@ void SuperContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info
 			list_sz++;
 		}
 	}
-		
+
 
 
 	bool found;
@@ -1216,7 +1216,7 @@ void SuperContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info
 	contigs_info->contig_sz_vt.push_back(0);
 	contigs_info->cov_vt.clear();
 	contigs_info->cov_vt.push_back(0);
-	
+
 	if(RecordKmerCnt)
 	{
 		contigs_info->kmer_cnt_vt.clear();
@@ -1245,7 +1245,7 @@ void SuperContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info
 
 		ContLen=cont_s.size();
 		contigs_info->contig_sz_vt.push_back(ContLen);
-		
+
 		bool Begin=0;
 		int hp=0;
 
@@ -1260,14 +1260,14 @@ void SuperContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info
 			if(i==(ContLen-K_size+1))
 			{break;}
 
-			
+
 			for (k=i+1;k<ContLen-K_size+1;++k)
 			{
 				if(cont_s[k]=='N')
 				{break;}
 			}
-			
-			
+
+
 			string contig_subseq=cont_s.substr(i,k-i);
 
 			struct contig_t Contig;
@@ -1371,11 +1371,11 @@ void SuperContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info
 	size_t hash_idx;
 	bool flip_c;
 	size_t nKmer=0;
-	
+
 	size_t ht_sz;
-	
+
 	ht_sz=ht->ht_sz;
-	
+
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
 		size_t list_sz=0;
@@ -1389,7 +1389,7 @@ void SuperContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info
 			list_sz++;
 		}
 	}
-		
+
 
 
 	bool found;
@@ -1400,7 +1400,7 @@ void SuperContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info
 	contigs_info->contig_sz_vt.push_back(0);
 	contigs_info->cov_vt.clear();
 	contigs_info->cov_vt.push_back(0);
-	
+
 	if(RecordKmerCnt)
 	{
 		contigs_info->kmer_cnt_vt.clear();
@@ -1431,7 +1431,7 @@ void SuperContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info
 		contigs_info->contig_sz_vt.push_back(ContLen);
 		//struct contig_t Contig;
 		//Init_Contig(cont_s,Contig);
-		
+
 		bool Begin=0;
 		int hp=0;
 
@@ -1446,14 +1446,14 @@ void SuperContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info
 			if(i==(ContLen-K_size+1))
 			{break;}
 
-			
+
 			for (k=i+1;k<ContLen-K_size+1;++k)
 			{
 				if(cont_s[k]=='N')
 				{break;}
 			}
-			
-			
+
+
 			string contig_subseq=cont_s.substr(i,k-i);
 
 			struct contig_t Contig;
@@ -1557,7 +1557,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 	{
 		contig_no++;
 	//	cout<<contig_no<<endl;
-	
+
 		getline(in_ctg,contig_s);
 
 		if(K_size<=32)
@@ -1680,7 +1680,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 						continue;
 					}
 					int n_contig_no=(*nc_ptr)->kmer_info.contig_no;
-					
+
 					if(n_contig_no==0)
 					{
 						edge_ptr=edge_ptr->nxt_edge;
@@ -1838,7 +1838,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 					int edge_len= edge_ptr->len;
 					edge_len++;
 					string edge_s = bitsarr2str(&edgebits,edge_len,edge_cstr,1);
-					
+
 					if((t_flip^flip_nc)==0)
 					{
 
@@ -2250,7 +2250,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 				{
 					//search left, append to left
 					edge_node* edge_ptr=(*ptr)->kmer_info.left;
-			
+
 					while(edge_ptr!=NULL)
 					{
 						kmer_t2 t_kmer=seq,f_kmer;
@@ -2337,7 +2337,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 							int edge_len= edge_ptr->len;
 							edge_len++;
 							string edge_s = bitsarr2str(&edgebits,edge_len,edge_cstr,1);
-							
+
 
 						if((t_flip^flip_nc)==1)
 						{
@@ -2346,7 +2346,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 							{
 								contigs_info->contig_adjacency_left[contig_no][-n_contig_no].cov=edge_ptr->edge_cov;
 								contigs_info->contig_adjacency_left[contig_no][-n_contig_no].bridge=edge_s;
-					
+
 							}
 							else
 							{
@@ -2486,7 +2486,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 						edge_len++;
 						edgebits=get_rev_comp_seq(edgebits,edge_len);
 						string edge_s = bitsarr2str(&edgebits,edge_len,edge_cstr,1);
-						
+
 						if((t_flip^flip_nc)==0)
 						{
 
@@ -2508,7 +2508,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 							{
 								contigs_info->contig_adjacency_left[contig_no][n_contig_no].cov=edge_ptr->edge_cov;;
 								contigs_info->contig_adjacency_left[contig_no][n_contig_no].bridge=edge_s;
-					
+
 							}
 							else
 							{
@@ -2587,7 +2587,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 							int right=(int)((edge_ptr->edge)>>2*j);
 
 
-						
+
 
 
 
@@ -2681,7 +2681,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 						int edge_len= edge_ptr->len;
 						edge_len++;
 						string edge_s = bitsarr2str(&edgebits,edge_len,edge_cstr,1);
-						
+
 
 						if((t_flip^flip_nc)==1)
 						{
@@ -2806,7 +2806,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 					//	if((*nc_ptr)->kmer_info.flip^flip_nc)
 						bool t_flip=(*nc_ptr)->kmer_info.flip;
 
-					
+
 						char edge_cstr[200];
 						uint64_t edgebits=edge_ptr->edge;
 
@@ -2815,7 +2815,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 						edgebits=get_rev_comp_seq(edgebits,edge_len);
 						string edge_s = bitsarr2str(&edgebits,edge_len,edge_cstr,1);
 
-						
+
 
 						if((t_flip^flip_nc)==0)
 						{
@@ -2874,7 +2874,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
 		if(contigs_info->contig_adjacency_left[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_left[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_left[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -2888,7 +2888,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 		out_ctg_graph<<contigs_info->contig_adjacency_right[i].size()<<endl;
 		if(contigs_info->contig_adjacency_right[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_right[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_right[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -2917,7 +2917,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 
 	while(getline(in_ctg,tag))
 	{
-		contig_no++;	
+		contig_no++;
 		getline(in_ctg,contig_s);
 		kmer_t3 seq,f_seq;
 		uint64_t hv;
@@ -2967,7 +2967,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 			{
 				//search left, append to left
 				edge_node* edge_ptr=(*ptr)->kmer_info.left;
-			
+
 				while(edge_ptr!=NULL)
 				{
 					kmer_t3 t_kmer=seq,f_kmer;
@@ -3062,7 +3062,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 						{
 							contigs_info->contig_adjacency_left[contig_no][-n_contig_no].cov=edge_ptr->edge_cov;
 							contigs_info->contig_adjacency_left[contig_no][-n_contig_no].bridge=edge_s;
-					
+
 						}
 						else
 						{
@@ -3223,7 +3223,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 						{
 							contigs_info->contig_adjacency_left[contig_no][n_contig_no].cov=edge_ptr->edge_cov;;
 							contigs_info->contig_adjacency_left[contig_no][n_contig_no].bridge=edge_s;
-					
+
 						}
 						else
 						{
@@ -3523,7 +3523,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 				//	if((*nc_ptr)->kmer_info.flip^flip_nc)
 					bool t_flip=(*nc_ptr)->kmer_info.flip;
 
-					
+
 					char edge_cstr[200];
 					uint64_t edgebits=edge_ptr->edge;
 					int edge_len= edge_ptr->len;
@@ -3587,7 +3587,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
 		if(contigs_info->contig_adjacency_left[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_left[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_left[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -3601,7 +3601,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 		out_ctg_graph<<contigs_info->contig_adjacency_right[i].size()<<endl;
 		if(contigs_info->contig_adjacency_right[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_right[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_right[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -3627,7 +3627,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 
 	while(getline(in_ctg,tag))
 	{
-		contig_no++;	
+		contig_no++;
 		getline(in_ctg,contig_s);
 		kmer_t4 seq,f_seq;
 		uint64_t hv;
@@ -3676,7 +3676,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 			{
 				//search left, append to left
 				edge_node* edge_ptr=(*ptr)->kmer_info.left;
-			
+
 				while(edge_ptr!=NULL)
 				{
 					kmer_t4 t_kmer=seq,f_kmer;
@@ -3775,7 +3775,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 						{
 							contigs_info->contig_adjacency_left[contig_no][-n_contig_no].cov=edge_ptr->edge_cov;
 							contigs_info->contig_adjacency_left[contig_no][-n_contig_no].bridge=edge_s;
-					
+
 						}
 						else
 						{
@@ -3936,7 +3936,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 						{
 							contigs_info->contig_adjacency_left[contig_no][n_contig_no].cov=edge_ptr->edge_cov;;
 							contigs_info->contig_adjacency_left[contig_no][n_contig_no].bridge=edge_s;
-					
+
 						}
 						else
 						{
@@ -4234,7 +4234,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 				//	if((*nc_ptr)->kmer_info.flip^flip_nc)
 					bool t_flip=(*nc_ptr)->kmer_info.flip;
 
-					
+
 					char edge_cstr[200];
 					uint64_t edgebits=edge_ptr->edge;
 					int edge_len= edge_ptr->len;
@@ -4284,7 +4284,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 			}
 
 
-		}	
+		}
 
 
 
@@ -4298,7 +4298,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
 		if(contigs_info->contig_adjacency_left[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_left[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_left[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -4312,7 +4312,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 		out_ctg_graph<<contigs_info->contig_adjacency_right[i].size()<<endl;
 		if(contigs_info->contig_adjacency_right[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_right[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_right[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -4346,7 +4346,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 
 	while(getline(in_ctg,tag))
 	{
-		contig_no++;	
+		contig_no++;
 		getline(in_ctg,contig_s);
 		uint64_t seq[100],f_seq[100];
 		uint64_t hv;
@@ -4363,21 +4363,21 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 
 			string K_mer=contig_s.substr(j,K_size);
 			str2bitsarr(K_mer.c_str(),K_size,seq,Kmer_arr_sz);
-			
+
 			memcpy(f_seq,seq,Kmer_arr_sz*sizeof(uint64_t));
 			get_rev_comp_seq_arr(f_seq,K_size,Kmer_arr_sz);
 			flip_c=0;
 			if(uint64_t_cmp(seq,f_seq,Kmer_arr_sz)>0)
 			{
 				flip_c=1;
-				memcpy(seq,f_seq,Kmer_arr_sz*sizeof(uint64_t));			
+				memcpy(seq,f_seq,Kmer_arr_sz*sizeof(uint64_t));
 			}
 
 			hv=MurmurHash64A(&seq,sizeof(uint64_t)*Kmer_arr_sz,0);
 			hash_idx=(size_t) (hv%(ht->ht_sz));
 
 			ptr= &(ht->store_pos[hash_idx]);
-			
+
 			found=look_up_in_a_list0(seq, &ptr ,Kmer_arr_sz);
 			if(found==0)
 			{continue;}
@@ -4398,12 +4398,12 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 			{
 				//search left, append to left
 				edge_node* edge_ptr=(*ptr)->kmer_info.left;
-			
+
 				while(edge_ptr!=NULL)
 				{
 					uint64_t t_kmer[100],f_kmer[100];
 					memcpy(t_kmer,seq,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 					uint64_t t=0;
 					bool flip_nc=0;
 					for(int j=0;j<=edge_ptr->len;++j)
@@ -4470,7 +4470,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 						{
 							contigs_info->contig_adjacency_left[contig_no][-n_contig_no].cov=edge_ptr->edge_cov;
 							contigs_info->contig_adjacency_left[contig_no][-n_contig_no].bridge=edge_s;
-					
+
 						}
 						else
 						{
@@ -4509,7 +4509,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 				{
 					uint64_t t_kmer[100],f_kmer[100];
 					memcpy(t_kmer,seq,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 					uint64_t t=0;
 					bool flip_nc=0;
 
@@ -4523,7 +4523,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 						t<<=((K_size-1)%32)*2;
 						t_kmer[0]&=(~t);
 						L_shift_NB(t_kmer,2,Kmer_arr_sz);//
-						
+
 						t_kmer[Kmer_arr_sz-1]|=right;
 
 					}
@@ -4531,14 +4531,14 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 					flip_nc=0;
 
 					memcpy(f_kmer,t_kmer,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 					get_rev_comp_seq_arr(f_kmer,K_size,Kmer_arr_sz);
 
 					if(uint64_t_cmp(t_kmer,f_kmer,Kmer_arr_sz)>0)
 					{
-						
+
 						memcpy(t_kmer,f_kmer,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 						flip_nc=!flip_nc;
 					}
 
@@ -4598,7 +4598,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 						{
 							contigs_info->contig_adjacency_left[contig_no][n_contig_no].cov=edge_ptr->edge_cov;;
 							contigs_info->contig_adjacency_left[contig_no][n_contig_no].bridge=edge_s;
-					
+
 						}
 						else
 						{
@@ -4629,19 +4629,19 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 			string K_mer=contig_s.substr(j,K_size);
 
 
-			
+
 			str2bitsarr(K_mer.c_str(),K_size,seq,Kmer_arr_sz);
-			
+
 			memcpy(f_seq,seq,Kmer_arr_sz*sizeof(uint64_t));
 			get_rev_comp_seq_arr(f_seq,K_size,Kmer_arr_sz);
 			flip_c=0;
 			if(uint64_t_cmp(seq,f_seq,Kmer_arr_sz)>0)
 			{
 				flip_c=1;
-				memcpy(seq,f_seq,Kmer_arr_sz*sizeof(uint64_t));			
+				memcpy(seq,f_seq,Kmer_arr_sz*sizeof(uint64_t));
 			}
 
-			
+
 
 			hv=MurmurHash64A(&seq,sizeof(uint64_t)*Kmer_arr_sz,0);
 			hash_idx=(size_t) (hv%(ht->ht_sz));
@@ -4677,7 +4677,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 
 					uint64_t t_kmer[100],f_kmer[100];
 					memcpy(t_kmer,seq,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 					uint64_t t=0;
 					bool flip_nc=0;
 
@@ -4693,7 +4693,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 						t<<=((K_size-1)%32)*2;
 						t_kmer[0]&=(~t);
 						L_shift_NB(t_kmer,2,Kmer_arr_sz);//
-						
+
 						t_kmer[Kmer_arr_sz-1]|=right;
 
 
@@ -4706,14 +4706,14 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 					flip_nc=0;
 
 					memcpy(f_kmer,t_kmer,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 					get_rev_comp_seq_arr(f_kmer,K_size,Kmer_arr_sz);
 
 					if(uint64_t_cmp(t_kmer,f_kmer,Kmer_arr_sz)>0)
 					{
-						
+
 						memcpy(t_kmer,f_kmer,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 						flip_nc=!flip_nc;
 					}
 
@@ -4808,7 +4808,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 
 					uint64_t t_kmer[100],f_kmer[100];
 					memcpy(t_kmer,seq,Kmer_arr_sz*sizeof(uint64_t));
-					
+
 					uint64_t t=0;
 					bool flip_nc=0;
 					for(int j=0;j<=edge_ptr->len;++j)
@@ -4861,7 +4861,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 				//	if((*nc_ptr)->kmer_info.flip^flip_nc)
 					bool t_flip=(*nc_ptr)->kmer_info.flip;
 
-					
+
 					char edge_cstr[200];
 					uint64_t edgebits=edge_ptr->edge;
 					int edge_len= edge_ptr->len;
@@ -4920,7 +4920,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
 		if(contigs_info->contig_adjacency_left[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_left[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_left[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -4934,7 +4934,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 		out_ctg_graph<<contigs_info->contig_adjacency_right[i].size()<<endl;
 		if(contigs_info->contig_adjacency_right[i].size()>0)
 		{
-		
+
 			map<int,struct adjacent_contig_info>::iterator map_beg=contigs_info->contig_adjacency_right[i].begin();
 			map<int,struct adjacent_contig_info>::iterator map_end=contigs_info->contig_adjacency_right[i].end();
 			map<int,struct adjacent_contig_info>::iterator map_it;
@@ -4988,7 +4988,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 	while(1)
 	{
 		NB_it=dist_ctgs.begin();
-		
+
 		if(NB_it==dist_ctgs.end())
 		{break;}
 		if(NB_it->first>max_dist)
@@ -5006,8 +5006,8 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
-		}		
+
+		}
 		new_node=stacked_bkt.bktptr;
 
 		RIGHT=stacked_bkt.RightSearch;
@@ -5023,7 +5023,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 			{
 				//tip end reached so continue.
 				continue;
-				
+
 			}
 
 			while(edge_ptr!=NULL)
@@ -5031,9 +5031,9 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 				kmer=(new_node)->kmer_t.kmer;
 				f_kmer=kmer;
 				f_kmer=get_rev_comp_seq(kmer,K_size);
-				
+
 				int edge_len=(int)(edge_ptr->len);
-				
+
 
 				for(int g=edge_len;g>=0;--g)
 				{
@@ -5068,7 +5068,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 				{
 
 					uint64_t bits1=(*ptr)->kmer_t.kmer;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -5086,8 +5086,8 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 					ptr= &(ht->store_pos[hash_idx]);
 					r_found=look_up_in_a_list(bits1,&ptr);
 
-			
-					
+
+
 				}
 
 
@@ -5106,7 +5106,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 
 						//Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 						Visited_Path[*ptr].depth=(Visited_Path[new_node].depth+1);
-						
+
 						int edge_len=edge_ptr->len;
 						int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
 						Visited_Path[*ptr].len=cum_len;//(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -5118,15 +5118,15 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 							stacked_nodes[*ptr]=-1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=0;
-						
+
 						}
 						else
 						{
 							stacked_nodes[*ptr]=1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=1;
-							
-							
+
+
 						}
 						dist_ctgs[cum_len].push_back(stacked_bkt);
 						NBs++;
@@ -5139,20 +5139,20 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
 							int edge_len=edge_ptr->len;
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-						
+
 							if(r_flip)
 							{
 								stacked_nodes[*ptr]=3;
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=0;
 								//stacked_bkt.BothSideSearch=1;
-								
+
 							}
 							else
 							{
@@ -5160,9 +5160,9 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=1;
 								//stacked_bkt.BothSideSearch=1;
-							
+
 							}
-						
+
 							dist_ctgs[cum_len].push_back(stacked_bkt);
 
 						}
@@ -5173,7 +5173,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 				}
 
 
-				
+
 
 				edge_ptr=edge_ptr->nxt_edge;
 			}
@@ -5196,7 +5196,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 			}
 			edge_ptr=(new_node)->kmer_info.left;
 
-			
+
 			if(lb==0)
 			{
 				continue;
@@ -5249,7 +5249,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 					//cout<<"WarningL"<<endl;
 
 					uint64_t bits1=(*ptr)->kmer_t.kmer;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -5266,7 +5266,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 					ptr= &(ht->store_pos[hash_idx]);
 					l_found=look_up_in_a_list(bits1,&ptr);
 
-					
+
 				}
 
 
@@ -5276,7 +5276,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 					{
 						int edge_len=edge_ptr->len;
 						return (int)(Visited_Path[new_node].len+edge_len+1);//found
-						
+
 					}
 
 					if(stacked_nodes[*ptr]==0)
@@ -5317,13 +5317,13 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
 							int edge_len=edge_ptr->len;
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-							
+
 							if(l_flip)
 							{
 								stacked_nodes[*ptr]=3;
@@ -5342,7 +5342,7 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 							NBs++;
 							//don't do anything,since both strands are visited.
 
-						
+
 
 						}
 					}
@@ -5405,7 +5405,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 	while(1)
 	{
 		NB_it=dist_ctgs.begin();
-		
+
 		if(NB_it==dist_ctgs.end())
 		{break;}
 		if(NB_it->first>max_dist)
@@ -5423,8 +5423,8 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
-		}		
+
+		}
 		new_node=stacked_bkt.bktptr;
 
 		RIGHT=stacked_bkt.RightSearch;
@@ -5440,7 +5440,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 			{
 				//tip end reached so continue.
 				continue;
-				
+
 			}
 
 			while(edge_ptr!=NULL)
@@ -5488,7 +5488,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 				{
 
 					kmer_t2 bits1=(*ptr)->kmer_t2;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -5505,8 +5505,8 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 					ptr= &(ht->store_pos[hash_idx]);
 					r_found=look_up_in_a_list2(&bits1,&ptr);
 
-			
-					
+
+
 				}
 
 
@@ -5516,7 +5516,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 					if((*ptr)==(obj_bktptr))
 					{
 						int edge_len=edge_ptr->len;
-						
+
 						return (int)(Visited_Path[new_node].len+edge_len+1);//found distance
 					}
 
@@ -5537,15 +5537,15 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 							stacked_nodes[*ptr]=-1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=0;
-						
+
 						}
 						else
 						{
 							stacked_nodes[*ptr]=1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=1;
-							
-							
+
+
 						}
 						dist_ctgs[cum_len].push_back(stacked_bkt);
 						NBs++;
@@ -5558,21 +5558,21 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
 							int edge_len=edge_ptr->len;
 
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-						
+
 							if(r_flip)
 							{
 								stacked_nodes[*ptr]=3;
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=0;
 								//stacked_bkt.BothSideSearch=1;
-								
+
 							}
 							else
 							{
@@ -5580,9 +5580,9 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=1;
 								//stacked_bkt.BothSideSearch=1;
-							
+
 							}
-						
+
 							dist_ctgs[cum_len].push_back(stacked_bkt);
 
 						}
@@ -5593,7 +5593,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 				}
 
 
-				
+
 
 				edge_ptr=edge_ptr->nxt_edge;
 			}
@@ -5616,7 +5616,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 			}
 			edge_ptr=(new_node)->kmer_info.left;
 
-			
+
 			if(lb==0)
 			{
 				continue;
@@ -5665,14 +5665,14 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 				ptr= &(ht->store_pos[hash_idx]);
 
 				l_found=look_up_in_a_list2(&kmer2,&ptr);
-			
+
 
 				if(l_found&&(*ptr)->kmer_info.removed==1)
 				{
 					//cout<<"WarningL"<<endl;
 
 					kmer_t2 bits1=(*ptr)->kmer_t2;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -5689,7 +5689,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 					ptr= &(ht->store_pos[hash_idx]);
 					l_found=look_up_in_a_list2(&bits1,&ptr);
 
-					
+
 				}
 
 
@@ -5699,7 +5699,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 					{
 						int edge_len=edge_ptr->len;
 						return (int)(Visited_Path[new_node].len+edge_len+1);//found
-						
+
 					}
 
 					if(stacked_nodes[*ptr]==0)
@@ -5740,13 +5740,13 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
 							int edge_len=edge_ptr->len;
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-						
+
 							if(l_flip)
 							{
 								stacked_nodes[*ptr]=3;
@@ -5765,7 +5765,7 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 							NBs++;
 							//don't do anything,since both strands are visited.
 
-						
+
 
 						}
 					}
@@ -5827,7 +5827,7 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 	while(1)
 	{
 		NB_it=dist_ctgs.begin();
-		
+
 		if(NB_it==dist_ctgs.end())
 		{break;}
 		if(NB_it->first>max_dist)
@@ -5845,8 +5845,8 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
-		}		
+
+		}
 		new_node=stacked_bkt.bktptr;
 
 		RIGHT=stacked_bkt.RightSearch;
@@ -5862,7 +5862,7 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 			{
 				//tip end reached so continue.
 				continue;
-				
+
 			}
 
 					while(edge_ptr!=NULL)
@@ -5912,7 +5912,7 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 				{
 
 					kmer_t3 bits1=(*ptr)->kmer_t3;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -5929,8 +5929,8 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 					ptr= &(ht->store_pos[hash_idx]);
 					r_found=look_up_in_a_list3(&bits1,&ptr);
 
-			
-					
+
+
 				}
 
 
@@ -5960,15 +5960,15 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 							stacked_nodes[*ptr]=-1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=0;
-						
+
 						}
 						else
 						{
 							stacked_nodes[*ptr]=1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=1;
-							
-							
+
+
 						}
 						dist_ctgs[cum_len].push_back(stacked_bkt);
 						NBs++;
@@ -5981,20 +5981,20 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
 							int edge_len=edge_ptr->len;
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-						
+
 							if(r_flip)
 							{
 								stacked_nodes[*ptr]=3;
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=0;
 								//stacked_bkt.BothSideSearch=1;
-								
+
 							}
 							else
 							{
@@ -6002,9 +6002,9 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=1;
 								//stacked_bkt.BothSideSearch=1;
-							
+
 							}
-						
+
 							dist_ctgs[cum_len].push_back(stacked_bkt);
 
 						}
@@ -6015,7 +6015,7 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 				}
 
 
-				
+
 
 				edge_ptr=edge_ptr->nxt_edge;
 			}
@@ -6038,7 +6038,7 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 			}
 			edge_ptr=(new_node)->kmer_info.left;
 
-			
+
 			if(lb==0)
 			{
 				continue;
@@ -6087,13 +6087,13 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 				ptr= &(ht->store_pos[hash_idx]);
 
 				l_found=look_up_in_a_list3(&kmer2,&ptr);
-			
+
 				if(l_found&&(*ptr)->kmer_info.removed==1)
 				{
 					//cout<<"WarningL"<<endl;
 
 					kmer_t3 bits1=(*ptr)->kmer_t3;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -6110,7 +6110,7 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 					ptr= &(ht->store_pos[hash_idx]);
 					l_found=look_up_in_a_list3(&bits1,&ptr);
 
-					
+
 				}
 
 
@@ -6120,14 +6120,14 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 					{
 						int edge_len=edge_ptr->len;
 						return (int)(Visited_Path[new_node].len+edge_len+1);//found
-						
+
 					}
 
 					if(stacked_nodes[*ptr]==0)
 					{
 						//Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 						Visited_Path[*ptr].depth=(Visited_Path[new_node].depth+1);
-						
+
 						int edge_len=edge_ptr->len;
 						int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
 						Visited_Path[*ptr].len=cum_len;
@@ -6162,14 +6162,14 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
-							
+
 							int edge_len=edge_ptr->len;
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-						
+
 							if(l_flip)
 							{
 								stacked_nodes[*ptr]=3;
@@ -6188,7 +6188,7 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 							NBs++;
 							//don't do anything,since both strands are visited.
 
-						
+
 
 						}
 					}
@@ -6250,7 +6250,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 	while(1)
 	{
 		NB_it=dist_ctgs.begin();
-		
+
 		if(NB_it==dist_ctgs.end())
 		{break;}
 		if(NB_it->first>max_dist)
@@ -6268,8 +6268,8 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 		if(NB_it->second.size()==0)
 		{
 			dist_ctgs.erase(NB_it->first);
-			
-		}		
+
+		}
 		new_node=stacked_bkt.bktptr;
 
 		RIGHT=stacked_bkt.RightSearch;
@@ -6285,7 +6285,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 			{
 				//tip end reached so continue.
 				continue;
-				
+
 			}
 
 			while(edge_ptr!=NULL)
@@ -6333,7 +6333,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 				{
 
 					kmer_t4 bits1=(*ptr)->kmer_t4;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -6350,8 +6350,8 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 					ptr= &(ht->store_pos[hash_idx]);
 					r_found=look_up_in_a_list4(&bits1,&ptr);
 
-			
-					
+
+
 				}
 
 
@@ -6360,7 +6360,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 				{
 					if((*ptr)==(obj_bktptr))
 					{
-						
+
 						int edge_len=edge_ptr->len;
 						return (int)(Visited_Path[new_node].len+edge_len+1);//found distance
 					}
@@ -6371,7 +6371,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 
 						//Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 						Visited_Path[*ptr].depth=(Visited_Path[new_node].depth+1);
-						
+
 						int edge_len=edge_ptr->len;
 						int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
 						Visited_Path[*ptr].len=cum_len;//(Visited_Path[new_node].len+edge_ptr->len+1);
@@ -6383,15 +6383,15 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 							stacked_nodes[*ptr]=-1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=0;
-						
+
 						}
 						else
 						{
 							stacked_nodes[*ptr]=1;
 							stacked_bkt.bktptr=*ptr;
 							stacked_bkt.RightSearch=1;
-							
-							
+
+
 						}
 						dist_ctgs[cum_len].push_back(stacked_bkt);
 						NBs++;
@@ -6404,21 +6404,21 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
-							
+
 							int edge_len=edge_ptr->len;
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-						
+
 							if(r_flip)
 							{
 								stacked_nodes[*ptr]=3;
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=0;
 								//stacked_bkt.BothSideSearch=1;
-								
+
 							}
 							else
 							{
@@ -6426,9 +6426,9 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 								stacked_bkt.bktptr=*ptr;
 								stacked_bkt.RightSearch=1;
 								//stacked_bkt.BothSideSearch=1;
-							
+
 							}
-						
+
 							dist_ctgs[cum_len].push_back(stacked_bkt);
 
 						}
@@ -6439,7 +6439,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 				}
 
 
-				
+
 
 				edge_ptr=edge_ptr->nxt_edge;
 			}
@@ -6462,7 +6462,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 			}
 			edge_ptr=(new_node)->kmer_info.left;
 
-			
+
 			if(lb==0)
 			{
 				continue;
@@ -6511,14 +6511,14 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 				ptr= &(ht->store_pos[hash_idx]);
 
 				l_found=look_up_in_a_list4(&kmer2,&ptr);
-			
+
 
 				if(l_found&&(*ptr)->kmer_info.removed==1)
 				{
 					//cout<<"WarningL"<<endl;
 
 					kmer_t4 bits1=(*ptr)->kmer_t4;
-					
+
 					uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
 					uint64_t hash_idx=(size_t) (hv%(merge_ht->ht_sz));
 
@@ -6535,7 +6535,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 					ptr= &(ht->store_pos[hash_idx]);
 					l_found=look_up_in_a_list4(&bits1,&ptr);
 
-					
+
 				}
 
 
@@ -6543,17 +6543,17 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 				{
 					if((*ptr)==obj_bktptr)
 					{
-						
+
 							int edge_len=edge_ptr->len;
 						return (int)(Visited_Path[new_node].len+edge_len+1);//found
-						
+
 					}
 
 					if(stacked_nodes[*ptr]==0)
 					{
 						//Visited_Path[*ptr].cov=(int)(Visited_Path[new_node].cov+edge_ptr->edge_cov);
 						Visited_Path[*ptr].depth=(Visited_Path[new_node].depth+1);
-						
+
 						int edge_len=edge_ptr->len;
 						int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
 						Visited_Path[*ptr].len=cum_len;
@@ -6588,14 +6588,14 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 						{
 							edge_ptr=edge_ptr->nxt_edge;
 							continue;
-						
+
 						}
 						else
 						{
-							
+
 							int edge_len=edge_ptr->len;
 							int cum_len=(int)(Visited_Path[new_node].len+edge_len+1);
-						
+
 							if(l_flip)
 							{
 								stacked_nodes[*ptr]=3;
@@ -6614,7 +6614,7 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 							NBs++;
 							//don't do anything,since both strands are visited.
 
-						
+
 
 						}
 					}
@@ -6645,7 +6645,7 @@ void AppendMergeHT(hashtable *ht,hashtable *merge_ht)
 	kmer_t kmer;
 	struct bucket_rm ** ptr_rm;
 	struct bucket ** ptr;
-	
+
 	for(size_t i=0;i<(merge_ht->ht_sz);++i)
 	{
 		ptr_rm=(bucket_rm **) &(merge_ht->store_pos[i]);
@@ -6664,7 +6664,7 @@ void AppendMergeHT(hashtable *ht,hashtable *merge_ht)
 				((struct bucket*) *ptr)->kmer_info.removed=1;
 			}
 
-			
+
 
 			(ptr_rm)=&((*ptr_rm)->nxt_bucket);
 		}
@@ -6678,7 +6678,7 @@ void AppendMergeHT2(hashtable2 *ht,hashtable2 *merge_ht)
 	kmer_t2 kmer;
 	struct bucket_rm2 ** ptr_rm;
 	struct bucket2 ** ptr;
-	
+
 	for(size_t i=0;i<(merge_ht->ht_sz);++i)
 	{
 		ptr_rm=(bucket_rm2 **) &(merge_ht->store_pos[i]);
@@ -6697,7 +6697,7 @@ void AppendMergeHT2(hashtable2 *ht,hashtable2 *merge_ht)
 				((struct bucket2*) *ptr)->kmer_info.removed=1;
 			}
 
-			
+
 
 			(ptr_rm)=&((*ptr_rm)->nxt_bucket);
 		}
@@ -6711,7 +6711,7 @@ void AppendMergeHT3(hashtable3 *ht,hashtable3 *merge_ht)
 	kmer_t3 kmer;
 	struct bucket_rm3 ** ptr_rm;
 	struct bucket3 ** ptr;
-	
+
 	for(size_t i=0;i<(merge_ht->ht_sz);++i)
 	{
 		ptr_rm=(bucket_rm3 **) &(merge_ht->store_pos[i]);
@@ -6730,7 +6730,7 @@ void AppendMergeHT3(hashtable3 *ht,hashtable3 *merge_ht)
 				((struct bucket3*) *ptr)->kmer_info.removed=1;
 			}
 
-			
+
 
 			(ptr_rm)=&((*ptr_rm)->nxt_bucket);
 		}
@@ -6744,7 +6744,7 @@ void AppendMergeHT4(hashtable4 *ht,hashtable4 *merge_ht)
 	kmer_t4 kmer;
 	struct bucket_rm4 ** ptr_rm;
 	struct bucket4 ** ptr;
-	
+
 	for(size_t i=0;i<(merge_ht->ht_sz);++i)
 	{
 		ptr_rm=(bucket_rm4 **) &(merge_ht->store_pos[i]);
@@ -6763,7 +6763,7 @@ void AppendMergeHT4(hashtable4 *ht,hashtable4 *merge_ht)
 				((struct bucket4*) *ptr)->kmer_info.removed=1;
 			}
 
-			
+
 
 			(ptr_rm)=&((*ptr_rm)->nxt_bucket);
 		}
@@ -6784,7 +6784,7 @@ void AppendMergeHT0(hashtable0 *ht,hashtable0 *merge_ht,int Kmer_arr_sz)
 		while((*ptr_rm)!=NULL)
 		{
 			memcpy(kmer,(*ptr_rm)->kmer_t,sizeof(uint64_t)*Kmer_arr_sz);
-			
+
 			uint64_t hv=MurmurHash64A(kmer,sizeof(uint64_t)*Kmer_arr_sz,0);
 			uint64_t hash_idx=(size_t) (hv%(ht->ht_sz));
 			ptr= &(ht->store_pos[hash_idx]);
@@ -6808,13 +6808,13 @@ void AppendMergeHT0(hashtable0 *ht,hashtable0 *merge_ht,int Kmer_arr_sz)
 
 void RemoveUnmappedNodes(hashtable *ht,hashtable2 *ht2,int K_size)
 {
-	
+
 	if(K_size<=32)
 	{
 		bucket *bktptr;
 		for(size_t i=0;i<ht->ht_sz;++i)
 		{
-			
+
 			bktptr=ht->store_pos[i];
 			while(bktptr!=NULL)
 			{
@@ -6824,7 +6824,7 @@ void RemoveUnmappedNodes(hashtable *ht,hashtable2 *ht2,int K_size)
 				}
 				bktptr=bktptr->nxt_bucket;
 			}
-				
+
 		}
 
 	}
@@ -6832,7 +6832,7 @@ void RemoveUnmappedNodes(hashtable *ht,hashtable2 *ht2,int K_size)
 	{
 		if(K_size>32&&K_size<=64)
 		{
-		
+
 
 			bucket2 *bktptr;
 			for(size_t i=0;i<ht2->ht_sz;++i)
@@ -6852,7 +6852,7 @@ void RemoveUnmappedNodes(hashtable *ht,hashtable2 *ht2,int K_size)
 	}
 
 	int64_t bucket_count=0,edge_cnt=0;
-	
+
 	if(K_size<=32)
 	{
 		RemovingWeakNodesAndEdges(ht, K_size,0, 0,&bucket_count, &edge_cnt);
@@ -6861,7 +6861,7 @@ void RemoveUnmappedNodes(hashtable *ht,hashtable2 *ht2,int K_size)
 	{
 		if(K_size>32&&K_size<=64)
 		{
-			RemovingWeakNodesAndEdges2(ht2, K_size,0, 0,&bucket_count, &edge_cnt);	
+			RemovingWeakNodesAndEdges2(ht2, K_size,0, 0,&bucket_count, &edge_cnt);
 		}
 	}
 }
@@ -6869,7 +6869,7 @@ void RemoveUnmappedNodes(hashtable *ht,hashtable2 *ht2,int K_size)
 
 void RemoveUnmappedNodes3(hashtable3 *ht,int K_size)
 {
-		
+
 
 	bucket3 *bktptr;
 	for(size_t i=0;i<ht->ht_sz;++i)
@@ -6886,15 +6886,15 @@ void RemoveUnmappedNodes3(hashtable3 *ht,int K_size)
 	}
 
 	int64_t bucket_count=0,edge_cnt=0;
-	
-	RemovingWeakNodesAndEdges3(ht, K_size,0, 0,&bucket_count, &edge_cnt);	
-	
+
+	RemovingWeakNodesAndEdges3(ht, K_size,0, 0,&bucket_count, &edge_cnt);
+
 }
 
 
 void RemoveUnmappedNodes4(hashtable4 *ht,int K_size)
 {
-		
+
 
 	bucket4 *bktptr;
 	for(size_t i=0;i<ht->ht_sz;++i)
@@ -6911,9 +6911,9 @@ void RemoveUnmappedNodes4(hashtable4 *ht,int K_size)
 	}
 
 	int64_t bucket_count=0,edge_cnt=0;
-	
-	RemovingWeakNodesAndEdges4(ht, K_size,0, 0,&bucket_count, &edge_cnt);	
-	
+
+	RemovingWeakNodesAndEdges4(ht, K_size,0, 0,&bucket_count, &edge_cnt);
+
 }
 
 
@@ -6926,7 +6926,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 	}
 
 	int MaxDepth=300,MaxSearchLen=2000;
-	
+
 	ofstream o_log;
 	int lib_cnt=1;
 	string pe_name;
@@ -6985,7 +6985,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 	if(ContigFilename=="Contigs.txt")
 	{
 		ContigsRemapping(ht1,ht2, K_size, contigs_info,ContigFilename,0);
-		
+
 	}
 	else
 	{
@@ -7001,7 +7001,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 	else
 	{
 		AppendMergeHT2(ht2,merge_ht2);
-	
+
 	}
 
 	cout<<"Collecting paired ends information."<<endl;
@@ -7014,7 +7014,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 	{
 		lib_no=lib_cnt;
 	}
-	
+
 	for(size_t ii=0;ii<filenames_vt.size();ii+=2)
 	{
 		int BaseInsertSize=-100000;
@@ -7035,8 +7035,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			else
 			{
 			o_log<<"InsertSizeEst_"<<lib_no<<": "<<-10000<<endl;
-			}	
-		
+			}
+
 		}
 		char o_sc_r_n[300],o_sc_l_n[300],o_sc_pd[300],o_sc_inward[300],o_sc_outward[300],o_sc_log[300];
 		if(1)//Iter_Scaffold==0)
@@ -7077,7 +7077,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			SINGLE_READ=0;
 		}
 
-		
+
 		string t1,t2;
 		int cont1,cont2;
 		int64_t cod1,cod2;
@@ -7086,7 +7086,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 		string kmer1,kmer2,seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n;
 		bool fq_flag=0;
 		string fq_tmp;
-	
+
 		struct read_t Read1,Read2;
 
 		Read1.read_bits =(uint64_t*) malloc(100000+100);
@@ -7118,7 +7118,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				fq_flag=1;
 				//fq_tmp=t1.substr(0,5);
 			}
-			
+
 			bool bad_flag1=0,bad_flag2=0;
 			int tag1_sz,tag2_sz;
 			if((!fq_flag&&t1[0]=='>')||(fq_flag&&nLines1%4==1))
@@ -7127,7 +7127,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				tag1_sz=t1.size();
 				tag_s1=t1;
 
-				
+
 
 			}
 			else
@@ -7143,8 +7143,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					continue;
 				}
 			}
-			
-			
+
+
 			while(getline(in_pair1,t1))
 			{
 				nLines1++;
@@ -7163,18 +7163,18 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					nLines1--;
 					continue;
 				}
-				
-			
+
+
 
 				if(t1[0]!='N'&&t1[0]!='A'&&t1[0]!='C'&&t1[0]!='G'&&t1[0]!='T')
 				{
-				
+
 					break;
 				}
 				seq_s1+=t1;
-						
+
 			}
-			
+
 
 			//while(t1.size()>0&&((fq_flag&&(t1.substr(0,5)!=fq_tmp))||((!fq_flag)&&t1[0]!='>')))
 			while(t1.size()>0&&((fq_flag&&nLines1!=1)||((!fq_flag)&&t1[0]!='>')))
@@ -7182,7 +7182,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				getline(in_pair1,t1);
 				nLines1++;
 				nLines1%=4;
-	
+
 			}
 			//cout<<t1<<endl;
 			if(t1.size()==0)
@@ -7190,16 +7190,16 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				break;
 			}
 			tag_s1n=t1;
-										
-						
+
+
 			readLen1=seq_s1.size();
-					
+
 			if (readLen1==0)
 			{
 				cout<<"Empty sequence!"<<endl;
 				bad_flag1=1;
 			}
-			
+
 			for(int i=0;i<readLen1;++i)
 			{
 				if(seq_s1[i]!='A'&&seq_s1[i]!='C'&&seq_s1[i]!='G'&&seq_s1[i]!='T'&&seq_s1[i]!='N')
@@ -7208,14 +7208,14 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					break;
 				}
 			}
-			
-			
+
+
 
 			int nN=readLen1-1,isN=-1;
 
 			for(int i=0;i<readLen1;++i)
 			{
-						
+
 				if(seq_s1[i]=='-'||seq_s1[i]=='N')
 				{
 					if(i<=readLen1/2)
@@ -7235,7 +7235,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			{
 				bad_flag1=1;
 			}
-		
+
 
 			if(isN>=0)
 			{
@@ -7248,26 +7248,26 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				seq_s1.resize(s);
 			}
 
-		
-			
-	
+
+
+
 			if(1)
 			{
-				
+
 				if(!SINGLE_READ)
 				{
 					getline(in_pair2,t2);
 					nLines2++;
 					nLines2%=4;
-	
+
 					if(t2.size()==0)
 					{
-					
+
 						getline(in_pair2,t2);
-					
-					
+
+
 					}
-			
+
 
 					if(t2[t2.size()-1]=='\n'||t2[t2.size()-1]=='\r')
 					{
@@ -7277,9 +7277,9 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					{
 						getline(in_pair2,t2);
 					}
-			
-			
-			
+
+
+
 					//if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(t2.substr(0,5)==fq_tmp)))
 					if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(nLines2==1)))
 					{
@@ -7293,16 +7293,16 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							tag_s2=tag_s2n;
 						}
-					
+
 						if(t2[0]!='N'&&t2[0]!='A'&&t2[0]!='C'&&t2[0]!='G'&&t2[0]!='T')
 						{
 							seq_s2.clear();
-						
+
 							continue;
 						}
 					}
-			
-			
+
+
 					while(getline(in_pair2,t2))
 					{
 						nLines2++;
@@ -7321,18 +7321,18 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							nLines2--;
 							continue;
 						}
-				
-					
+
+
 
 						if(t2[0]!='N'&&t2[0]!='A'&&t2[0]!='C'&&t2[0]!='G'&&t2[0]!='T')
 						{
-					
+
 							break;
 						}
 						seq_s2+=t2;
-						
+
 					}
-			
+
 
 					//while(t2.size()>0&&((fq_flag&&(t2.substr(0,5)!=fq_tmp))||((!fq_flag)&&t2[0]!='>')))
 					while(t2.size()>0&&((fq_flag&&nLines2!=1)||((!fq_flag)&&t2[0]!='>')))
@@ -7340,7 +7340,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						getline(in_pair2,t2);
 						nLines2++;
 						nLines2%=4;
-				
+
 					}
 					if(t2.size()==0)
 					{
@@ -7348,19 +7348,19 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					}
 
 					//cout<<t2<<endl;
-				
+
 					tag_s2n=t2;
-				
-										
-						
+
+
+
 					readLen2=seq_s2.size();
-					
+
 					if (readLen2==0)
 					{
 						cout<<"Empty sequence!"<<endl;
 						bad_flag2=1;
 					}
-			
+
 					for(int i=0;i<readLen2;++i)
 					{
 						if(seq_s2[i]!='A'&&seq_s2[i]!='C'&&seq_s2[i]!='G'&&seq_s2[i]!='T'&&seq_s2[i]!='N')
@@ -7369,15 +7369,15 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							break;
 						}
 					}
-			
-						
-			
-					
+
+
+
+
 
 					int nN=readLen2-1,isN=-1;
 					for(int i=0;i<readLen2;++i)
 					{
-						
+
 						if(seq_s2[i]=='-'||seq_s2[i]=='N')
 						{
 							if(i<=readLen2/2)
@@ -7397,7 +7397,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					{
 						bad_flag2=1;
 					}
-		
+
 
 					if(isN>=0)
 					{
@@ -7409,7 +7409,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						seq_s2[s]='\0';
 						seq_s2.resize(s);
 					}
-		
+
 
 				}
 				else
@@ -7437,7 +7437,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			}
 			if(num_Reads%10000000==0)
 			{
-				
+
 				time(&read_time);
 				cout<<num_Reads<<" Pairs Searched."<<endl;
 				cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
@@ -7457,7 +7457,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				continue;
 			}
 			*/
-		
+
 			if(!SINGLE_READ)
 			{
 				if(isLongLib)
@@ -7469,20 +7469,20 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				{
 					reverse(seq_s2.begin(),seq_s2.end());
 					complement_str(seq_s2);
-						
+
 				}
 			}
 			Init_Read(seq_s1,Read1);
 			seq_s1.clear();
-			
-		
+
+
 			Init_Read(seq_s2,Read2);
 			seq_s2.clear();
-			
+
 			tag1_sz=tag_s1.size();
 			tag2_sz=tag_s2.size();
 
-	
+
 			int mismatch_cnt=0;
 			bool tag_mismatch=0;
 			/*
@@ -7503,7 +7503,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				{
 					mismatch_cnt++;
 
-					
+
 				}
 			}
 			if(mismatch_cnt>3)
@@ -7519,7 +7519,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 			//for non adjacent relation
 
-		
+
 			struct bucket **ptr1_d,**ptr2_d;
 			struct bucket2 **ptr1_t2d,**ptr2_t2d;
 			bool flip_1d;
@@ -7543,7 +7543,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					found=look_up_in_a_list(bits1,&ptr1);
 					if(found)
 					{
-						
+
 					//	cout<<"f"<<endl;
 
 						found1=1;
@@ -7557,12 +7557,12 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							flip_1=(*ptr1)->kmer_info.flip^flip_0;
 							pos1=i;
 
-							break;		
+							break;
 						}
 						else
 						{
 							bool flip_1=flip_0;
-							
+
 							while(1)//up search in the tree flip as needed,and if finally found, update the values.
 							{
 								uint64_t hv=MurmurHash64A(&bits1,sizeof(bits1),0);
@@ -7572,7 +7572,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 								ptr=(bucket_rm **) &(merge_ht1->store_pos[hash_idx]);
 								//r_found=look_up_in_a_list_rm((*ptr1)->kmer_t.kmer,&ptr);
 								bool r_found=look_up_in_a_list_rm(bits1,&ptr);
-								
+
 								if(r_found==1)
 								{
 									flip_1^=(*ptr)->flip;
@@ -7589,7 +7589,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							struct bucket **ptr1;
 							ptr1= &(ht1->store_pos[hash_idx]);
 							found1=look_up_in_a_list(bits1,&ptr1);
-							
+
 
 							if(found1&&(!(*ptr1)->kmer_info.removed))
 							{
@@ -7600,8 +7600,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 								flip_1=(*ptr1)->kmer_info.flip^flip_1;
 								pos1=i;
 
-							
-								
+
+
 							}
 							else
 							{
@@ -7613,7 +7613,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 						}
 
-						
+
 					}
 				}
 				else
@@ -7639,7 +7639,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						found=look_up_in_a_list2(&bits1_t2,&ptr1);
 						if(found)
 						{
-							
+
 							found1=1;
 
 
@@ -7656,12 +7656,12 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 								flip_1=(*ptr1)->kmer_info.flip^flip_0;
 								pos1=i;
 
-								break;		
+								break;
 							}
 							else
 							{
 								bool flip_1=flip_0;
-							
+
 								while(1)//up search in the tree flip as needed,and if finally found, update the values.
 								{
 									uint64_t hv=MurmurHash64A(&bits1_t2,sizeof(bits1_t2),0);
@@ -7669,10 +7669,10 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 									struct bucket_rm2 ** ptr;
 									ptr=(bucket_rm2 **) &(merge_ht2->store_pos[hash_idx]);
-									
+
 									//r_found=look_up_in_a_list_rm2(&((*ptr1)->kmer_t2),&ptr);
 									bool r_found=look_up_in_a_list_rm2(&bits1_t2,&ptr);
-									
+
 									if(r_found==1)
 									{
 										flip_1^=(*ptr)->flip;
@@ -7697,8 +7697,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 									flip_1=(*ptr1)->kmer_info.flip^flip_1;
 									pos1=i;
 
-							
-								
+
+
 								}
 								else
 								{
@@ -7716,7 +7716,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 
 
-						
+
 						}
 					}
 				}
@@ -7749,7 +7749,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					found=look_up_in_a_list(bits2,&ptr2);
 					if(found)
 					{
-						
+
 					//	cout<<"f"<<endl;
 
 						found2=1;
@@ -7761,12 +7761,12 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							flip_2=(*ptr2)->kmer_info.flip^flip_0;
 							pos2=i;
 
-							break;		
+							break;
 						}
 						else
 						{
 							bool flip_2=flip_0;
-							
+
 							while(1)//up search in the tree flip as needed,and if finally found, update the values.
 							{
 								uint64_t hv=MurmurHash64A(&bits2,sizeof(bits2),0);
@@ -7799,7 +7799,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 								cont2=(*ptr2)->kmer_info.contig_no;
 								flip_2=(*ptr2)->kmer_info.flip^flip_2;
 								pos2=i;
-			
+
 							}
 							else
 							{
@@ -7862,12 +7862,12 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 								flip_2=(*ptr2)->kmer_info.flip^flip_0;
 								pos2=i;
 
-								break;		
+								break;
 							}
 							else
 							{
 								bool flip_2=flip_0;
-							
+
 								while(1)//up search in the tree flip as needed,and if finally found, update the values.
 								{
 									uint64_t hv=MurmurHash64A(&bits2_t2,sizeof(bits2_t2),0);
@@ -7899,8 +7899,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 									flip_2=(*ptr2)->kmer_info.flip^flip_2;
 									pos2=i;
 
-							
-								
+
+
 								}
 								else
 								{
@@ -7944,7 +7944,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			{
 				int pdist=-10000;
 
-				
+
 				if(MatePair&&LocalSearch)
 				{
 
@@ -7962,7 +7962,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							stacked_bucket.RightSearch=0;
 						}
 						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -7976,7 +7976,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
 						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -7987,8 +7987,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							outward_not_found++;
 						}
-						
-						
+
+
 					}
 					else
 					{
@@ -8004,7 +8004,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							stacked_bucket.RightSearch=0;
 						}
 						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -8017,7 +8017,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						}
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
 						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -8028,16 +8028,16 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							outward_not_found++;
 						}
-					
+
 					}
 				}
-				
+
 				if(ignore==1)
 				{
-							
+
 					continue;
 				}
-			
+
 
 				if(flip_1==0&&(cod2>cod1))
 				{
@@ -8086,10 +8086,10 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 			if(cont1!=cont2)
 			{
-				
+
 				int pdist=-10000;
 
-				
+
 				if(MatePair&&LocalSearch)
 				{
 
@@ -8107,7 +8107,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							stacked_bucket.RightSearch=0;
 						}
 						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -8121,7 +8121,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
 						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -8132,8 +8132,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							outward_not_found++;
 						}
-						
-						
+
+
 					}
 					else
 					{
@@ -8149,7 +8149,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							stacked_bucket.RightSearch=0;
 						}
 						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -8162,7 +8162,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						}
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
 						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-						
+
 						if(pdist>0)
 						{
 							ignore=1;
@@ -8173,23 +8173,23 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							outward_not_found++;
 						}
-					
+
 					}
 				}
-				
+
 				if(ignore==1)
 				{
-							
+
 					continue;
 				}
-			
+
 
 
 				//cout<<pdist<<endl;
-				
+
 
 				///////
-              
+
 
 				int64_t d1,d2,d3,d4,dist;
 
@@ -8204,7 +8204,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					{
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;////
 						dist=d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
-						
+
 						o_Pdist_R<<cont1 <<" "<<cont2<<" "<<d1<<endl;//" Library: "<<lib_no<<endl;
 				//		o_Pdist_L<<cont2 <<" "<<cont1<<" "<<d1<<" Library: "<<ii<<endl;
 
@@ -8214,7 +8214,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						int64_t r_cod2=(int64_t)(contigs_info->contig_sz_vt[cont2])-cod2-(int64_t)K_size;
 						dist=d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
 						//int64_t Tdist=(scaffold_len+pos2-readLen2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;////
-						
+
 						o_Pdist_R<<cont1 <<" "<<-cont2<<" "<<d2<<endl;//" Library: "<<lib_no<<endl;
 					//	o_Pdist_R<<cont2 <<" "<<-cont1<<" "<<d2<<" Library: "<<lib_no<<endl;
 
@@ -8268,7 +8268,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 		}
 
 		o_Pdist_log<<"Inward found:"<<inward_found<<endl;
-		o_Pdist_log<<"Inward not found:"<<inward_not_found<<endl;		
+		o_Pdist_log<<"Inward not found:"<<inward_not_found<<endl;
 		o_Pdist_log<<"Outward found:"<<outward_found<<endl;
 		o_Pdist_log<<"Outward not found:"<<outward_not_found<<endl;
 
@@ -8279,8 +8279,8 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 		o_log<<"InsertSizeEst_"<<lib_no<<": "<<-10000<<endl;
 		}
 	}
-	
-	
+
+
 ///end for all insert size
 
 
@@ -8309,7 +8309,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 	int lib_cnt=1;
 	if(0)//ResumePE)
 	{
-		
+
 		ifstream in_pe_info(pe_name.c_str(),ios::app);
 
 		string str,s;
@@ -8320,7 +8320,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			ins_est_vt.push_back(ins_est);
 		}
 		lib_cnt=ins_est_vt.size();
-		
+
 	}
 	else
 	{
@@ -8339,9 +8339,9 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 	bool found;
 	bool flip_1,flip_2,flip_0;
 	size_t ht_sz;
-	
+
 	ht_sz=ht->ht_sz;
-	
+
 
 	bool FAST=1;
 	map<int,vector<int> > hit_position;
@@ -8351,7 +8351,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 	if(ContigFilename=="Contigs.txt")
 	{
 		ContigsRemapping3(ht, K_size, contigs_info,ContigFilename,0);
-	
+
 	}
 	else
 	{
@@ -8371,8 +8371,8 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 	{
 		lib_no=lib_cnt;
 	}
-	
-	
+
+
 	for(size_t ii=0;ii<filenames_vt.size();ii+=2)
 	{
 		int BaseInsertSize=-100000;
@@ -8396,7 +8396,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 		}
 
 		char o_sc_r_n[300],o_sc_l_n[300],o_sc_pd[300],o_sc_inward[300],o_sc_outward[300],o_sc_log[300];
-		
+
 		if(1)//Iter_Scaffold==0)
 		{
 		sprintf(o_sc_r_n,"Pdist_R_lib_%d.txt",lib_no);
@@ -8417,7 +8417,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 		}
 		ofstream o_Pdist_R(o_sc_r_n),o_Pdist_L(o_sc_l_n),o_Pdist(o_sc_pd),o_Pdist_in(o_sc_inward),o_Pdist_out(o_sc_outward),o_Pdist_log(o_sc_log);
 		uint64_t inward_found=0,inward_not_found=0,outward_found=0,outward_not_found=0;
-		
+
 		dist_sum=0,p_cnt=0;
 		cout<<"Processing library: "<<ii<<" & "<<ii+1<<endl;
 		//scaffold_len=insert_sz_vt[ii/2];
@@ -8436,7 +8436,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			SINGLE_READ=0;
 		}
 
-		
+
 		string t1,t2;
 		int cont1,cont2;
 		int64_t cod1,cod2;
@@ -8445,7 +8445,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 		string kmer1,kmer2,seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n;
 		bool fq_flag=0;
 		string fq_tmp;
-	
+
 		struct read_t Read1,Read2;
 		Read1.read_bits =(uint64_t*) malloc(100000+100);
 		Read2.read_bits =(uint64_t*) malloc(100000+100);
@@ -8475,7 +8475,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				fq_flag=1;
 				//fq_tmp=t1.substr(0,5);
 			}
-			
+
 			bool bad_flag1=0,bad_flag2=0;
 			int tag1_sz,tag2_sz;
 			if((!fq_flag&&t1[0]=='>')||(fq_flag&&nLines1%4==1))
@@ -8484,7 +8484,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				tag1_sz=t1.size();
 				tag_s1=t1;
 
-				
+
 
 			}
 			else
@@ -8500,8 +8500,8 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					continue;
 				}
 			}
-			
-			
+
+
 			while(getline(in_pair1,t1))
 			{
 				nLines1++;
@@ -8520,18 +8520,18 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					nLines1--;
 					continue;
 				}
-				
-			
+
+
 
 				if(t1[0]!='N'&&t1[0]!='A'&&t1[0]!='C'&&t1[0]!='G'&&t1[0]!='T')
 				{
-				
+
 					break;
 				}
 				seq_s1+=t1;
-						
+
 			}
-			
+
 
 			//while(t1.size()>0&&((fq_flag&&(t1.substr(0,5)!=fq_tmp))||((!fq_flag)&&t1[0]!='>')))
 			while(t1.size()>0&&((fq_flag&&nLines1!=1)||((!fq_flag)&&t1[0]!='>')))
@@ -8539,7 +8539,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				getline(in_pair1,t1);
 				nLines1++;
 				nLines1%=4;
-	
+
 			}
 			//cout<<t1<<endl;
 			if(t1.size()==0)
@@ -8547,16 +8547,16 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				break;
 			}
 			tag_s1n=t1;
-										
-						
+
+
 			readLen1=seq_s1.size();
-					
+
 			if (readLen1==0)
 			{
 				cout<<"Empty sequence!"<<endl;
 				bad_flag1=1;
 			}
-			
+
 			for(int i=0;i<readLen1;++i)
 			{
 				if(seq_s1[i]!='A'&&seq_s1[i]!='C'&&seq_s1[i]!='G'&&seq_s1[i]!='T'&&seq_s1[i]!='N')
@@ -8565,14 +8565,14 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					break;
 				}
 			}
-			
-			
+
+
 
 			int nN=readLen1-1,isN=-1;
 
 			for(int i=0;i<readLen1;++i)
 			{
-						
+
 				if(seq_s1[i]=='-'||seq_s1[i]=='N')
 				{
 					if(i<=readLen1/2)
@@ -8592,7 +8592,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			{
 				bad_flag1=1;
 			}
-		
+
 
 			if(isN>=0)
 			{
@@ -8605,26 +8605,26 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				seq_s1.resize(s);
 			}
 
-		
-			
-	
+
+
+
 			if(1)
 			{
-				
+
 				if(!SINGLE_READ)
 				{
 					getline(in_pair2,t2);
 					nLines2++;
 					nLines2%=4;
-	
+
 					if(t2.size()==0)
 					{
-					
+
 						getline(in_pair2,t2);
-					
-					
+
+
 					}
-			
+
 
 					if(t2[t2.size()-1]=='\n'||t2[t2.size()-1]=='\r')
 					{
@@ -8634,9 +8634,9 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					{
 						getline(in_pair2,t2);
 					}
-			
-			
-			
+
+
+
 					//if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(t2.substr(0,5)==fq_tmp)))
 					if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(nLines2==1)))
 					{
@@ -8650,16 +8650,16 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						{
 							tag_s2=tag_s2n;
 						}
-					
+
 						if(t2[0]!='N'&&t2[0]!='A'&&t2[0]!='C'&&t2[0]!='G'&&t2[0]!='T')
 						{
 							seq_s2.clear();
-						
+
 							continue;
 						}
 					}
-			
-			
+
+
 					while(getline(in_pair2,t2))
 					{
 						nLines2++;
@@ -8678,18 +8678,18 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 							nLines2--;
 							continue;
 						}
-				
-					
+
+
 
 						if(t2[0]!='N'&&t2[0]!='A'&&t2[0]!='C'&&t2[0]!='G'&&t2[0]!='T')
 						{
-					
+
 							break;
 						}
 						seq_s2+=t2;
-						
+
 					}
-			
+
 
 					//while(t2.size()>0&&((fq_flag&&(t2.substr(0,5)!=fq_tmp))||((!fq_flag)&&t2[0]!='>')))
 					while(t2.size()>0&&((fq_flag&&nLines2!=1)||((!fq_flag)&&t2[0]!='>')))
@@ -8697,7 +8697,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						getline(in_pair2,t2);
 						nLines2++;
 						nLines2%=4;
-				
+
 					}
 					if(t2.size()==0)
 					{
@@ -8705,19 +8705,19 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					}
 
 					//cout<<t2<<endl;
-				
+
 					tag_s2n=t2;
-				
-										
-						
+
+
+
 					readLen2=seq_s2.size();
-					
+
 					if (readLen2==0)
 					{
 						cout<<"Empty sequence!"<<endl;
 						bad_flag2=1;
 					}
-			
+
 					for(int i=0;i<readLen2;++i)
 					{
 						if(seq_s2[i]!='A'&&seq_s2[i]!='C'&&seq_s2[i]!='G'&&seq_s2[i]!='T'&&seq_s2[i]!='N')
@@ -8727,17 +8727,17 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 							break;
 						}
 					}
-			
-						
-			
-					
-				
+
+
+
+
+
 
 
 					int nN=readLen2-1,isN=-1;
 					for(int i=0;i<readLen2;++i)
 					{
-						
+
 						if(seq_s2[i]=='-'||seq_s2[i]=='N')
 						{
 							if(i<=readLen2/2)
@@ -8757,7 +8757,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					{
 						bad_flag2=1;
 					}
-		
+
 
 					if(isN>=0)
 					{
@@ -8769,7 +8769,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						seq_s2[s]='\0';
 						seq_s2.resize(s);
 					}
-		
+
 
 				}
 				else
@@ -8795,7 +8795,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			}
 			if(num_Reads%10000000==0)
 			{
-				
+
 				time(&read_time);
 				cout<<num_Reads<<" Pairs Searched."<<endl;
 				cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
@@ -8811,7 +8811,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				continue;
 			}
 			*/
-		
+
 			if(!SINGLE_READ)
 			{
 				if(isLongLib)
@@ -8823,20 +8823,20 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				{
 					reverse(seq_s2.begin(),seq_s2.end());
 					complement_str(seq_s2);
-						
+
 				}
 			}
 			Init_Read(seq_s1,Read1);
 			seq_s1.clear();
-			
-		
+
+
 			Init_Read(seq_s2,Read2);
 			seq_s2.clear();
-			
+
 			tag1_sz=tag_s1.size();
 			tag2_sz=tag_s2.size();
 
-	
+
 			int mismatch_cnt=0;
 			bool tag_mismatch=0;
 			/*
@@ -8857,7 +8857,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				{
 					mismatch_cnt++;
 
-					
+
 				}
 			}
 			if(mismatch_cnt>3)
@@ -8871,8 +8871,8 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 
 			bool found1=0,found2=0,LocalSearch=1;
 
-			
-		
+
+
 			struct bucket3 **ptr1_d,**ptr2_d;
 			//struct bucket2 **ptr1_t2d,**ptr2_t2d;
 			bool flip_1d;
@@ -8880,11 +8880,11 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			//for non adjacent relation
 
 			//	cout<<num_Reads<<endl;
-		
+
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
 			{
-				
-				
+
+
 				get_sub_arr(Read1.read_bits,Read1.readLen,i,K_size,bits1_t3.kmer);
 
 				f_seq_t3=bits1_t3;
@@ -8920,12 +8920,12 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						flip_1=(*ptr1)->kmer_info.flip^flip_0;
 						pos1=i;
 
-						break;		
+						break;
 					}
 					else
 					{
 						bool flip_1=flip_0;
-							
+
 						while(1)//up search in the tree flip as needed,and if finally found, update the values.
 						{
 							uint64_t hv=MurmurHash64A(&bits1_t3,sizeof(bits1_t3),0);
@@ -8959,8 +8959,8 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 							flip_1=(*ptr1)->kmer_info.flip^flip_1;
 							pos1=i;
 
-							
-								
+
+
 						}
 						else
 						{
@@ -8978,10 +8978,10 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 
 
 
-						
+
 				}
-			
-			
+
+
 
 
 			}
@@ -9024,12 +9024,12 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						flip_2=(*ptr2)->kmer_info.flip^flip_0;
 						pos2=i;
 
-						break;		
+						break;
 					}
 					else
 					{
 						bool flip_2=flip_0;
-							
+
 						while(1)//up search in the tree flip as needed,and if finally found, update the values.
 						{
 							uint64_t hv=MurmurHash64A(&bits2_t3,sizeof(bits2_t3),0);
@@ -9061,7 +9061,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 							cont2=(*ptr2)->kmer_info.contig_no;
 							flip_2=(*ptr2)->kmer_info.flip^flip_2;
 							pos2=i;
-	
+
 						}
 						else
 						{
@@ -9102,7 +9102,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			{
 				if(flip_1==0&&(cod2>cod1))
 				{
-					
+
 					int pdist=(int)((cod2-cod1)+pos1+readLen2-pos2);
 					if(BaseInsertSize<-1000||(BaseInsertSize<=500&&((pdist<=(2*BaseInsertSize))&&(pdist>=(-100))))||((pdist<=(3*BaseInsertSize/2))&&(pdist>=(BaseInsertSize/2))))
 					{
@@ -9150,7 +9150,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			{
 				int pdist=-10000;
 
-				
+
 				if(MatePair&&LocalSearch)
 				{
 					struct stacked_bucket3 stacked_bucket;
@@ -9165,7 +9165,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						stacked_bucket.RightSearch=0;
 					}
 					pdist= BFSearchDist3(ht, merge_ht, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
-					
+
 					if(pdist>0)
 					{
 						ignore=1;
@@ -9192,7 +9192,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				}
 				if(ignore==1)
 				{continue;}
-			
+
 				int64_t d1,d2,d3,d4,dist;
 
 				// build adjacency info for cont1&2
@@ -9206,7 +9206,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					{
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;////
 						dist=d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
-						
+
 						o_Pdist_R<<cont1 <<" "<<cont2<<" "<<d1<<endl;//" Library: "<<lib_no<<endl;
 				//		o_Pdist_L<<cont2 <<" "<<cont1<<" "<<d1<<" Library: "<<ii<<endl;
 
@@ -9216,7 +9216,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						int64_t r_cod2=(int64_t)(contigs_info->contig_sz_vt[cont2])-cod2-(int64_t)K_size;
 						dist=d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
 						//int64_t Tdist=(scaffold_len+pos2-readLen2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;////
-						
+
 						o_Pdist_R<<cont1 <<" "<<-cont2<<" "<<d2<<endl;//" Library: "<<lib_no<<endl;
 					//	o_Pdist_R<<cont2 <<" "<<-cont1<<" "<<d2<<" Library: "<<lib_no<<endl;
 
@@ -9269,7 +9269,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 
 		}
 		o_Pdist_log<<"Inward found:"<<inward_found<<endl;
-		o_Pdist_log<<"Inward not found:"<<inward_not_found<<endl;		
+		o_Pdist_log<<"Inward not found:"<<inward_not_found<<endl;
 		o_Pdist_log<<"Outward found:"<<outward_found<<endl;
 		o_Pdist_log<<"Outward not found:"<<outward_not_found<<endl;
 		if(p_cnt>0)
@@ -9279,7 +9279,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 		o_log<<"InsertSizeEst_"<<lib_no<<": "<<-10000<<endl;
 		}
 	}
-	
+
 
 
 }
@@ -9314,7 +9314,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			ins_est_vt.push_back(ins_est);
 		}
 		lib_cnt=ins_est_vt.size();
-		
+
 	}
 	else
 	{
@@ -9333,9 +9333,9 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 	bool found;
 	bool flip_1,flip_2,flip_0;
 	size_t ht_sz;
-	
+
 	ht_sz=ht->ht_sz;
-	
+
 
 	bool FAST=1;
 	map<int,vector<int> > hit_position;
@@ -9346,7 +9346,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 	if(ContigFilename=="Contigs.txt")
 	{
 		ContigsRemapping4(ht, K_size, contigs_info,ContigFilename,0);
-	
+
 	}
 	else
 	{
@@ -9366,16 +9366,16 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 	{
 		lib_no=lib_cnt;
 	}
-	
 
-	
+
+
 	for(size_t ii=0;ii<filenames_vt.size();ii+=2)
 	{
 		int BaseInsertSize=-100000;
 		vector<int> insert_sz_est_vt;
 		if(insert_sz_vt.size()==(filenames_vt.size()/2))
 		{
-			BaseInsertSize=insert_sz_vt[ii/2];	
+			BaseInsertSize=insert_sz_vt[ii/2];
 			if(BaseInsertSize>10000)
 			{MatePair=1;}
 		}
@@ -9388,11 +9388,11 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			else
 			{
 			o_log<<"InsertSizeEst_"<<lib_no<<": "<<-10000<<endl;
-			}	
-		
+			}
+
 		}
-		
-		
+
+
 		char o_sc_r_n[300],o_sc_l_n[300],o_sc_pd[300],o_sc_inward[300],o_sc_outward[300],o_sc_log[300];
 		if(1)//Iter_Scaffold==0)
 		{
@@ -9412,10 +9412,10 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 		sprintf(o_sc_outward,"PdistIter_outward_lib_%d.txt",lib_no);
 		sprintf(o_sc_log,"PdistIter_lib_%d_log.txt",lib_no);
 		}
-		
+
 		ofstream o_Pdist_R(o_sc_r_n),o_Pdist_L(o_sc_l_n),o_Pdist(o_sc_pd),o_Pdist_in(o_sc_inward),o_Pdist_out(o_sc_outward),o_Pdist_log(o_sc_log);
 		uint64_t inward_found=0,inward_not_found=0,outward_found=0,outward_not_found=0;
-		
+
 		dist_sum=0,p_cnt=0;
 		cout<<"Processing library: "<<ii<<" & "<<ii+1<<endl;
 		//scaffold_len=insert_sz_vt[ii/2];
@@ -9434,7 +9434,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			SINGLE_READ=0;
 		}
 
-		
+
 		string t1,t2;
 		int cont1,cont2;
 		int64_t cod1,cod2;
@@ -9443,7 +9443,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 		string kmer1,kmer2,seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n;
 		bool fq_flag=0;
 		string fq_tmp;
-	
+
 		struct read_t Read1,Read2;
 		Read1.read_bits =(uint64_t*) malloc(100000+100);
 		Read2.read_bits =(uint64_t*) malloc(100000+100);
@@ -9474,7 +9474,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				fq_flag=1;
 				//fq_tmp=t1.substr(0,5);
 			}
-			
+
 			bool bad_flag1=0,bad_flag2=0;
 			int tag1_sz,tag2_sz;
 			if((!fq_flag&&t1[0]=='>')||(fq_flag&&nLines1%4==1))
@@ -9483,7 +9483,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				tag1_sz=t1.size();
 				tag_s1=t1;
 
-				
+
 
 			}
 			else
@@ -9499,8 +9499,8 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					continue;
 				}
 			}
-			
-			
+
+
 			while(getline(in_pair1,t1))
 			{
 				nLines1++;
@@ -9519,18 +9519,18 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					nLines1--;
 					continue;
 				}
-				
-			
+
+
 
 				if(t1[0]!='N'&&t1[0]!='A'&&t1[0]!='C'&&t1[0]!='G'&&t1[0]!='T')
 				{
-				
+
 					break;
 				}
 				seq_s1+=t1;
-						
+
 			}
-			
+
 
 			//while(t1.size()>0&&((fq_flag&&(t1.substr(0,5)!=fq_tmp))||((!fq_flag)&&t1[0]!='>')))
 			while(t1.size()>0&&((fq_flag&&nLines1!=1)||((!fq_flag)&&t1[0]!='>')))
@@ -9538,7 +9538,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				getline(in_pair1,t1);
 				nLines1++;
 				nLines1%=4;
-	
+
 			}
 			//cout<<t1<<endl;
 			if(t1.size()==0)
@@ -9546,16 +9546,16 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				break;
 			}
 			tag_s1n=t1;
-										
-						
+
+
 			readLen1=seq_s1.size();
-					
+
 			if (readLen1==0)
 			{
 				cout<<"Empty sequence!"<<endl;
 				bad_flag1=1;
 			}
-			
+
 			for(int i=0;i<readLen1;++i)
 			{
 				if(seq_s1[i]!='A'&&seq_s1[i]!='C'&&seq_s1[i]!='G'&&seq_s1[i]!='T'&&seq_s1[i]!='N')
@@ -9564,12 +9564,12 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					break;
 				}
 			}
-			
+
 			int nN=readLen1-1,isN=-1;
 
 			for(int i=0;i<readLen1;++i)
 			{
-						
+
 				if(seq_s1[i]=='-'||seq_s1[i]=='N')
 				{
 					if(i<=readLen1/2)
@@ -9589,7 +9589,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			{
 				bad_flag1=1;
 			}
-		
+
 
 			if(isN>=0)
 			{
@@ -9602,26 +9602,26 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				seq_s1.resize(s);
 			}
 
-		
-			
-	
+
+
+
 			if(1)
 			{
-				
+
 				if(!SINGLE_READ)
 				{
 					getline(in_pair2,t2);
 					nLines2++;
 					nLines2%=4;
-	
+
 					if(t2.size()==0)
 					{
-					
+
 						getline(in_pair2,t2);
-					
-					
+
+
 					}
-			
+
 
 					if(t2[t2.size()-1]=='\n'||t2[t2.size()-1]=='\r')
 					{
@@ -9631,9 +9631,9 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					{
 						getline(in_pair2,t2);
 					}
-			
-			
-			
+
+
+
 					//if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(t2.substr(0,5)==fq_tmp)))
 					if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(nLines2==1)))
 					{
@@ -9647,16 +9647,16 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						{
 							tag_s2=tag_s2n;
 						}
-					
+
 						if(t2[0]!='N'&&t2[0]!='A'&&t2[0]!='C'&&t2[0]!='G'&&t2[0]!='T')
 						{
 							seq_s2.clear();
-						
+
 							continue;
 						}
 					}
-			
-			
+
+
 					while(getline(in_pair2,t2))
 					{
 						nLines2++;
@@ -9675,18 +9675,18 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 							nLines2--;
 							continue;
 						}
-				
-					
+
+
 
 						if(t2[0]!='N'&&t2[0]!='A'&&t2[0]!='C'&&t2[0]!='G'&&t2[0]!='T')
 						{
-					
+
 							break;
 						}
 						seq_s2+=t2;
-						
+
 					}
-			
+
 
 					//while(t2.size()>0&&((fq_flag&&(t2.substr(0,5)!=fq_tmp))||((!fq_flag)&&t2[0]!='>')))
 					while(t2.size()>0&&((fq_flag&&nLines2!=1)||((!fq_flag)&&t2[0]!='>')))
@@ -9694,7 +9694,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						getline(in_pair2,t2);
 						nLines2++;
 						nLines2%=4;
-				
+
 					}
 					if(t2.size()==0)
 					{
@@ -9702,19 +9702,19 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					}
 
 					//cout<<t2<<endl;
-				
+
 					tag_s2n=t2;
-				
-										
-						
+
+
+
 					readLen2=seq_s2.size();
-					
+
 					if (readLen2==0)
 					{
 						cout<<"Empty sequence!"<<endl;
 						bad_flag2=1;
 					}
-			
+
 					for(int i=0;i<readLen2;++i)
 					{
 						if(seq_s2[i]!='A'&&seq_s2[i]!='C'&&seq_s2[i]!='G'&&seq_s2[i]!='T'&&seq_s2[i]!='N')
@@ -9724,17 +9724,17 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 							break;
 						}
 					}
-			
-						
-			
-					
-				
+
+
+
+
+
 
 
 					int nN=readLen2-1,isN=-1;
 					for(int i=0;i<readLen2;++i)
 					{
-						
+
 						if(seq_s2[i]=='-'||seq_s2[i]=='N')
 						{
 							if(i<=readLen2/2)
@@ -9754,7 +9754,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					{
 						bad_flag2=1;
 					}
-		
+
 
 					if(isN>=0)
 					{
@@ -9766,7 +9766,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						seq_s2[s]='\0';
 						seq_s2.resize(s);
 					}
-		
+
 
 				}
 				else
@@ -9792,7 +9792,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			}
 			if(num_Reads%10000000==0)
 			{
-				
+
 				time(&read_time);
 				cout<<num_Reads<<" Pairs Searched."<<endl;
 				cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
@@ -9808,7 +9808,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				continue;
 			}
 			*/
-		
+
 			if(!SINGLE_READ)
 			{
 				if(isLongLib)
@@ -9819,20 +9819,20 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				else
 				{
 					reverse(seq_s2.begin(),seq_s2.end());
-					complement_str(seq_s2);		
+					complement_str(seq_s2);
 				}
 			}
 			Init_Read(seq_s1,Read1);
 			seq_s1.clear();
-			
-		
+
+
 			Init_Read(seq_s2,Read2);
 			seq_s2.clear();
-			
+
 			tag1_sz=tag_s1.size();
 			tag2_sz=tag_s2.size();
 
-	
+
 			int mismatch_cnt=0;
 			bool tag_mismatch=0;
 			/*
@@ -9853,7 +9853,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				{
 					mismatch_cnt++;
 
-					
+
 				}
 			}
 			if(mismatch_cnt>3)
@@ -9870,15 +9870,15 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			//for non adjacent relation
 
 			//	cout<<num_Reads<<endl;
-			
-		
+
+
 			struct bucket4 **ptr1_d,**ptr2_d;
 			bool flip_1d;
-		
+
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
 			{
-				
-				
+
+
 				get_sub_arr(Read1.read_bits,Read1.readLen,i,K_size,bits1_t4.kmer);
 
 				f_seq_t4=bits1_t4;
@@ -9909,12 +9909,12 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						flip_1=(*ptr1)->kmer_info.flip^flip_0;
 						pos1=i;
 
-						break;		
+						break;
 					}
 					else
 					{
 						bool flip_1=flip_0;
-							
+
 						while(1)//up search in the tree flip as needed,and if finally found, update the values.
 						{
 							uint64_t hv=MurmurHash64A(&bits1_t4,sizeof(bits1_t4),0);
@@ -9947,8 +9947,8 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 							flip_1=(*ptr1)->kmer_info.flip^flip_1;
 							pos1=i;
 
-							
-								
+
+
 						}
 						else
 						{
@@ -9958,10 +9958,10 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 
 
 					}
-	
+
 				}
-			
-			
+
+
 
 
 			}
@@ -10011,12 +10011,12 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						flip_2=(*ptr2)->kmer_info.flip^flip_0;
 						pos2=i;
 
-						break;		
+						break;
 					}
 					else
 					{
 						bool flip_2=flip_0;
-							
+
 						while(1)//up search in the tree flip as needed,and if finally found, update the values.
 						{
 							uint64_t hv=MurmurHash64A(&bits2_t4,sizeof(bits2_t4),0);
@@ -10048,7 +10048,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 							cont2=(*ptr2)->kmer_info.contig_no;
 							flip_2=(*ptr2)->kmer_info.flip^flip_2;
 							pos2=i;
-	
+
 						}
 						else
 						{
@@ -10090,10 +10090,10 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				if(flip_1==0&&(cod2>cod1))
 				{
 					int pdist=(int)((cod2-cod1)+pos1+readLen2-pos2);
-					
+
 					if(BaseInsertSize<-1000||(BaseInsertSize<=500&&((pdist<=(2*BaseInsertSize))&&(pdist>=(-100))))||((pdist<=(3*BaseInsertSize/2))&&(pdist>=(BaseInsertSize/2))))
 					{
-						
+
 						dist_sum+=pdist;
 						o_Pdist<<pdist<<endl;
 						p_cnt++;
@@ -10110,7 +10110,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				}
 				else
 				{
-					
+
 					if(flip_1==1&&cod1>cod2)
 					{
 						int pdist=(int)((cod1-cod2)+pos1+readLen2-pos2);
@@ -10136,13 +10136,13 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						//orientation errors
 						if(flip_1==1&&(cod2>cod1))
 						{
-							
+
 						}
 						if(flip_2==0&&(cod2<cod1))
 						{
-							
+
 						}
-					
+
 					}
 
 				}
@@ -10153,7 +10153,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 
 				int pdist=-10000;
 
-				
+
 				if(MatePair&&LocalSearch)
 				{
 					struct stacked_bucket4 stacked_bucket;
@@ -10194,7 +10194,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				}
 				if(ignore==1)
 				{continue;}
-			
+
 				int64_t d1,d2,d3,d4,dist;
 
 				// build adjacency info for cont1&2
@@ -10208,7 +10208,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					{
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;////
 						dist=d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
-						
+
 						o_Pdist_R<<cont1 <<" "<<cont2<<" "<<d1<<endl;//" Library: "<<lib_no<<endl;
 				//		o_Pdist_L<<cont2 <<" "<<cont1<<" "<<d1<<" Library: "<<ii<<endl;
 
@@ -10218,7 +10218,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						int64_t r_cod2=(int64_t)(contigs_info->contig_sz_vt[cont2])-cod2-(int64_t)K_size;
 						dist=d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
 						//int64_t Tdist=(scaffold_len+pos2-readLen2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;////
-						
+
 						o_Pdist_R<<cont1 <<" "<<-cont2<<" "<<d2<<endl;//" Library: "<<lib_no<<endl;
 					//	o_Pdist_R<<cont2 <<" "<<-cont1<<" "<<d2<<" Library: "<<lib_no<<endl;
 
@@ -10271,7 +10271,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 
 		}
 		o_Pdist_log<<"Inward found:"<<inward_found<<endl;
-		o_Pdist_log<<"Inward not found:"<<inward_not_found<<endl;		
+		o_Pdist_log<<"Inward not found:"<<inward_not_found<<endl;
 		o_Pdist_log<<"Outward found:"<<outward_found<<endl;
 		o_Pdist_log<<"Outward not found:"<<outward_not_found<<endl;
 
@@ -10304,7 +10304,7 @@ bool BackCheckLoop_ctg(int new_ctg,int end_node, map<int,struct BFS_path_info_ct
 	{
 
 		pre_node=abs(Visited_Path[cur_node].last_ctg);
-		
+
 		if(new_ctg==cur_node)
 		{
 			return 1;
@@ -10319,8 +10319,8 @@ bool BackCheckLoop_ctg(int new_ctg,int end_node, map<int,struct BFS_path_info_ct
 
 
 void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,map<int,list<int> > &dist_ctg,map<int,int > & unitig_dist,int dist_searched,map<int,vector<int> > &node_cov,int max_depth,bool GapClosingMode,bool MatePair)//
-{	
-		
+{
+
 	map<int, struct BFS_path_info_ctg > Visited_Path;
 	map<int, int > stacked_nodes;
 //	map<int, vector<int> > node_cov;
@@ -10331,13 +10331,13 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 	int DepthTh=max_depth;//min(300/gap,20);
 	//int LenTh=1000;
 	int TipLenTh=100;
-	
+
 	int dist_searched_t=0;
 	int DistVar=1000;
 	int DistVarFactor=2;
 	bool RIGHT=0;
 	int new_node=ctg_stack.front();
-	
+
 	if(new_node>0)
 	{
 		stacked_nodes[new_node]=1;
@@ -10360,8 +10360,8 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 
 		new_node=ctg_stack.front();
 		ctg_stack.pop_front();
-	
-		
+
+
 		if(new_node>0)
 		{
 			RIGHT=1;
@@ -10374,13 +10374,13 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 		if(Visited_Path.count(abs(new_node)))
 		{
 			if(Visited_Path[abs(new_node)].depth>DepthTh)//||Visited_Path[abs(new_node)].len>LenTh)
-			{					
+			{
 				continue;
 			}
 		}
 
 		if(RIGHT)
-		{				
+		{
 			map<int, struct adjacent_contig_info>::iterator ctg_it;
 			int nRB=0;
 			for(ctg_it=contigs_info->contig_adjacency_right[new_node].begin();ctg_it!=contigs_info->contig_adjacency_right[new_node].end();)
@@ -10388,21 +10388,21 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 				map<int, struct adjacent_contig_info>::iterator n_ctg_it=ctg_it;
 				n_ctg_it++;
 				int ctg_no=ctg_it->first;
-				nRB++;				
-				ctg_it=n_ctg_it;			
+				nRB++;
+				ctg_it=n_ctg_it;
 			}
 			stacked_nodes[new_node]=1+nRB;
-			
-			
+
+
 			if(nRB==0)
 			{
 				stacked_nodes[new_node]=2;
-				
+
 				//tip end reached
 				continue;
 
 			}
-			
+
 			//so at least one ctg on the right
 
 			dist_searched_t=Visited_Path[abs(new_node)].len;
@@ -10415,8 +10415,8 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 			{
 				dist_ctg_it_n=dist_ctg_it;
 				dist_ctg_it_n++;
-						
-						
+
+
 				list<int>::iterator lit,lit2,n_lit;
 				for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 				{
@@ -10425,9 +10425,9 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 					n_lit=lit2;
 					n_lit++;
 					int dist0=*lit2;
-						
+
 					int DistVar2=DistVar;
-													
+
 					if(MatePair)//dist0>3000)
 					{
 						DistVar2=20000;//dist0;//dist0/DistVarFactor;
@@ -10443,7 +10443,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 						continue;
 					}
 
-							
+
 					if((dist_ctg_it->first>dist_searched-DistVar2)&&(dist_ctg_it->first<dist_searched+DistVar2))
 					{
 						marked_ctgs[abs(*lit)]=dist_ctg_it->first-dist_searched;
@@ -10451,25 +10451,25 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 						continue;
 					}
 					lit=n_lit;
-						
+
 				}
 				if(dist_ctg_it->second.size()==0)
 				{
 					dist_ctg.erase(dist_ctg_it);
 				}
-		
+
 				dist_ctg_it=dist_ctg_it_n;
 
-					
+
 			}
 
-			
+
 			for(ctg_it=contigs_info->contig_adjacency_right[new_node].begin();ctg_it!=contigs_info->contig_adjacency_right[new_node].end(); )
 			{
-				
+
 				map<int, struct adjacent_contig_info>::iterator n_ctg_it=ctg_it;
 				n_ctg_it++;
-				
+
 				int nxt_ctg=ctg_it->first;
 
 				int is_marked=0,is_unitig;
@@ -10484,13 +10484,13 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 					// not in stack
 					if(stacked_nodes.count(abs(nxt_ctg))==0)//&&contigs_info->c_info_vt[abs(nxt_ctg)].removed==0)
 					{
-						
+
 						Visited_Path[abs(nxt_ctg)].cov=(Visited_Path[abs(new_node)].cov+is_marked);
-						
+
 						Visited_Path[abs(nxt_ctg)].depth=(Visited_Path[abs(new_node)].depth+1);
 						Visited_Path[abs(nxt_ctg)].len=(Visited_Path[abs(new_node)].len+contigs_info->contig_sz_vt[abs(nxt_ctg)]);
 						Visited_Path[abs(nxt_ctg)].last_ctg=abs(new_node);
-			
+
 						if(unitig_dist.count(abs(nxt_ctg)))//is_mark
 						{
 							if(Visited_Path[abs(new_node)].cov==0)//GapClosingMode&&
@@ -10502,7 +10502,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 								int p_ctg=nxt_ctg;
 								while(p_ctg!=0)
 								{
-//									
+//
 									dep--;
 									if(dep<0)
 									{
@@ -10512,7 +10512,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 										ctg_it=n_ctg_it;
 										break;
 									}
-									
+
 									node_cov[(nxt_ctg)].push_back(p_ctg);
 									p_ctg=Visited_Path[abs(p_ctg)].last_ctg;
 									if(stacked_nodes[abs(p_ctg)]<0)
@@ -10532,7 +10532,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 								node_cov[(nxt_ctg)].clear();
 								node_cov[(nxt_ctg)].push_back(Visited_Path[abs(new_node)].cov+1);
 								node_cov.erase(new_node);
-															
+
 								int p_ctg=nxt_ctg;
 
 								int dep=Visited_Path[abs(nxt_ctg)].depth;
@@ -10544,12 +10544,12 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									if(dep<0)
 									{
 										//cout<<"w"<<endl;
-										
+
 										node_cov.erase(nxt_ctg);
 										ctg_it=n_ctg_it;
 										break;
 									}
-									
+
 									node_cov[(nxt_ctg)].push_back(p_ctg);
 									p_ctg=Visited_Path[abs(p_ctg)].last_ctg;
 									if(stacked_nodes[abs(p_ctg)]<0)
@@ -10565,7 +10565,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									continue;
 								}
 							}
-							
+
 						}
 
 						if(nxt_ctg<0)
@@ -10596,12 +10596,12 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 							{
 								ctg_it=n_ctg_it;
 								continue;
-								
+
 							}
 							else
 							{
 								//backtrack the original path
-							
+
 								Visited_Path[abs(nxt_ctg)].cov=(Visited_Path[abs(new_node)].cov+is_marked);
 								Visited_Path[abs(nxt_ctg)].depth=Visited_Path[abs(new_node)].depth+1;
 								Visited_Path[abs(nxt_ctg)].len=(Visited_Path[abs(new_node)].len+contigs_info->contig_sz_vt[abs(nxt_ctg)]);
@@ -10614,13 +10614,13 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									{
 										node_cov[(nxt_ctg)].clear();
 										node_cov[(nxt_ctg)].push_back(1);
-										
+
 										int p_ctg=nxt_ctg;
 										int dep=Visited_Path[abs(nxt_ctg)].depth;
 
 										while(p_ctg!=0)
 										{
-											
+
 										//	if(sc_cnt==4866)
 											//{cout<<"q";}
 											dep--;
@@ -10632,7 +10632,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 												ctg_it=n_ctg_it;
 												break;
 											}
-									
+
 											node_cov[(nxt_ctg)].push_back(p_ctg);
 											p_ctg=Visited_Path[abs(p_ctg)].last_ctg;
 											if(stacked_nodes[abs(p_ctg)]<0)
@@ -10642,7 +10642,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 										}
 										if(dep>=0)
 										{
-											reverse(node_cov[(nxt_ctg)].begin()+1,node_cov[(nxt_ctg)].end());	
+											reverse(node_cov[(nxt_ctg)].begin()+1,node_cov[(nxt_ctg)].end());
 											ctg_it=n_ctg_it;
 											continue;
 										}
@@ -10669,7 +10669,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 												ctg_it=n_ctg_it;
 												break;;
 											}
-									
+
 											node_cov[(nxt_ctg)].push_back(p_ctg);
 											p_ctg=Visited_Path[abs(p_ctg)].last_ctg;
 											if(stacked_nodes[abs(p_ctg)]<0)
@@ -10686,7 +10686,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									}
 									//node_cov[abs(nxt_ctg)]=Visited_Path[abs(new_node)].cov+is_marked;
 								}
-								
+
 							}
 
 						}
@@ -10702,7 +10702,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 
 				}
 				ctg_it=n_ctg_it;
-				
+
 			}
 		}
 		else
@@ -10713,28 +10713,28 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 			int nLB=0;
 			for(ctg_it=contigs_info->contig_adjacency_left[new_node].begin();ctg_it!=contigs_info->contig_adjacency_left[new_node].end();)
 			{
-				
+
 				map<int, struct adjacent_contig_info>::iterator n_ctg_it=ctg_it;
 				n_ctg_it++;
 				int ctg_no=ctg_it->first;
-				
+
 				nLB++;
-				
+
 				ctg_it=n_ctg_it;
 			}
 			stacked_nodes[new_node]=-1-nLB;
-			
+
 			if(nLB==0)
 			{
 
 				stacked_nodes[abs(new_node)]=-2;
-			
+
 				continue;
 			}
 
 
 
-			
+
 			dist_searched_t=Visited_Path[abs(new_node)].len;
 			map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
 			map<int,int> marked_ctgs;
@@ -10743,9 +10743,9 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 			{
 				dist_ctg_it_n=dist_ctg_it;
 				dist_ctg_it_n++;
-						
-				
-						
+
+
+
 				list<int>::iterator lit,lit2,n_lit;
 				for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 				{
@@ -10754,9 +10754,9 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 					n_lit=lit2;
 					n_lit++;
 					int dist0=*lit2;
-						
+
 					int DistVar2=DistVar;
-													
+
 					if(MatePair)//dist0>3000)
 					{
 						DistVar2=20000;//dist0;//dist0/DistVarFactor;
@@ -10772,7 +10772,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 						continue;
 					}
 
-							
+
 					if((dist_ctg_it->first>dist_searched-DistVar2)&&(dist_ctg_it->first<dist_searched+DistVar2))
 					{
 						marked_ctgs[abs(*lit)]=dist_ctg_it->first-dist_searched;
@@ -10780,7 +10780,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 						continue;
 					}
 					lit=n_lit;
-						
+
 				}
 				if(dist_ctg_it->second.size()==0)
 				{
@@ -10789,10 +10789,10 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 
 
 
-						
+
 				dist_ctg_it=dist_ctg_it_n;
 
-					
+
 			}
 
 
@@ -10810,14 +10810,14 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 				{
 					is_marked=1;
 				}
-				
+
 				if(1)//contigs_info->c_info_vt[abs(nxt_ctg)].removed==0)
 				{
-					
+
 					if(stacked_nodes.count(abs(nxt_ctg))==0)//&&contigs_info->c_info_vt[abs(nxt_ctg)].removed==0)
 					{
-						
-						Visited_Path[abs(nxt_ctg)].cov=(Visited_Path[abs(new_node)].cov+is_marked);						
+
+						Visited_Path[abs(nxt_ctg)].cov=(Visited_Path[abs(new_node)].cov+is_marked);
 						Visited_Path[abs(nxt_ctg)].depth=(Visited_Path[abs(new_node)].depth+1);
 						Visited_Path[abs(nxt_ctg)].len=(Visited_Path[abs(new_node)].len+contigs_info->contig_sz_vt[abs(nxt_ctg)]);
 						Visited_Path[abs(nxt_ctg)].last_ctg=abs(new_node);//abs
@@ -10830,13 +10830,13 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 							{
 								node_cov[-(nxt_ctg)].clear();
 								node_cov[-(nxt_ctg)].push_back(1);
-																
+
 								int p_ctg=-nxt_ctg;
 								int dep=Visited_Path[abs(nxt_ctg)].depth;
 
 								while(p_ctg!=0)
 								{
-											
+
 //									if(sc_cnt==4866)
 	//										{cout<<"e";}
 									dep--;
@@ -10848,7 +10848,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 										ctg_it=n_ctg_it;
 										break;
 									}
-									
+
 									node_cov[-(nxt_ctg)].push_back(p_ctg);
 									p_ctg=Visited_Path[abs(p_ctg)].last_ctg;
 									if(stacked_nodes[abs(p_ctg)]<0)
@@ -10862,7 +10862,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									ctg_it=n_ctg_it;
 									continue;
 								}
-								
+
 							}
 							if((GapClosingMode==0)&&Visited_Path[abs(new_node)].cov>=1)
 							{
@@ -10870,16 +10870,16 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 								node_cov[-(nxt_ctg)].clear();
 								node_cov[-(nxt_ctg)].push_back(Visited_Path[abs(new_node)].cov+1);
 
-								
+
 								int p_ctg=-nxt_ctg;
-								
+
 								int dep=Visited_Path[abs(nxt_ctg)].depth;
 
 								while(p_ctg!=0)
 								{
 //									if(sc_cnt==4866)
 	//										{cout<<"r";}
-											
+
 									dep--;
 									if(dep<0)
 									{
@@ -10902,11 +10902,11 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									ctg_it=n_ctg_it;
 									continue;
 								}
-								
+
 							}
-							
+
 						}
-						
+
 						if(nxt_ctg<0)
 						{
 							stacked_nodes[abs(nxt_ctg)]=1;
@@ -10926,26 +10926,26 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 					}
 					else
 					{
-						
+
 						if((stacked_nodes[abs(nxt_ctg)]<0&&nxt_ctg>0)||(stacked_nodes[abs(nxt_ctg)]>0&&nxt_ctg<0))
 						{
 							//backtrack if the same direction is found
 							if((Visited_Path[abs(new_node)].cov+is_marked<=Visited_Path[abs(nxt_ctg)].cov)||(BackCheckLoop_ctg( abs(nxt_ctg),abs(new_node),Visited_Path)==1))//
 							{
-								
+
 								//backtrack the current path
-								
+
 								ctg_it=n_ctg_it;
 								continue;
-								
-							
+
+
 							}
 							else
 							{
 								//backtrack the original path
-						
+
 								Visited_Path[abs(nxt_ctg)].cov=(Visited_Path[abs(new_node)].cov+is_marked);
-	
+
 								Visited_Path[abs(nxt_ctg)].depth=Visited_Path[abs(new_node)].depth+1;
 								Visited_Path[abs(nxt_ctg)].len=(Visited_Path[abs(new_node)].len+contigs_info->contig_sz_vt[abs(nxt_ctg)]);
 
@@ -10960,16 +10960,16 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									{
 										node_cov[-(nxt_ctg)].clear();
 										node_cov[-(nxt_ctg)].push_back(1);
-								
-										
-										int p_ctg=-nxt_ctg;	
+
+
+										int p_ctg=-nxt_ctg;
 										int dep=Visited_Path[abs(nxt_ctg)].depth;
 
 										while(p_ctg!=0)
 										{
 //											if(sc_cnt==4866)
 	//										{cout<<"t";}
-											
+
 											dep--;
 											if(dep<0)
 											{
@@ -10979,7 +10979,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 												ctg_it=n_ctg_it;
 												break;
 											}
-											
+
 											node_cov[-(nxt_ctg)].push_back(p_ctg);
 											p_ctg=Visited_Path[abs(p_ctg)].last_ctg;
 											if(stacked_nodes[abs(p_ctg)]<0)
@@ -10996,12 +10996,12 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 									}
 									if((GapClosingMode==0)&&Visited_Path[abs(new_node)].cov>=1)
 									{
-									
+
 										node_cov.erase(-new_node);
 										node_cov[-(nxt_ctg)].clear();
 										node_cov[-(nxt_ctg)].push_back(Visited_Path[abs(new_node)].cov+1);
 
-										
+
 										int p_ctg=-nxt_ctg;
 										int dep=Visited_Path[abs(nxt_ctg)].depth;
 
@@ -11017,8 +11017,8 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 												ctg_it=n_ctg_it;
 												break;
 											}
-										
-											
+
+
 											node_cov[-(nxt_ctg)].push_back(p_ctg);
 											p_ctg=Visited_Path[abs(p_ctg)].last_ctg;
 											if(stacked_nodes[abs(p_ctg)]<0)
@@ -11032,9 +11032,9 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 											ctg_it=n_ctg_it;
 											continue;
 										}
-								
+
 									}
-							
+
 								}
 
 
@@ -11092,7 +11092,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 			if(insert_sz_vt[i]<=10000)
 			{MatePair=0;}
 		}
-		
+
 	}
 	ifstream in_pe_info(pe_name.c_str());
 	string str,s;
@@ -11108,7 +11108,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		DistVar0=5000;
 	}
 	int DistVarFactor=2;
-	
+
 	vector<int> ins_est_vt;
 	while(in_pe_info>>str>>ins_est)
 	{
@@ -11139,7 +11139,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		cout<<"Loading adjacent info. left. "<<i<<endl;
 		int cont1,cont2,dist;
 		int nr=0;
-		
+
 		while(in_sc_l>>cont1>>cont2>>dist)
 		{
 			nr++;
@@ -11152,7 +11152,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 			if(dist<-200||(dist>(ins_est_vt[i-1]*3/2)))//double check
 			{continue;}
 
-	
+
 			if(1)//contigs_info->contig_sz_vt[cont1]>=UniqueLenTh)
 			{
 
@@ -11167,7 +11167,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 				{
 					contigs_info->scaffold_adjacency_left[cont1][cont2].dist_sum+=dist;
 					contigs_info->scaffold_adjacency_left[cont1][cont2].cov+=1;
-				
+
 				}
 			}
 
@@ -11236,7 +11236,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 			}
 
 			dist+=ins_est_vt[i-1];
-			
+
 			if(dist<-200||(dist>(ins_est_vt[i-1]*3/2)))//double check
 			{continue;}
 
@@ -11253,7 +11253,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 				{
 					contigs_info->scaffold_adjacency_right[cont1][cont2].dist_sum+=dist;
 					contigs_info->scaffold_adjacency_right[cont1][cont2].cov+=1;
-					
+
 				}
 
 			}
@@ -11298,7 +11298,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 	}
 
 	cout<<"Removing weak links..."<<endl;
-	
+
 	for(int i=1;i<=contigs_info->total_contigs;++i)
 	{
 
@@ -11342,9 +11342,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 	}
-	
+
 	cout<<"Done."<<endl;
-	
+
 	string ContigsHPName="Contigs_HP.txt";
 	if(Iter_Scaffold==1)
 	{
@@ -11369,11 +11369,11 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		contigs_info->contigs_hp_b[n_ctgs]=codB;
 		contigs_info->contigs_hp_e[n_ctgs]=codE;
 		contigs_info->contigs_str[n_ctgs]=cont_s;
-		
+
 	}
 
 	int K_size=contigs_info->K_size;
-	
+
 	string sc_info_name="SuperContigs_info.txt",sc_name="SuperContigs.txt";
 
 	if(Iter_Scaffold)
@@ -11396,7 +11396,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 	{
 		sc_cov_name="SuperContigs_Cov.txt";//sc_cov_name="IteratedSuperContigs_Cov.txt";
 	}
-	
+
 	osc_cov.open(sc_cov_name.c_str());
 
 	int sc_cnt=0;
@@ -11407,7 +11407,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 	//ofstream o_ContigGap_info("ContigGap_info.txt");
 	//contigs_info->scaffolds.resize(1);
 	//contigs_info->gaps_in_scaffolds.resize(1);
-		
+
 	int break_points=0;
 	int ambiguous_points=0;
 	int gap_points=0;
@@ -11466,7 +11466,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 	for(int i=1;i<=tot_ctgs;++i)
 	{
-	
+
 		bool Unique=1;
 		map<int,int> dist_ctg;
 		map<int,struct scaffold_contig_info>::iterator ctg_info_it1;//ctg_info_it2;
@@ -11487,7 +11487,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 		map<int,int>::iterator dist_it1,dist_it2;
-		
+
 		for(dist_it1=dist_ctg.begin();dist_it1!=dist_ctg.end();++dist_it1)
 		{
 			dist_it2=dist_it1;
@@ -11522,7 +11522,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		}
 
 
-		
+
 		for(dist_it1=dist_ctg.begin();dist_it1!=dist_ctg.end();++dist_it1)
 		{
 			dist_it2=dist_it1;
@@ -11558,7 +11558,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 	}
 
 
-	
+
 	for(int i=0;i<tot_ctgs;++i )
 	{
 		int contig_no=(contigs_info->LengthRank[i])-contigs_info->contig_sz_vt.begin();
@@ -11568,7 +11568,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 			continue;
 		}
 
-		
+
 		sc_cnt++;
 		//cout<<sc_cnt<<endl;
 
@@ -11576,9 +11576,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		map<int,int> unitig_dist;
 
 		unitig_dist[contig_no]=0;
-		vector<int> left_ctgs,right_ctgs,t_left_ctgs,t_right_ctgs;	
-		map<int,int> ctgs_for_second_round;		
-		//make it 2 rounds to close the gaps 
+		vector<int> left_ctgs,right_ctgs,t_left_ctgs,t_right_ctgs;
+		map<int,int> ctgs_for_second_round;
+		//make it 2 rounds to close the gaps
 		for(int round=1;round<=1;++round)
 		{
 			unitig_dist.clear();
@@ -11612,7 +11612,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 				}
 
 				map<int, list<int> > dist_ctg,dist_ctg_rep,dist_unitig;
-				
+
 				map<int,int >::iterator ctgs_it;
 				for(ctgs_it=ctgs_for_second_round.begin();ctgs_it!=ctgs_for_second_round.end();++ctgs_it)
 				{
@@ -11627,18 +11627,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						dist_ctg[-ctgs_it->second].push_back(ctgs_it->second);
 					}
 				}
-				
+
 				map<int,int> marked_ctgs;
 				int dist_searched=0;
-			
+
 				while(1)
 				{
-				
+
 					if(Right)
 					{
 						UniqueCurrent=UniqueNxt;
 						current_ctg=abs(nxt_ctg);
-					
+
 						if(UniqueCurrent)
 						{
 							if(unitig_dist.count(current_ctg)==0)
@@ -11655,15 +11655,15 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							Exist_Next_Unitig=0;
 							NextUnitig=0;
 							RightUnitig=1;
-						
+
 							dist_searched+=contigs_info->contig_sz_vt[abs(current_ctg)];//
 							marked_ctgs.clear();
 							map<int,scaffold_contig_info>::iterator adj_it,adj_it_n;
 							//check for unitig below
-						
+
 							for(adj_it=contigs_info->scaffold_adjacency_right[current_ctg].begin();adj_it!=contigs_info->scaffold_adjacency_right[current_ctg].end();++adj_it)
 							{
-							
+
 								if(adj_it->second.cov>=LinkCovTh)
 								{
 									//record a next unitig
@@ -11672,10 +11672,10 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										Exist_Next_Unitig=1;
 										if(NextUnitig==0)
 										{
-										
+
 											NextUnitig=adj_it->first;
 											Dist2NextUnitig=adj_it->second.dist_sum/adj_it->second.cov;
-										
+
 										}
 									}
 
@@ -11706,7 +11706,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							dist_searched+=contigs_info->contig_sz_vt[abs(current_ctg)];
 
 							marked_ctgs.clear();
-												
+
 							//newly added repeat solver
 
 							map<int,scaffold_contig_info>::iterator adj_it,adj_it_n;
@@ -11744,7 +11744,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								dist_ctg_it_n=dist_ctg_it;
 								dist_ctg_it_n++;
-						
+
 								list<int>::iterator lit,lit2,n_lit;
 								for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 								{
@@ -11753,9 +11753,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									n_lit=lit2;
 									n_lit++;
 									int dist0=*lit2;
-						
+
 									int DistVar2=DistVar;
-													
+
 									if(MatePair)//dist0>3000)
 									{
 										DistVar2=10000;//dist0;
@@ -11763,18 +11763,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(contigs_info->c_info_vt[abs(*lit)].unique&&(!contigs_info->c_info_vt[abs(*lit)].used))
 									if(dist_ctg_it->first>dist_searched-DistVar2)
 									{
-									
+
 										if(unitig_dist.count(abs(*lit))==0)
 										{
 											if(it==1)
 											{
 												right_ctgs.push_back(*lit);
-												
+
 											}
 											else
 											{
 												left_ctgs.push_back(*lit);
-												
+
 											}
 											if(it==1)
 											{
@@ -11791,24 +11791,24 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											nxt_ctg=*lit;
 											t_right_ctgs.clear();
 											t_left_ctgs.clear();
-											contigs_info->c_info_vt[abs(*lit)].used=1;							
-											NextUnitig=0;														
+											contigs_info->c_info_vt[abs(*lit)].used=1;
+											NextUnitig=0;
 											dist_searched+=contigs_info->contig_sz_vt[abs(*lit)];
 											UnitigFound=1;
 											break;
 
 										}
-									
+
 									}
 									lit=n_lit;
 
-						
+
 								}
-							
+
 								if(UnitigFound)
 								{break;}
 
-								
+
 								dist_ctg_it=dist_ctg_it_n;
 								continue;
 
@@ -11829,7 +11829,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						{
 							dist_ctg_it_n=dist_ctg_it;
 							dist_ctg_it_n++;
-						
+
 							list<int>::iterator lit,lit2,n_lit;
 							for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 							{
@@ -11838,9 +11838,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								n_lit=lit2;
 								n_lit++;
 								int dist0=*lit2;
-						
+
 								int DistVar2=DistVar;
-													
+
 								if(MatePair)//dist0>3000)
 								{
 									DistVar2=20000;//dist0;
@@ -11856,7 +11856,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									continue;
 								}
 
-							
+
 								if((dist_ctg_it->first>dist_searched-DistVar2)&&(dist_ctg_it->first<dist_searched+DistVar2))
 								{
 									marked_ctgs[abs(*lit)]=dist_ctg_it->first-dist_searched;
@@ -11864,7 +11864,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									continue;
 								}
 								lit=n_lit;
-						
+
 							}
 							if(dist_ctg_it->second.size()==0)
 							{
@@ -11904,16 +11904,16 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							t_left_ctgs.clear();
 							if(Exist_Next_Unitig)
 							{
-								//insert the unitigs before this 
+								//insert the unitigs before this
 
 
 								map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-							
+
 								for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 								{
 									dist_ctg_it_n=dist_ctg_it;
 									dist_ctg_it_n++;
-						
+
 									list<int>::iterator lit,lit2,n_lit;
 									for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 									{
@@ -11922,9 +11922,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										n_lit=lit2;
 										n_lit++;
 										int dist0=*lit2;
-						
+
 										int DistVar2=DistVar;
-													
+
 										if(MatePair)//dist0>3000)
 										{
 											DistVar2=10000;//dist0;
@@ -11942,12 +11942,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												if(it==1)
 												{
 													t_right_ctgs.push_back(*lit);
-												
+
 												}
 												else
 												{
 													t_left_ctgs.push_back(*lit);
-												
+
 												}
 												if(it==1)
 												{
@@ -11962,12 +11962,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												contigs_info->c_info_vt[abs(*lit)].used=1;
 												key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 											}
-									
+
 										}
 										lit=n_lit;
-						
+
 									}
-								
+
 									dist_ctg_it=dist_ctg_it_n;
 									continue;
 
@@ -11998,7 +11998,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 								key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
-							
+
 								map<int,vector<int> > node_cov;
 								if(it==1)
 								{
@@ -12007,26 +12007,26 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(RightUnitig)
 									{
 										t_right_ctgs.push_back(NextUnitig);
-									
+
 										list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
-									
+
+											}
+
+
 
 										}
-									
-							
+
+
 									}
 									else
 									{
@@ -12034,23 +12034,23 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
-								
+
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
+
 											}
 										}
-								
+
 
 									}
-								
+
 
 
 									if(node_cov.size()==1)
@@ -12089,8 +12089,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 										//break;
-										
-									}	
+
+									}
 									else
 									{
 										for(int jj=0;jj<t_right_ctgs.size();++jj)
@@ -12098,7 +12098,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
 									}
-										
+
 
 
 									t_right_ctgs.clear();
@@ -12111,20 +12111,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
 									else
 									{
@@ -12133,20 +12133,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
 
 
@@ -12190,7 +12190,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
+
 									}
 									else
 									{
@@ -12199,9 +12199,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
 									}
-								
 
-								
+
+
 									t_left_ctgs.clear();
 								}
 
@@ -12214,8 +12214,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							}
 
 							break;
-						
-						
+
+
 						}
 
 
@@ -12233,23 +12233,23 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 								map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-							
+
 								for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 								{
 									dist_ctg_it_n=dist_ctg_it;
 									dist_ctg_it_n++;
-						
+
 									list<int>::iterator lit,lit2,n_lit;
 									for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
-			 						{
+									{
 										lit2=lit;
 										lit2++;
 										n_lit=lit2;
 										n_lit++;
 										int dist0=*lit2;
-						
+
 										int DistVar2=DistVar;
-													
+
 										if(MatePair)//dist0>3000)
 										{
 											DistVar2=10000;//dist0;
@@ -12266,12 +12266,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												if(it==1)
 												{
 													t_right_ctgs.push_back(*lit);
-												
+
 												}
 												else
 												{
 													t_left_ctgs.push_back(*lit);
-												
+
 												}
 
 												if(it==1)
@@ -12287,12 +12287,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												contigs_info->c_info_vt[abs(*lit)].used=1;
 												key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 											}
-										
+
 										}
 										lit=n_lit;
-						
+
 									}
-								
+
 									dist_ctg_it=dist_ctg_it_n;
 									continue;
 
@@ -12320,9 +12320,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								{break;}
 
 								key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
-							
+
 								map<int,vector<int> > node_cov;
-								
+
 								if(it==1)
 								{
 
@@ -12330,25 +12330,25 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(RightUnitig)
 									{
 										t_right_ctgs.push_back(NextUnitig);
-									
+
 										list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-								
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
-									
+
+											}
+
+
 										}
-									
-							
+
+
 									}
 									else
 									{
@@ -12356,24 +12356,24 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-								
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
-									
+
+											}
+
+
 										}
-								
+
 
 									}
-								
+
 
 
 
@@ -12419,15 +12419,15 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 										//break;
-										
-									}	
+
+									}
 									else
 									{
 										for(int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
-									}		
+									}
 
 									t_right_ctgs.clear();
 								}
@@ -12439,20 +12439,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
 									else
 									{
@@ -12461,22 +12461,22 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
-								
+
 
 
 
@@ -12521,7 +12521,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
+
 									}
 									else
 									{
@@ -12530,15 +12530,15 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
 									}
-								
 
-								
+
+
 
 
 									t_left_ctgs.clear();
 								}
 
-							
+
 								contigs_info->c_info_vt[abs(NextUnitig)].used=1;
 								NextUnitig=0;
 								//key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
@@ -12546,9 +12546,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								continue;
 							}
 
-					
+
 							break;
-						
+
 						}
 						if(marked_cnt==1)
 						{
@@ -12569,12 +12569,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									{
 
 										map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-									
+
 										for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 										{
 											dist_ctg_it_n=dist_ctg_it;
 											dist_ctg_it_n++;
-						
+
 											list<int>::iterator lit,lit2,n_lit;
 											for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 											{
@@ -12583,9 +12583,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												n_lit=lit2;
 												n_lit++;
 												int dist0=*lit2;
-						
+
 												int DistVar2=DistVar;
-													
+
 												if(MatePair)//dist0>3000)
 												{
 													DistVar2=10000;//dist0;
@@ -12602,12 +12602,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														if(it==1)
 														{
 															t_right_ctgs.push_back(*lit);
-														
+
 														}
 														else
 														{
 															t_left_ctgs.push_back(*lit);
-														
+
 														}
 
 														if(it==1)
@@ -12622,12 +12622,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														//unitig_dist[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 														key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 													}
-												
+
 												}
 												lit=n_lit;
-						
+
 											}
-								
+
 											dist_ctg_it=dist_ctg_it_n;
 											continue;
 
@@ -12655,7 +12655,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
 										map<int,vector<int> > node_cov;
-								
+
 										if(it==1)
 										{
 
@@ -12663,25 +12663,25 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(RightUnitig)
 											{
 												t_right_ctgs.push_back(NextUnitig);
-									
+
 												list<int> ctg_stack;
 												ctg_stack.push_back(current_ctg);
-											
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
 													BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 													if(node_cov.size()==1)
 													{
-													
+
 														break;
-										
-													}	
-										
-									
+
+													}
+
+
 												}
-									
-							
+
+
 											}
 											else
 											{
@@ -12689,7 +12689,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 												list<int> ctg_stack;
 												ctg_stack.push_back(-current_ctg);
-											
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
@@ -12697,15 +12697,15 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													if(node_cov.size()==1)
 													{
 														break;
-										
-													}	
-										
-									
+
+													}
+
+
 												}
-								
+
 
 											}
-								
+
 
 
 
@@ -12752,7 +12752,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													}
 												}
 											//	break;
-										
+
 											}
 											else
 											{
@@ -12761,7 +12761,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
 											}
-										
+
 
 											t_right_ctgs.clear();
 										}
@@ -12773,20 +12773,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 												list<int> ctg_stack;
 												ctg_stack.push_back(current_ctg);
-											
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
 													BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 													if(node_cov.size()==1)
 													{
-													
+
 														break;
-										
-													}	
-										
+
+													}
+
 												}
-								
+
 											}
 											else
 											{
@@ -12795,20 +12795,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 													list<int> ctg_stack;
 												ctg_stack.push_back(-current_ctg);
-								
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
 													BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 													if(node_cov.size()==1)
 													{
-													
+
 														break;
-										
-													}	
-										
+
+													}
+
 												}
-								
+
 											}
 
 
@@ -12849,7 +12849,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													}
 												}
 											//	break;
-										
+
 											}
 											else
 											{
@@ -12861,7 +12861,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											t_left_ctgs.clear();
 										}
 
-								
+
 										contigs_info->c_info_vt[abs(NextUnitig)].used=1;
 										NextUnitig=0;
 										//key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
@@ -12904,7 +12904,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 								if(UniqueNxt&&contigs_info->c_info_vt[-nxt_ctg].used)
 								{
-								
+
 									UniqueNxt=contigs_info->c_info_vt[-nxt_ctg].unique=0;
 								//	break;
 								}
@@ -12943,7 +12943,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										contigs_info->c_info_vt[abs(t_left_ctgs[ii])].used=1;
 									}
 									t_left_ctgs.clear();
-							
+
 								}
 							}
 
@@ -12959,12 +12959,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 
 								map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-							
+
 								for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 								{
 									dist_ctg_it_n=dist_ctg_it;
 									dist_ctg_it_n++;
-						
+
 									list<int>::iterator lit,lit2,n_lit;
 									for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 									{
@@ -12973,9 +12973,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										n_lit=lit2;
 										n_lit++;
 										int dist0=*lit2;
-						
+
 										int DistVar2=DistVar;
-													
+
 										if(MatePair)//dist0>3000)
 										{
 											DistVar2=10000;//dist0;
@@ -12996,7 +12996,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												else
 												{
 													t_left_ctgs.push_back(*lit);
-											
+
 												}
 
 
@@ -13014,12 +13014,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 											}
 
-										
+
 										}
 										lit=n_lit;
-						
+
 									}
-								
+
 									dist_ctg_it=dist_ctg_it_n;
 									continue;
 
@@ -13046,7 +13046,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 								key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
 								map<int,vector<int> > node_cov;
-								
+
 
 
 								if(it==1)
@@ -13056,24 +13056,24 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(RightUnitig)
 									{
 										t_right_ctgs.push_back(NextUnitig);
-									
+
 										list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-									
-							
+
+
 									}
 									else
 									{
@@ -13081,28 +13081,28 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
-									
+
+											}
+
+
 
 										}
-								
+
 
 									}
 
 
 
-								
+
 
 
 
@@ -13132,7 +13132,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_right_ctgs.size();++jj)
@@ -13143,15 +13143,15 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
-									}	
+
+									}
 									else
 									{
 										for(int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
-									}		
+									}
 
 									t_right_ctgs.clear();
 								}
@@ -13163,20 +13163,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-								
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-										
+
 												break;
 
 
 											}
 										}
-								
+
 									}
 									else
 									{
@@ -13185,19 +13185,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
 
 											}
 										}
-								
+
 									}
 
 
@@ -13213,7 +13213,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -13229,7 +13229,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -13240,7 +13240,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
+
 									}
 									else
 									{
@@ -13249,12 +13249,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
 									}
-								
-								
+
+
 									t_left_ctgs.clear();
 								}
 
-							
+
 								contigs_info->c_info_vt[abs(NextUnitig)].used=1;
 								NextUnitig=0;
 								dist_searched+=Dist2NextUnitig;
@@ -13262,11 +13262,11 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							}
 
 							break;
-						
+
 
 
 						}
-					
+
 
 
 
@@ -13302,7 +13302,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						//	dist_ctg.clear();
 							marked_ctgs.clear();
 							dist_searched+=contigs_info->contig_sz_vt[abs(current_ctg)];///
-						
+
 							map<int,scaffold_contig_info>::iterator adj_it;
 
 							for(adj_it=contigs_info->scaffold_adjacency_left[current_ctg].begin();adj_it!=contigs_info->scaffold_adjacency_left[current_ctg].end();++adj_it)
@@ -13315,11 +13315,11 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										Exist_Next_Unitig=1;
 										if(NextUnitig==0)
 										{
-										
+
 											NextUnitig=adj_it->first;
 											Dist2NextUnitig=adj_it->second.dist_sum/adj_it->second.cov;
-										
-										
+
+
 										}
 									}
 									int dist0=adj_it->second.dist_sum/adj_it->second.cov;
@@ -13333,7 +13333,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										dist_ctg[dist].push_back((adj_it->first));	
+										dist_ctg[dist].push_back((adj_it->first));
 										dist_ctg[dist].push_back(dist0);
 										dist_ctg_rep[dist].push_back(adj_it->first);
 										dist_ctg_rep[dist].push_back(dist0);
@@ -13366,12 +13366,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										dist_ctg_rep[dist].push_back((adj_it->first));								
+										dist_ctg_rep[dist].push_back((adj_it->first));
 										dist_ctg_rep[dist].push_back(dist0);
 									}
 								}
 							}
-						
+
 							//newly added repeat solver
 
 						}
@@ -13386,7 +13386,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								dist_ctg_it_n=dist_ctg_it;
 								dist_ctg_it_n++;
-						
+
 								list<int>::iterator lit,lit2,n_lit;
 								for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 								{
@@ -13395,28 +13395,28 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									n_lit=lit2;
 									n_lit++;
 									int dist0=*lit2;
-						
+
 									int DistVar2=DistVar;
-													
+
 									if(MatePair)//dist0>3000)
 									{
 										DistVar2=10000;//dist0;
 									}
-									if(contigs_info->c_info_vt[abs(*lit)].unique&&(!contigs_info->c_info_vt[abs(*lit)].used))										
+									if(contigs_info->c_info_vt[abs(*lit)].unique&&(!contigs_info->c_info_vt[abs(*lit)].used))
 									if(dist_ctg_it->first>dist_searched-DistVar2)
 									{
-									
+
 										if(unitig_dist.count(abs(*lit))==0)
 										{
 											if(it==1)
 											{
 												right_ctgs.push_back(*lit);
-												
+
 											}
 											else
 											{
 												left_ctgs.push_back(*lit);
-												
+
 											}
 											if(it==1)
 											{
@@ -13433,19 +13433,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											nxt_ctg=*lit;
 											t_right_ctgs.clear();
 											t_left_ctgs.clear();
-											contigs_info->c_info_vt[abs(*lit)].used=1;							
-											NextUnitig=0;														
+											contigs_info->c_info_vt[abs(*lit)].used=1;
+											NextUnitig=0;
 											dist_searched+=contigs_info->contig_sz_vt[abs(*lit)];
 											UnitigFound=1;
 											break;
 
 										}
-									
+
 									}
 									lit=n_lit;
-						
+
 								}
-								
+
 								if(UnitigFound)
 								{break;}
 
@@ -13468,10 +13468,10 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						{
 							dist_ctg_it_n=dist_ctg_it;
 							dist_ctg_it_n++;
-						
 
 
-						
+
+
 							list<int>::iterator lit,lit2,n_lit;
 							for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 							{
@@ -13480,9 +13480,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								n_lit=lit2;
 								n_lit++;
 								int dist0=*lit2;
-						
+
 								int DistVar2=DistVar;
-													
+
 								if(MatePair)//dist0>3000)
 								{
 									DistVar2=20000;//dist0;//dist0/DistVarFactor;;
@@ -13498,7 +13498,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									continue;
 								}
 
-							
+
 								if((dist_ctg_it->first>dist_searched-DistVar2)&&(dist_ctg_it->first<dist_searched+DistVar2))
 								{
 									marked_ctgs[abs(*lit)]=dist_ctg_it->first-dist_searched;
@@ -13506,7 +13506,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									continue;
 								}
 								lit=n_lit;
-						
+
 							}
 							if(dist_ctg_it->second.size()==0)
 							{
@@ -13514,10 +13514,10 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							}
 
 
-						
+
 							dist_ctg_it=dist_ctg_it_n;
 
-					
+
 						}
 
 
@@ -13536,7 +13536,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								nxt_ctg=adj_it->first;
 								nxt_ctg_list.push_back(nxt_ctg);
 								nxt_ctg_dist_list.push_back(marked_ctgs[abs(adj_it->first)]);
-						
+
 							}
 						}
 
@@ -13551,12 +13551,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 								map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-							
+
 								for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 								{
 									dist_ctg_it_n=dist_ctg_it;
 									dist_ctg_it_n++;
-						
+
 									list<int>::iterator lit,lit2,n_lit;
 									for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 									{
@@ -13565,9 +13565,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										n_lit=lit2;
 										n_lit++;
 										int dist0=*lit2;
-						
+
 										int DistVar2=DistVar;
-													
+
 										if(MatePair)//dist0>3000)
 										{
 											DistVar2=10000;//dist0;
@@ -13584,12 +13584,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												if(it==1)
 												{
 													t_right_ctgs.push_back(*lit);
-												
+
 												}
 												else
 												{
 													t_left_ctgs.push_back(*lit);
-												
+
 												}
 												if(it==1)
 												{
@@ -13603,12 +13603,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												//unitig_dist[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 												key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 											}
-										
+
 										}
 										lit=n_lit;
-						
+
 									}
-								
+
 									dist_ctg_it=dist_ctg_it_n;
 									continue;
 
@@ -13632,10 +13632,10 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								nxt_ctg=NextUnitig;
 								if(contigs_info->c_info_vt[abs(NextUnitig)].used==1)
 								{break;}
-							
+
 								key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
 								map<int,vector<int> > node_cov;
-								
+
 
 								if(it==1)
 								{
@@ -13644,27 +13644,27 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(RightUnitig)
 									{
 										t_right_ctgs.push_back(NextUnitig);
-									
+
 										list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
-										
+
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
-									
+
+											}
+
+
 
 										}
-									
-							
+
+
 									}
 									else
 									{
@@ -13672,27 +13672,27 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
-									
+
+											}
+
+
 
 
 										}
-								
+
 
 									}
 
-								
+
 
 
 
@@ -13707,7 +13707,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_right_ctgs.size();++jj)
@@ -13723,7 +13723,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_right_ctgs.size();++jj)
@@ -13734,7 +13734,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
+
 									}
 									else
 									{
@@ -13743,7 +13743,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
 									}
-										
+
 									t_right_ctgs.clear();
 								}
 								else
@@ -13754,19 +13754,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-								
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
+
 											}
 										}
-								
+
 									}
 									else
 									{
@@ -13775,23 +13775,23 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-								
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
-									
+
+											}
+
+
 										}
-								
+
 									}
-								
+
 
 									if(node_cov.size()==1)
 									{
@@ -13804,7 +13804,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -13820,7 +13820,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -13831,7 +13831,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
+
 									}
 									else
 									{
@@ -13840,19 +13840,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
 									}
-								
+
 									t_left_ctgs.clear();
 								}
 
-							
+
 								contigs_info->c_info_vt[abs(NextUnitig)].used=1;
 								NextUnitig=0;
 								dist_searched+=Dist2NextUnitig;
 								continue;
 							}
 							break;
-						
-					
+
+
 						}
 
 
@@ -13860,7 +13860,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						{
 
 
-						
+
 							map<int,int> key_unitigs;
 							t_right_ctgs.clear();
 							t_left_ctgs.clear();
@@ -13869,12 +13869,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 								map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-							
+
 								for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 								{
 									dist_ctg_it_n=dist_ctg_it;
 									dist_ctg_it_n++;
-						
+
 									list<int>::iterator lit,lit2,n_lit;
 									for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 									{
@@ -13883,9 +13883,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										n_lit=lit2;
 										n_lit++;
 										int dist0=*lit2;
-						
+
 										int DistVar2=DistVar;
-													
+
 										if(MatePair)//dist0>3000)
 										{
 											DistVar2=10000;//dist0;
@@ -13902,12 +13902,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												if(it==1)
 												{
 													t_right_ctgs.push_back(*lit);
-														
+
 												}
 												else
 												{
 													t_left_ctgs.push_back(*lit);
-														
+
 												}
 												if(it==1)
 												{
@@ -13921,12 +13921,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												//unitig_dist[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 												key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 											}
-												
+
 										}
 										lit=n_lit;
-						
+
 									}
-								
+
 									dist_ctg_it=dist_ctg_it_n;
 									continue;
 
@@ -13951,7 +13951,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								{break;}
 								key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
 								map<int,vector<int> > node_cov;
-								
+
 
 								if(it==1)
 								{
@@ -13960,23 +13960,23 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(RightUnitig)
 									{
 										t_right_ctgs.push_back(NextUnitig);
-									
+
 										list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
+
 											}
 										}
-									
-							
+
+
 									}
 									else
 									{
@@ -13984,25 +13984,25 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-										
+
 												break;
-										
+
 											}
 										}
-								
+
 
 									}
 
 
 
-								
+
 
 
 
@@ -14017,7 +14017,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_right_ctgs.size();++jj)
@@ -14033,7 +14033,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_right_ctgs.size();++jj)
@@ -14044,15 +14044,15 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
-									}	
+
+									}
 									else
 									{
 										for(int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
-									}		
+									}
 									t_right_ctgs.clear();
 								}
 								else
@@ -14063,20 +14063,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
 									else
 									{
@@ -14085,20 +14085,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
 
 
@@ -14114,7 +14114,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -14130,7 +14130,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
-													
+
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
 												for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -14141,7 +14141,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
+
 									}
 									else
 									{
@@ -14149,10 +14149,10 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										{
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
-								
+
 									}
-								
-								
+
+
 									t_left_ctgs.clear();
 								}
 
@@ -14164,23 +14164,23 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								continue;
 							}
 							break;
-						
+
 						}
 
 						if(marked_cnt==1)
 						{
-						
+
 							//dist_searched-=marked_ctgs[abs(nxt_ctg)]/2;//smoothing
 							if(searched_ctgs.count(abs(nxt_ctg))==0)
 							{
 								searched_ctgs[abs(nxt_ctg)]++;
-							
+
 							}
 							else
 							{
 								searched_ctgs[abs(nxt_ctg)]++;
 								if(searched_ctgs[abs(nxt_ctg)]>4)
-								{		
+								{
 									map<int,int> key_unitigs;
 									t_right_ctgs.clear();
 									t_left_ctgs.clear();
@@ -14189,12 +14189,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 										map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-									
+
 										for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 										{
 											dist_ctg_it_n=dist_ctg_it;
 											dist_ctg_it_n++;
-						
+
 											list<int>::iterator lit,lit2,n_lit;
 											for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 											{
@@ -14203,9 +14203,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												n_lit=lit2;
 												n_lit++;
 												int dist0=*lit2;
-						
+
 												int DistVar2=DistVar;
-													
+
 												if(MatePair)//dist0>3000)
 												{
 													DistVar2=10000;//dist0;
@@ -14222,12 +14222,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														if(it==1)
 														{
 															right_ctgs.push_back(*lit);
-														
+
 														}
 														else
 														{
 															left_ctgs.push_back(*lit);
-														
+
 														}
 														if(it==1)
 														{
@@ -14241,12 +14241,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														//unitig_dist[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 														key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 													}
-												
+
 												}
 												lit=n_lit;
-						
+
 											}
-								
+
 											dist_ctg_it=dist_ctg_it_n;
 											continue;
 
@@ -14272,7 +14272,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
 										map<int,vector<int> > node_cov;
-								
+
 
 										if(it==1)
 										{
@@ -14281,24 +14281,24 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(RightUnitig)
 											{
 												t_right_ctgs.push_back(NextUnitig);
-									
+
 												list<int> ctg_stack;
 												ctg_stack.push_back(current_ctg);
-											
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
 													BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 													if(node_cov.size()==1)
 													{
-												
+
 														break;
 
 
 													}
 												}
-									
-							
+
+
 											}
 											else
 											{
@@ -14306,25 +14306,25 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 												list<int> ctg_stack;
 												ctg_stack.push_back(-current_ctg);
-											
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
 													BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 													if(node_cov.size()==1)
 													{
-												
+
 														break;
-												
+
 													}
 												}
-								
+
 
 											}
 
 
 
-										
+
 
 
 
@@ -14339,7 +14339,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
-													
+
 															right_ctgs.push_back(tmp_vt[jj]);
 														}
 														for(int jj=ii;jj<t_right_ctgs.size();++jj)
@@ -14355,7 +14355,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
-													
+
 															right_ctgs.push_back(-tmp_vt[jj]);
 														}
 														for(int jj=ii;jj<t_right_ctgs.size();++jj)
@@ -14366,7 +14366,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													}
 												}
 											//	break;
-										
+
 											}
 											else
 											{
@@ -14375,8 +14375,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
 											}
-										
-								
+
+
 											t_right_ctgs.clear();
 										}
 										else
@@ -14387,20 +14387,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 													list<int> ctg_stack;
 												ctg_stack.push_back(current_ctg);
-											
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
 													BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 													if(node_cov.size()==1)
 													{
-													
+
 														break;
-										
-													}	
-										
+
+													}
+
 												}
-								
+
 											}
 											else
 											{
@@ -14409,20 +14409,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 													list<int> ctg_stack;
 												ctg_stack.push_back(-current_ctg);
-											
+
 												for(int d=3;d<max_dep;d+=2)
 												{
 
 													BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 													if(node_cov.size()==1)
 													{
-													
+
 														break;
-										
-													}	
-										
+
+													}
+
 												}
-								
+
 											}
 
 											if(node_cov.size()==1)
@@ -14436,7 +14436,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
-													
+
 															left_ctgs.push_back(tmp_vt[jj]);
 														}
 														for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -14452,7 +14452,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
-													
+
 															left_ctgs.push_back(-tmp_vt[jj]);
 														}
 														for(int jj=ii;jj<t_left_ctgs.size();++jj)
@@ -14463,7 +14463,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													}
 												}
 											//	break;
-										
+
 											}
 											else
 											{
@@ -14472,11 +14472,11 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
 											}
-								
+
 											t_left_ctgs.clear();
 										}
-									
-									
+
+
 										contigs_info->c_info_vt[abs(NextUnitig)].used=1;
 										//key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
 										NextUnitig=0;
@@ -14553,7 +14553,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										contigs_info->c_info_vt[abs(t_left_ctgs[ii])].used=1;
 									}
 									t_left_ctgs.clear();
-							
+
 								}
 							}
 
@@ -14571,12 +14571,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 
 								map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
-							
+
 								for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 								{
 									dist_ctg_it_n=dist_ctg_it;
 									dist_ctg_it_n++;
-						
+
 									list<int>::iterator lit,lit2,n_lit;
 									for(lit=dist_ctg_it->second.begin();lit!=dist_ctg_it->second.end();)
 									{
@@ -14585,9 +14585,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										n_lit=lit2;
 										n_lit++;
 										int dist0=*lit2;
-						
+
 										int DistVar2=DistVar;
-													
+
 										if(MatePair)//dist0>3000)
 										{
 											DistVar2=10000;//dist0;
@@ -14604,12 +14604,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												if(it==1)
 												{
 													t_right_ctgs.push_back(*lit);
-												
+
 												}
 												else
 												{
 													t_left_ctgs.push_back(*lit);
-												
+
 												}
 												if(it==1)
 												{
@@ -14623,12 +14623,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												//unitig_dist[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 												key_unitigs[abs(*lit)]=dist_searched+Dist2NextUnitig/2;
 											}
-										
+
 										}
 										lit=n_lit;
-						
+
 									}
-								
+
 									dist_ctg_it=dist_ctg_it_n;
 									continue;
 
@@ -14654,7 +14654,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 								key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
 								map<int,vector<int> > node_cov;
-								
+
 
 								if(it==1)
 								{
@@ -14663,23 +14663,23 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(RightUnitig)
 									{
 										t_right_ctgs.push_back(NextUnitig);
-									
+
 										list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-										
+
 												break;
 
 											}
 										}
-									
-							
+
+
 									}
 									else
 									{
@@ -14687,26 +14687,26 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-										
+
 												break;
 
 											}
 										}
-								
+
 
 									}
-								
 
 
 
-								
+
+
 
 
 
@@ -14746,8 +14746,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
-									}	
+
+									}
 									else
 									{
 										for(int jj=0;jj<t_right_ctgs.size();++jj)
@@ -14755,7 +14755,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
 									}
-										
+
 									t_right_ctgs.clear();
 								}
 								else
@@ -14766,20 +14766,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(current_ctg);
-									
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
 									else
 									{
@@ -14788,20 +14788,20 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											list<int> ctg_stack;
 										ctg_stack.push_back(-current_ctg);
-								
+
 										for(int d=3;d<max_dep;d+=2)
 										{
 
 											BFSearchPathFinder(contigs_info, ctg_stack,dist_ctg,key_unitigs,dist_searched,node_cov,d,1,MatePair);//,sc_cnt
 											if(node_cov.size()==1)
 											{
-											
+
 												break;
-										
-											}	
-										
+
+											}
+
 										}
-								
+
 									}
 
 
@@ -14841,7 +14841,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 										}
 									//	break;
-										
+
 									}
 									else
 									{
@@ -14850,8 +14850,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
 									}
-								
-								
+
+
 									t_left_ctgs.clear();
 								}
 								//key_unitigs[abs(NextUnitig)]=dist_searched+Dist2NextUnitig;
@@ -14862,8 +14862,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							}
 
 							break;
-						
-					
+
+
 
 						}
 
@@ -14894,7 +14894,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						unitigs_vt.push_back(ctg_no);
 					}
 					contigs_info->c_info_vt[abs(ctg_no)].used=0;
-					
+
 
 				}
 				if(contigs_info->c_info_vt[abs(contig_no)].unique)
@@ -14930,24 +14930,24 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								ctgs_dist_cov[scf_it->first].resize(2);
 							}
-							
+
 							if(unitig_dist[abs(ctg_no)]<=0)
 							{
 								ctgs_dist_cov[scf_it->first][0]-=(contigs_info->contig_sz_vt[abs(ctg_no)])*scf_it->second.cov;
 								ctgs_dist_cov[scf_it->first][0]-=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)-scf_it->second.dist_sum);
-						
+
 							}
 							else
 							{
 								ctgs_dist_cov[scf_it->first][0]-=(contigs_info->contig_sz_vt[abs(scf_it->first)])*scf_it->second.cov;
 								ctgs_dist_cov[scf_it->first][0]+=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)+scf_it->second.dist_sum);
-				
+
 							}
-				
-								
+
+
 							ctgs_dist_cov[scf_it->first][1]+=scf_it->second.cov;
-						
-							
+
+
 						}
 						else
 						{
@@ -14959,18 +14959,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								ctgs_dist_cov[-scf_it->first][0]+=(contigs_info->contig_sz_vt[abs(ctg_no)])*scf_it->second.cov;
 								ctgs_dist_cov[-scf_it->first][0]+=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)+scf_it->second.dist_sum);
-						
+
 							}
 							else
 							{
 								ctgs_dist_cov[-scf_it->first][0]+=(contigs_info->contig_sz_vt[abs(scf_it->first)])*scf_it->second.cov;
 								ctgs_dist_cov[-scf_it->first][0]-=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)+scf_it->second.dist_sum);
-				
+
 							}
-				
-								
+
+
 							ctgs_dist_cov[-scf_it->first][1]+=scf_it->second.cov;
-							
+
 						}
 					}
 
@@ -14983,25 +14983,25 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								ctgs_dist_cov[-scf_it->first].resize(2);
 							}
-							
+
 							if(unitig_dist[abs(ctg_no)]<=0)
 							{
 								ctgs_dist_cov[-scf_it->first][0]-=(contigs_info->contig_sz_vt[abs(ctg_no)])*scf_it->second.cov;
 								ctgs_dist_cov[-scf_it->first][0]-=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)+scf_it->second.dist_sum);
-				
-										
+
+
 							}
 							else
 							{
 								ctgs_dist_cov[-scf_it->first][0]-=(contigs_info->contig_sz_vt[abs(scf_it->first)])*scf_it->second.cov;
 								ctgs_dist_cov[-scf_it->first][0]+=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)+scf_it->second.dist_sum);
-				
+
 							}
-				
-								
+
+
 							ctgs_dist_cov[-scf_it->first][1]+=scf_it->second.cov;
-						
-							
+
+
 						}
 						else
 						{
@@ -15013,24 +15013,24 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								ctgs_dist_cov[scf_it->first][0]+=(contigs_info->contig_sz_vt[abs(ctg_no)])*scf_it->second.cov;
 								ctgs_dist_cov[scf_it->first][0]+=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)+scf_it->second.dist_sum);
-						
+
 							}
 							else
 							{
 								ctgs_dist_cov[scf_it->first][0]+=(contigs_info->contig_sz_vt[abs(scf_it->first)])*scf_it->second.cov;
 								ctgs_dist_cov[scf_it->first][0]-=(((abs(unitig_dist[abs(ctg_no)]))*scf_it->second.cov)+scf_it->second.dist_sum);
-				
+
 							}
-				
-								
+
+
 							ctgs_dist_cov[scf_it->first][1]+=scf_it->second.cov;
-							
+
 						}
 					}
 
 
 				}
-				
+
 				//cout<<"adding missing contigs ."<<endl;
 				map<int,vector<int> >::iterator ctgs_it,ctgs_it_n;
 				for(ctgs_it=ctgs_dist_cov.begin();ctgs_it!=ctgs_dist_cov.end();++ctgs_it)
@@ -15043,7 +15043,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 				}
 
 
-				
+
 				//cout<<"adding missing unitigs ."<<endl;
 
 				map<int,int>::iterator unitig_it;
@@ -15055,45 +15055,45 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 				}
 
 				map<int, int > dist_ctg;
-				
-				
+
+
 				//cout<<"dist_ctgs ."<<endl;
 				map<int,int>::iterator ctgs_it2;
 				for(ctgs_it2=ctgs_for_second_round.begin();ctgs_it2!=ctgs_for_second_round.end();++ctgs_it2)
 				{
 					int dist=ctgs_it2->second;
 					dist_ctg[dist]=(ctgs_it2->first);
-					
+
 				}
-				
+
 				for(ctgs_it=ctgs_dist_cov.begin();ctgs_it!=ctgs_dist_cov.end();++ctgs_it)
 				{
-					
-					
+
+
 					if(ctgs_it->second[1]<LinkCovTh&&(ctgs_it->second[1]>LinkCovTh0&&contigs_info->c_info_vt[abs(ctgs_it->first)].unique))
 					{
 						int dist=ctgs_it->second[0]/ctgs_it->second[1];
 						dist_ctg[dist]=ctgs_it->first;
 					}
-					
+
 				}
 
-				
+
 				//cout<<"conflicts ."<<endl;
 
 				map<int,int>::iterator dist_ctg_it_p,dist_ctg_it,dist_ctg_it_n;
 				dist_ctg_it_p=dist_ctg.begin();
 				dist_ctg_it=dist_ctg_it_p;
 				cout<<dist_ctg.size()<<endl;
-				
+
 				if(dist_ctg.size()>0)
 				{
-				
+
 					dist_ctg_it++;
-				
+
 					for (;dist_ctg_it!=dist_ctg.end();++dist_ctg_it)
 					{
-						
+
 						dist_ctg_it_n=dist_ctg_it;
 						dist_ctg_it_n++;
 						if(dist_ctg_it_n==dist_ctg.end())
@@ -15101,7 +15101,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 						if(ctgs_dist_cov.count(dist_ctg_it->second)==1)
 						{
-						
+
 							if(ctgs_dist_cov[(dist_ctg_it->second)][1]<LinkCovTh&&ctgs_dist_cov[(dist_ctg_it->second)][1]>LinkCovTh0)
 							{
 								if(dist_ctg_it->first>0)
@@ -15118,15 +15118,15 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										ctgs_for_second_round[dist_ctg_it->second]=dist_ctg_it->first;
 									}
 								}
-							
+
 							}
 						}
 						dist_ctg_it_p=dist_ctg_it;
 					}
-			
+
 
 					//cout<<"conflicts end."<<endl;
-		
+
 				}
 			}
 
@@ -15148,12 +15148,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		o_sc_info<<">SuperContig_"<<sc_cnt<<endl;
 
 		o_sc<<">SuperContig_"<<sc_cnt<<endl;
-		
-		
+
+
 		vector<int> ctgs_vt;
 		reverse(left_ctgs.begin(),left_ctgs.end());
 
-		
+
 		for(int j=0;j<(int)left_ctgs.size();++j)
 		{
 		//	o_sc_info<<left_ctgs[j]<<" ";
@@ -15170,9 +15170,9 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 		}
 		//o_sc_info<<endl;
-		
 
-		//output coverage		
+
+		//output coverage
 
 		uint64_t tot_cov=0,uni_cov=0,tot_len=0,uni_len=0;
 		for(int j=0;j<(int)ctgs_vt.size();++j)
@@ -15205,7 +15205,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		}
 
 
-		
+
 		int gap_closing_flag=0;
 		int gap_offset=0;
 		//o_sc<<sc_cnt<<endl;
@@ -15282,21 +15282,21 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						//cout<<contigs_info->contig_adjacency_right[cur_ctg][nxt_ctg].bridge;
 						string bridge=contigs_info->contig_adjacency_right[cur_ctg][nxt_ctg].bridge;
 						//o_sc<<contigs_info->contig_adjacency_right[cur_ctg][nxt_ctg].bridge;
-						
+
 						o_sc<<bridge;
 
 						int zero=0;
 						o_sc_info<<"d: "<<zero<<" ";
-						
+
 						//contigs_info->gaps_in_scaffolds[sc_cnt].push_back(0);
-					
+
 					}
 					else
 					{
 						if(contigs_info->scaffold_adjacency_right[cur_ctg].count(nxt_ctg)>0)
 						{
 							//o_sc<<contigs_info->contigs_str[cur_ctg].substr(..,..);
-							
+
 							int gap_sz=contigs_info->scaffold_adjacency_right[cur_ctg][nxt_ctg].dist_sum;
 							int gap_cov=contigs_info->scaffold_adjacency_right[cur_ctg][nxt_ctg].cov;
 							gap_sz=gap_sz/gap_cov;
@@ -15304,7 +15304,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							//cout<<gap_sz<<endl;
 							if(gap_sz<150&&gap_sz>-150)
 							{
-							
+
 								int start_pos=codB+K_size+codE-codB;
 								if(start_pos<0)
 								{
@@ -15320,7 +15320,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								string match1_s=contigs_info->contigs_str[cur_ctg].substr(codE,1000);
 								int match1_sz=match1_s.size();
 								int m_k=11;
-								map<string,int> match_pos;	
+								map<string,int> match_pos;
 								for(int i=0;i<=match1_sz - m_k;++i)
 								{
 									string substr=match1_s.substr(i,m_k);
@@ -15341,7 +15341,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									if(match_pos.count(substr))
 									{
 										gap_closing_flag=1;
-										gap_offset=i+match1_sz-match_pos[substr];	
+										gap_offset=i+match1_sz-match_pos[substr];
 										gapoffset_cov[gap_offset]++;
 										if(gap_offset>=query_sz)
 										{
@@ -15350,7 +15350,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 										}
 										//break;
-								
+
 									}
 								}
 								map<int,int>::iterator offset_it;
@@ -15363,19 +15363,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										best_offset=offset_it->first;
 									}
 
-									
+
 								}
 								gap_offset=best_offset;
 								if(gap_closing_flag==0)
 								{
-									
+
 									//gap_closing_flag=1;
 									gap_offset=0;
 								}
 
 							}
-							
-							
+
+
 
 
 							if(gap_closing_flag==0)
@@ -15385,7 +15385,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								if(gap_sz<0)
 								{o_sc<<'N';}
 							//	contigs_info->gaps_in_scaffolds[sc_cnt].push_back(gap_sz);
-								
+
 								o_sc_info<<"d: "<<gap_sz<<" ";
 								scf_len+=gap_sz;
 							}
@@ -15464,18 +15464,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						complement_str(bridge);
 
 
-						
+
 						o_sc<<bridge;
 						int zero=0;
 						o_sc_info<<"d: "<<zero<<" ";
-						
+
 					}
 					else
 					{
 						if(contigs_info->scaffold_adjacency_left[cur_ctg].count(-nxt_ctg)>0)
 						{
 							//o_sc<<contigs_info->contigs_str[cur_ctg].substr(..,..);
-							
+
 							int gap_sz=contigs_info->scaffold_adjacency_left[cur_ctg][-nxt_ctg].dist_sum;
 							int gap_cov=contigs_info->scaffold_adjacency_left[cur_ctg][-nxt_ctg].cov;
 							gap_sz=gap_sz/gap_cov;
@@ -15483,7 +15483,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 						//	cout<<gap_sz<<endl;
 							if(gap_sz<150&&gap_sz>-150)
 							{
-						
+
 								string tmp_str=contigs_info->contigs_str[cur_ctg].substr(0,codB);
 								reverse(tmp_str.begin(),tmp_str.end());
 								complement_str(tmp_str);
@@ -15494,7 +15494,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								complement_str(match1_s);
 								int match1_sz=match1_s.size();
 								int m_k=11;
-								map<string,int> match_pos;	
+								map<string,int> match_pos;
 								for(int i=0;i<=match1_sz - m_k;++i)
 								{
 									string substr=match1_s.substr(i,m_k);
@@ -15522,12 +15522,12 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											gap_offset=0;
 										}
 										break;
-								
+
 									}
 								}
 
 
-								
+
 								map<int,int>::iterator offset_it;
 								int best_offset=0,max_cov=0;
 								for(offset_it=gapoffset_cov.begin();offset_it!=gapoffset_cov.end();++offset_it)
@@ -15538,27 +15538,27 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										best_offset=offset_it->first;
 									}
 
-									
+
 								}
 								gap_offset=best_offset;
 
 								if(gap_closing_flag==0)
 								{
-									
+
 									gap_offset=0;
 								}
 
 
 							}
-							
-							
+
+
 							if(gap_closing_flag==0)
 							{
 								for(int gg=0;gg<gap_sz;++gg)
 								{o_sc<<'N';}
 								if(gap_sz<0)
 								{o_sc<<'N';}
-								
+
 							//	contigs_info->gaps_in_scaffolds[sc_cnt].push_back(gap_sz);
 								o_sc_info<<"d: "<<gap_sz<<" ";
 								scf_len+=gap_sz;
@@ -15635,12 +15635,12 @@ void ConstructContigGraph(struct hashtable *ht1,struct hashtable *merge_ht1, int
 	if(ContigFilename=="Contigs.txt")
 	{
 		ContigsRemapping(ht1,&ht2, K_size, contigs_info,ContigFilename,0);
-		
+
 	}
-	
+
 	AppendMergeHT(ht1, merge_ht1);
-	BuildContigAdjacency(ht1, &ht2, contigs_info, K_size,ContigFilename);	
-		
+	BuildContigAdjacency(ht1, &ht2, contigs_info, K_size,ContigFilename);
+
 
 }
 
@@ -15660,8 +15660,8 @@ void ConstructContigGraph0(struct hashtable0 *ht,struct hashtable0 *merge_ht, in
 	bool flip_1,flip_2,flip_0;
 	size_t ht_sz;
 	size_t numReads=0;
-	
-	
+
+
 	int Kmer_arr_sz=K_size/32+1;
 	int rem1=K_size%32;
 	if(rem1==0)
@@ -15670,17 +15670,17 @@ void ConstructContigGraph0(struct hashtable0 *ht,struct hashtable0 *merge_ht, in
 	int boundary=0,removed=0,bridge=0;
 
 	ht_sz=ht->ht_sz;
-	
-	
+
+
 	cout<<"Contigs remapping."<<endl;
 	if(ContigFilename=="Contigs.txt")
 	{
-		ContigsRemapping0(ht, K_size, contigs_info,ContigFilename,0);		
+		ContigsRemapping0(ht, K_size, contigs_info,ContigFilename,0);
 	}
 	 AppendMergeHT0(ht, merge_ht,Kmer_arr_sz);
 	//cout<<"Collecting informative reads."<<endl;
 	BuildContigAdjacency0(ht,contigs_info, K_size,ContigFilename);
-	
+
 
 }
 
