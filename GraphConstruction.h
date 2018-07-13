@@ -14,6 +14,8 @@
 #include "OpenFile.h"
 #include "ReadFirstLine.h"
 
+extern double UPDATERATE;
+
 using namespace std;
 
 
@@ -5213,6 +5215,8 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 		string tag, qs, n_tag;
 		string QS_s;
 
+		time_t timer = time(NULL);
+
 		while (read_success)
 		{
 			if (fq_flag)
@@ -5260,8 +5264,12 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 			if(seq_sz>*maxlen)
 			{*maxlen=seq_sz;}
 
-			if ((numReads2)%50000000==0)
+			// Do not update message more than once every UPDATERATE seconds.
+			if ( difftime(time(NULL), timer) > UPDATERATE )
+			{
 				cout<<"Reading: "<<(numReads2)<<endl;
+				timer = time(NULL);
+			}
 
 			if ((totReads2) != 0 && (numReads2) >= (totReads2))
 			{

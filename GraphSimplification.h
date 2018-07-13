@@ -1,17 +1,16 @@
 #ifndef __GRAPH_SIMPLIFICATION_H
 #define __GRAPH_SIMPLIFICATION_H
-// #include <iostream>
 #include <string>
-// #include <string.h>
-// #include <stdint.h>
 #include <vector>
 #include <map>
 #include <list>
 #include <algorithm>
-// #include <fstream>
 #include <time.h>
 #include "BasicDataStructure.h"
 #include "GraphConstruction.h"
+
+extern double UPDATERATE;
+
 using namespace std;
 
 
@@ -7566,13 +7565,21 @@ void GraphSimplification(hashtable *ht,hashtable * merge_ht, hashtable2 *ht2, ha
 {
 	if(K_size<=32)
 	{
+		time_t timer = time(NULL);
+
 		for(size_t i=0;i<ht->ht_sz;++i)
 		{
 
 
 
 			if((i+1)%10000000==0)//||i>6000000)
-			{cout<<i+1<<endl;}
+			// Do not update message more than once every UPDATERATE seconds.
+			if ( difftime(time(NULL), timer) > UPDATERATE )
+			{
+				cout<<i+1<<endl;
+				timer = time(NULL);
+			}
+
 
 			struct bucket *bktptr=ht->store_pos[i];
 
@@ -7626,14 +7633,19 @@ void GraphSimplification(hashtable *ht,hashtable * merge_ht, hashtable2 *ht2, ha
 	{
 		if(K_size<=64)
 		{
+			time_t timer = time(NULL);
 			for(size_t i=0;i<ht2->ht_sz;++i)
 			{
 
 				//if(i==13174)//11390)//2483)
 				//{cout<<"";}
 					//if(1)
-				if(i%10000000==0)//||i>6000000)
-				{cout<<i<<endl;}
+				// Do not update message more than once every UPDATERATE seconds.
+				if ( difftime(time(NULL), timer) > UPDATERATE )
+				{
+					cout<<i<<endl;
+					timer = time(NULL);
+				}
 
 				struct bucket2 *bktptr=ht2->store_pos[i];
 
@@ -7690,10 +7702,15 @@ void GraphSimplification(hashtable *ht,hashtable * merge_ht, hashtable2 *ht2, ha
 void GraphSimplification3(hashtable3 *ht3, hashtable3 * merge_ht3,int K_size,int gap,int PathCovTh,int max_depth,int PathSim)
 {
 
+	time_t timer = time(NULL);
+
 	for(size_t i=0;i<ht3->ht_sz;++i)
 	{
-		if(i%10000000==0)//||i>6000000)
-		{cout<<i<<endl;}
+		if ( difftime(time(NULL), timer) > UPDATERATE )
+		{
+			cout<<i<<endl;
+			timer = time(NULL);
+		}
 
 		struct bucket3 *bktptr=ht3->store_pos[i];
 
@@ -7746,11 +7763,15 @@ void GraphSimplification3(hashtable3 *ht3, hashtable3 * merge_ht3,int K_size,int
 void GraphSimplification4(hashtable4 *ht4, hashtable4 * merge_ht4,int K_size,int gap,int PathCovTh,int max_depth,int PathSim)
 {
 
+	time_t timer = time(NULL);
 
 	for(size_t i=0;i<ht4->ht_sz;++i)
 	{
-		if(i%10000000==0)//||i>6000000)
-		{cout<<i<<endl;}
+		if ( difftime(time(NULL), timer) > UPDATERATE )
+		{
+			cout<<i<<endl;
+			timer = time(NULL);
+		}
 
 		struct bucket4 *bktptr=ht4->store_pos[i];
 
@@ -7804,11 +7825,15 @@ void GraphSimplification4(hashtable4 *ht4, hashtable4 * merge_ht4,int K_size,int
 void GraphSimplification0(hashtable0 *ht, hashtable0 * merge_ht,int K_size,int gap,int PathCovTh,int max_depth,int PathSim)
 {
 
+	time_t timer = time(NULL);
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		if(i%10000000==0&&i>0)//||i>6000000)
-		{cout<<i<<endl;}
+		if ( difftime(time(NULL), timer) > UPDATERATE )
+		{
+			cout<<i<<endl;
+			timer = time(NULL);
+		}
 
 		struct bucket0 *bktptr=ht->store_pos[i];
 

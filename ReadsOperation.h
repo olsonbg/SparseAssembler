@@ -12,6 +12,8 @@
 #include "GraphSimplification.h"
 #include "ScaffoldingDataStructure.h"
 
+extern double UPDATERATE;
+
 using namespace std;
 
 
@@ -6106,6 +6108,9 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 
 		struct bucket **ptr1,**ptr2;
 		bool RightSearch=0;
+
+		time_t timer = time(NULL);
+
 		for (int round=1;round<=3;++round)
 		{
 			if(round==2)
@@ -6207,11 +6212,11 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 
 				num_Reads++;
 
-				if(num_Reads%10000000==0)
+				if ( difftime(time(NULL), timer) > UPDATERATE )
 				{
-					time(&read_time);
 					cout<<num_Reads<<" Pairs Searched."<<endl;
-					cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
+					timer = time(NULL);
+					cout<<"Time: "<<difftime(timer,beg_time)<<" secs."<<endl;
 					continue;
 				}
 

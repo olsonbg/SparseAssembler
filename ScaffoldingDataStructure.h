@@ -11,6 +11,7 @@
 #include "GraphConstruction.h"
 #include "GraphSimplification.h"
 
+extern double UPDATERATE;
 
 using namespace std;
 
@@ -11136,13 +11137,17 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		int cont1,cont2,dist;
 		int nr=0;
 
+		time_t timer = time(NULL);
+
 		while(in_sc_l>>cont1>>cont2>>dist)
 		{
 			nr++;
-			if(nr%1000000==0)
+			if ( difftime(time(NULL), timer) > UPDATERATE )
 			{
 				cout<<nr<<endl;
+				timer = time(NULL);
 			}
+
 		//	cout<<nr<<endl;
 			dist+=ins_est_vt[i-1];
 			if(dist<-200||(dist>(ins_est_vt[i-1]*3/2)))//double check
@@ -11218,7 +11223,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 			sprintf(sc_name,"PdistIter_R_lib_%d.txt",i);
 		}
 		ifstream in_sc_r(sc_name);
-		 nr=0;
+		nr=0;
+		timer = time(NULL);
 		while(in_sc_r>>cont1>>cont2>>dist)
 		{
 
@@ -11226,9 +11232,10 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		//	if((abs(cont1)==16&&abs(cont2)==9)||(abs(cont1)==9&&abs(cont2)==16))
 			//{cout<<"";}
 			nr++;
-			if(nr%1000000==0)
+			if ( difftime(time(NULL), timer) > UPDATERATE )
 			{
 				cout<<nr<<endl;
+				timer = time(NULL);
 			}
 
 			dist+=ins_est_vt[i-1];

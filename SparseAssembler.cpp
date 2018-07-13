@@ -19,6 +19,8 @@
 #include "OpenFile.h"
 #include "ReadFirstLine.h"
 
+// Update time messages every UPDATERATE seconds.
+double UPDATERATE = 300.0; // 5 minutes.
 
 using namespace std;
 
@@ -842,6 +844,8 @@ int main(int argc, char* argv[])
 				}
 				cout<<"Building the sparse k-mer graph, round: "<<round<<endl;
 				//scan files of fasta or fastq format. The below is long and trivial, skip it to the major function.
+				time_t timer = time(NULL);
+
 				for(size_t jj=0;jj<in_filenames_vt.size();++jj)
 				{
 					uint64_t nLines=0;
@@ -1068,8 +1072,7 @@ int main(int argc, char* argv[])
 						}
 
 
-						if (numReads%10000000==0)
-						//if (numReads%100000==0)
+						if ( difftime(time(NULL), timer) > UPDATERATE )
 						{
 							cout<<"Reading: "<<numReads<<endl;
 							if(round==1)
@@ -1094,8 +1097,8 @@ int main(int argc, char* argv[])
 							}
 
 							//cout<<"bucket_count"<<bucket_count<<endl;
-							time(&read_time);
-							cout<<"Reading time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
+							timer = time(NULL);
+							cout<<"Reading time: "<<difftime(timer,beg_time)<<" secs."<<endl;
 
 						}
 
@@ -1423,6 +1426,8 @@ int main(int argc, char* argv[])
 			uint64_t nLines=0;
 			int seq_sz=0;
 
+			time_t timer = time(NULL);
+
 			for(int jj=0;jj<single_filenames_vt.size();++jj)
 			{
 
@@ -1681,12 +1686,12 @@ int main(int argc, char* argv[])
 
 
 
-					if (numReads%10000000==0)
+					if ( difftime(time(NULL), timer) > UPDATERATE )
 					{
 						cout<<"Denoised: "<<numReads<<endl;
 
-						time(&read_time);
-						cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
+						timer = time(NULL);
+						cout<<"Time: "<<difftime(timer,beg_time)<<" secs."<<endl;
 
 					}
 
@@ -1701,6 +1706,8 @@ int main(int argc, char* argv[])
 
 			//free(read1.read_bits);
 			//free(read2.read_bits);
+
+			timer = time(NULL);
 
 			for(int jj=0;jj<p1_filenames_vt.size();jj+=1)
 			{
@@ -1767,15 +1774,6 @@ int main(int argc, char* argv[])
 				int readLen1,readLen2;
 				nLines1=0,nLines2=0;
 
-
-
-
-
-
-
-
-
-
 				getline(in_pair1,str);
 				if(fq_flag==0&&str[0]=='@')
 				{
@@ -1787,7 +1785,6 @@ int main(int argc, char* argv[])
 				in_pair1.open(in_filenames_vt[jj].c_str());
 
 				bool read_success1=1,read_success2=1;
-
 
 				string tag1,n_tag1,tag2,n_tag2;
 				string QS_s1,QS_s2;
@@ -2228,12 +2225,12 @@ int main(int argc, char* argv[])
 				//	if (numReads==180)
 				//	{cout<<numReads<<endl;}
 
-					if (numReads%10000000==0)
+					if ( difftime(time(NULL), timer) > UPDATERATE )
 					{
 						cout<<"Denoised: "<<numReads<< " pairs."<<endl;
 
-						time(&read_time);
-						cout<<"Time: "<<difftime(read_time,beg_time)<<" secs."<<endl;
+						timer = time(NULL);
+						cout<<"Time: "<<difftime(timer,beg_time)<<" secs."<<endl;
 
 					}
 
