@@ -1,16 +1,12 @@
 #ifndef __SCAFFOLDING_DATA_STRUCTURE_H
 #define __SCAFFOLDING_DATA_STRUCTURE_H
 
-#include <iostream>
 #include <string>
-#include <string.h>
-#include <stdint.h>
 #include <vector>
 #include <map>
 #include <list>
 #include <algorithm>
-#include <fstream>
-#include "time.h"
+#include <time.h>
 #include "BasicDataStructure.h"
 #include "GraphConstruction.h"
 #include "GraphSimplification.h"

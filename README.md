@@ -31,3 +31,7 @@ LD: load a saved k-mer graph.
 
 PathCovTh: coverage threshold for spurious paths in the breadth-first search, support 0-100.
 
+# Compression
+
+Supports reading gzip, bzip2, and xz compressed files. Uses `OpenFile.cpp` and
+`MagicNumber.cpp` from https://github.com/olsonbg/TraceHBonds

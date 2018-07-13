@@ -1,17 +1,12 @@
 #ifndef __BUILD_CONTIGS_H
 #define __BUILD_CONTIGS_H
 
-
-#include <iostream>
 #include <string>
-#include <string.h>
-#include <stdint.h>
 #include <vector>
 #include <map>
 #include <list>
 #include <algorithm>
-#include <fstream>
-#include "time.h"
+#include <time.h>
 #include "BasicDataStructure.h"
 #include "GraphConstruction.h"
 using namespace std;

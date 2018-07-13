@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <string>
-#include <string.h>
-#include <stdint.h>
 #include <vector>
 #include <map>
 #include <list>
 #include <algorithm>
-#include <fstream>
 #include "time.h"
+#include "OpenFile.h"
+
 using namespace std;
 //typedef unsigned __int64 uint64_t;
 //typedef __int64 int64_t;
@@ -449,6 +448,48 @@ bool get_a_fasta_read(ifstream & fasta_in, string &tag, string &str, string & n_
 	return 1;
 }
 
+bool get_a_fasta_read(boost::iostreams::filtering_stream<boost::iostreams::input> *fasta_in,
+                      string &tag, string &str, string & n_tag)
+{
+
+	ifstream tmp_ifstream;
+	string temp;
+	if(!getline(*fasta_in,temp))
+	{return 0;}
+	if(temp[temp.size()-1]=='\n'||temp[temp.size()-1]=='\r')
+	{temp.resize(temp.size()-1);}
+
+	str.clear();
+	if(temp[0]=='>')
+	{tag=temp;}
+	else
+	{
+		tag=n_tag;
+		str=temp;
+	}
+
+
+	while(getline(*fasta_in,temp))
+	{
+
+		if(temp[temp.size()-1]=='\n'||temp[temp.size()-1]=='\r')
+		{temp.resize(temp.size()-1);}
+
+		if((temp.size()>0&&(temp[0]=='>'||temp[0]=='\n'||temp[0]=='\r')))
+		{
+			n_tag=temp;
+			return 1;
+		}
+		else
+		{
+			str+=temp;
+
+		}
+
+	}
+	return 1;
+}
+
 
 bool get_a_fastq_read(ifstream & fastq_in, string &tag, string &seq, string & quality)
 {
@@ -466,11 +507,41 @@ bool get_a_fastq_read(ifstream & fastq_in, string &tag, string &seq, string & qu
 	}
 	getline(fastq_in,seq);//seq
 	if(seq[seq.size()-1]=='\n'||seq[seq.size()-1]=='\r')
-	{seq.resize(seq.size()-1);}
+		seq.resize(seq.size()-1);
+
 	getline(fastq_in,temp);//'+'
+
 	getline(fastq_in,quality);
 	if(quality[quality.size()-1]=='\n'||quality[quality.size()-1]=='\r')
-	{quality.resize(quality.size()-1);}
+		quality.resize(quality.size()-1);
+
+	return 1;
+}
+
+bool get_a_fastq_read(boost::iostreams::filtering_stream<boost::iostreams::input> *fastq_in,
+                      string & tag, string &seq, string &quality)
+{
+
+	ifstream tmp_ifstream;
+	string temp;
+	if(!getline(*fastq_in,temp))
+	{return 0;}
+	seq.clear();
+	if(temp[0]=='@')
+	{tag=temp;}
+	else
+	{
+		return 0;
+	}
+	getline(*fastq_in,seq);//seq
+	if(seq[seq.size()-1]=='\n'||seq[seq.size()-1]=='\r')
+		seq.resize(seq.size()-1);
+
+	getline(*fastq_in,temp);//'+'
+
+	getline(*fastq_in,quality);
+	if(quality[quality.size()-1]=='\n'||quality[quality.size()-1]=='\r')
+		quality.resize(quality.size()-1);
 
 	return 1;
 }

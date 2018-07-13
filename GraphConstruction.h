@@ -2,18 +2,18 @@
 #define __GRAPH_CONSTRUCTION_H
 
 
-#include <iostream>
 #include <string>
-#include <string.h>
-#include <stdint.h>
 #include <vector>
 #include <map>
 #include <list>
 #include <algorithm>
-#include <fstream>
 #include <sstream>
-#include "time.h"
+#include <time.h>
 #include "BasicDataStructure.h"
+#include "MagicNumber.h"
+#include "OpenFile.h"
+#include "ReadFirstLine.h"
+
 using namespace std;
 
 
@@ -5184,24 +5184,27 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 		uint64_t nLines=0;
 		int seq_sz=0;
 
-		ifstream infile(in_filenames_vt[jj].c_str());
+		bool fq_flag=0;
+
+		if( !get_first_line(&str, in_filenames_vt[jj].c_str()) )
+			return;
+
+		if (fq_flag == 0 && str[0] == '@')
+			fq_flag = 1;
+
+		ifstream ifpfile;
+		boost::iostreams::filtering_stream<boost::iostreams::input> infile;
+
+		if( !openfile(in_filenames_vt[jj].c_str(), &infile, &ifpfile)) {
+			cout<< "Error opening file\n";
+			return;
+		};
+
 		cout<<jj+1<<"/"<<in_filenames_vt.size()<<" files."<<endl;
 		cout<<"Processing file: "<<in_filenames_vt[jj]<<endl;
 
 		seq_s.clear();
 
-		bool fq_flag=0;
-
-
-		getline(infile, str);
-		if (fq_flag == 0 && str[0] == '@')
-		{
-			fq_flag = 1;
-		}
-		infile.close();
-
-		infile.clear();
-		infile.open(in_filenames_vt[jj].c_str());
 
 		bool read_success = 0;
 
@@ -5213,19 +5216,12 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 		while (read_success)
 		{
 			if (fq_flag)
-			{
-				read_success = get_a_fastq_read(infile, tag, seq_s, QS_s);
-
-			}
+				read_success = get_a_fastq_read(&infile, tag, seq_s, QS_s);
 			else
-			{
-				read_success = get_a_fasta_read(infile, tag, seq_s, n_tag);
+				read_success = get_a_fasta_read(&infile, tag, seq_s, n_tag);
 
-			}
 			if (read_success == 0)
-			{
 				break;
-			}
 
 			seq_sz = seq_s.size();
 
@@ -5265,9 +5261,7 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 			{*maxlen=seq_sz;}
 
 			if ((numReads2)%50000000==0)
-			{
 				cout<<"Reading: "<<(numReads2)<<endl;
-			}
 
 			if ((totReads2) != 0 && (numReads2) >= (totReads2))
 			{
@@ -5277,8 +5271,8 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 
 		}
 		//fclose(infile);
-		infile.close();
-		infile.clear();
+		ifpfile.close();
+		// infile.clear();
 
 
 

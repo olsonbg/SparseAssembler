@@ -1,18 +1,13 @@
-#include "iostream"
-#include "stdio.h"
-#include "string"
-#include "vector"
-#include "cstdlib"
-#include "bitset"
+#include <string>
+#include <vector>
+#include <cstdlib>
+#include <bitset>
 #include <map>
 #include <math.h>
-#include "memory"
+#include <memory>
 #include <algorithm>
-#include "fstream"
-#include "sstream"
-#include "list"
-#include "stdlib.h"
-#include "time.h"
+#include <list>
+#include <time.h>
 #include "BasicDataStructure.h"
 #include "BuildContigs.h"
 #include "GraphConstruction.h"
@@ -20,8 +15,13 @@
 #include "ScaffoldingDataStructure.h"
 #include "ReadsCorrection.h"
 #include "ReadsOperation.h"
+#include "MagicNumber.h"
+#include "OpenFile.h"
+#include "ReadFirstLine.h"
+
 
 using namespace std;
+
 
 int main(int argc, char* argv[])
 {
@@ -847,25 +847,29 @@ int main(int argc, char* argv[])
 					uint64_t nLines=0;
 					int seq_sz=0;
 
-					ifstream infile(in_filenames_vt[jj].c_str());
-
 					cout<<jj+1<<"/"<<in_filenames_vt.size()<<" files."<<endl;
 					cout<<"Processing file: "<<in_filenames_vt[jj]<<endl;
 
-					seq_s.clear();
-
 					bool fq_flag=0;
 
+					if( !get_first_line(&str, in_filenames_vt[jj].c_str()) )
+						return(false);
 
-					getline(infile,str);
 					if(fq_flag==0&&str[0]=='@')
 					{
 						fq_flag=1;
 					}
-					infile.close();
 
-					infile.clear();
-					infile.open(in_filenames_vt[jj].c_str());
+					ifstream ifpfile;
+					boost::iostreams::filtering_stream<boost::iostreams::input> infile;
+
+					if( !openfile(in_filenames_vt[jj].c_str(), &infile, &ifpfile)) {
+						cout<< "Error opening file\n";
+						return(0);
+					};
+
+
+					seq_s.clear();
 
 					bool read_success=0;
 
@@ -878,12 +882,12 @@ int main(int argc, char* argv[])
 					{
 						if(fq_flag)
 						{
-							read_success=get_a_fastq_read(infile,tag,seq_s,QS_s);
+							read_success=get_a_fastq_read(&infile,tag,seq_s,QS_s);
 
 						}
 						else
 						{
-							read_success=get_a_fasta_read(infile,tag,seq_s,n_tag);
+							read_success=get_a_fasta_read(&infile,tag,seq_s,n_tag);
 
 						}
 						if(read_success==0)
@@ -1099,8 +1103,8 @@ int main(int argc, char* argv[])
 
 					}
 					//fclose(infile);
-					infile.close();
-					infile.clear();
+					ifpfile.close();
+					// infile.clear();
 
 
 
@@ -1422,8 +1426,22 @@ int main(int argc, char* argv[])
 			for(int jj=0;jj<single_filenames_vt.size();++jj)
 			{
 
-				ifstream infile(single_filenames_vt[jj].c_str());
+				if( !get_first_line(&str, in_filenames_vt[jj].c_str()) )
+					return(false);
+
 				bool fq_flag=0;
+
+				if(fq_flag==0&&str[0]=='@')
+				{
+					fq_flag=1;
+				}
+
+				ifstream ifpfile;
+				boost::iostreams::filtering_stream<boost::iostreams::input> infile;
+				if( !openfile(in_filenames_vt[jj].c_str(), &infile, &ifpfile)) {
+					cout<< "Error opening file\n";
+					return(0);
+				};
 				nLines=0;
 
 
@@ -1447,17 +1465,6 @@ int main(int argc, char* argv[])
 				cout<<"Processing file: "<<single_filenames_vt[jj]<<endl;
 
 
-				getline(infile,str);
-
-
-				if(fq_flag==0&&str[0]=='@')
-				{
-					fq_flag=1;
-				}
-				infile.close();
-
-				infile.clear();
-				infile.open(in_filenames_vt[jj].c_str());
 
 				bool read_success=0;
 
@@ -1470,12 +1477,12 @@ int main(int argc, char* argv[])
 				{
 					if(fq_flag)
 					{
-						read_success=get_a_fastq_read(infile,tag,seq_s,QS_s);
+						read_success=get_a_fastq_read(&infile,tag,seq_s,QS_s);
 
 					}
 					else
 					{
-						read_success=get_a_fasta_read(infile,tag,seq_s,n_tag);
+						read_success=get_a_fasta_read(&infile,tag,seq_s,n_tag);
 
 					}
 
@@ -1687,8 +1694,8 @@ int main(int argc, char* argv[])
 
 				}
 
-				infile.close();
-				infile.clear();
+				ifpfile.close();
+				// infile.clear();
 
 			}
 

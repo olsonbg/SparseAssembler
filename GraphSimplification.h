@@ -1,15 +1,15 @@
 #ifndef __GRAPH_SIMPLIFICATION_H
 #define __GRAPH_SIMPLIFICATION_H
-#include <iostream>
+// #include <iostream>
 #include <string>
-#include <string.h>
-#include <stdint.h>
+// #include <string.h>
+// #include <stdint.h>
 #include <vector>
 #include <map>
 #include <list>
 #include <algorithm>
-#include <fstream>
-#include "time.h"
+// #include <fstream>
+#include <time.h>
 #include "BasicDataStructure.h"
 #include "GraphConstruction.h"
 using namespace std;
