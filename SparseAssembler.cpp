@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <vector>
 #include <cstdlib>
@@ -8,22 +9,20 @@
 #include <algorithm>
 #include <list>
 #include <time.h>
+#include <sstream>
 #include "BasicDataStructure.h"
-#include "BuildContigs.h"
 #include "GraphConstruction.h"
 #include "GraphSimplification.h"
 #include "ScaffoldingDataStructure.h"
 #include "ReadsCorrection.h"
 #include "ReadsOperation.h"
-#include "MagicNumber.h"
-#include "OpenFile.h"
 #include "ReadFirstLine.h"
+#include "BuildContigs.h"
 
 // Update time messages every UPDATERATE seconds.
 double UPDATERATE = 300.0; // 5 minutes.
 
 using namespace std;
-
 
 int main(int argc, char* argv[])
 {
