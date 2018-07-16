@@ -289,7 +289,7 @@ struct reads_table
 
 struct contigs_info
 {
-	int total_contigs;
+	unsigned int total_contigs;
 	int K_size;
 	vector<int> contig_sz_vt,kmer_cnt_vt,comp_vt;
 	vector<int> contigs_hp_b,contigs_hp_e;

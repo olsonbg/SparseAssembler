@@ -189,7 +189,7 @@ void MarkBranches0(hashtable0 *ht)
 
 
 // produce the contigs, single end assembly complete
-void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips)
+void build_contigs(struct hashtable *ht,int K_size, string Contig_Filename,bool ScreenOffTips)
 {
 	//bool ScreenOffTips=1;
 	int TipLenTh=100;
@@ -206,7 +206,6 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 	ofstream o_cov_hist(o_name.c_str());
 
 	map<int,int> cov_hist;
-	bool FE_left=0,FE_right=0;
 	ofstream o_Log("ContigsLog.txt");//,ios_base::app);
 	bool COVERAGE_STS=1;
 	uint64_t coverage=0;
@@ -237,7 +236,6 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 				//{cout<<"";}
 			//	if(bkt_ptr->kmer_t.kmer==14437493651275778)
 			//	{cout<<"";}
-				FE_left=0;FE_right=0;
 
 				if(COVERAGE_STS)
 				{
@@ -262,14 +260,13 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 				int nLBranches=0,nRBranches=0;
 				uint64_t left_bits,right_bits;
 
-				bool Right=0,flag=0;
+				bool Right=0;
 
 
 				for(int it=1;it<=2;++it)
 				{
 					string sum_str,t_str;
 
-					bool Free_End=0;
 					int nBranches=0;
 					sum_str.clear();
 					t_str.clear();
@@ -297,7 +294,6 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 							if(bkt_ptr->kmer_info.right==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -369,7 +365,6 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 							if(bkt_ptr->kmer_info.left==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -445,10 +440,6 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 						if(found==0)
 						{
-							Free_End=1;
-
-							flag=1;
-
 							break;
 						}
 
@@ -457,7 +448,6 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 						if((Right==1&&bkt_ptr->kmer_info.split_left==1)||(Right==0&&bkt_ptr->kmer_info.split_right==1))
 						{
-							flag=1;
 							last_bkt_ptr->kmer_info.marked=1;
 							//t_str=t_str.substr(0,t_str.size()-1);
 							t_str.clear();
@@ -472,7 +462,6 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 						if(bkt_ptr->kmer_info.used==1)
 						{
-							flag=1;
 							break;
 						}
 
@@ -578,7 +567,7 @@ void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filena
 
 }
 
-void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips)
+void build_contigs2(struct hashtable2 *ht,int K_size, string Contig_Filename,bool ScreenOffTips)
 {
 	//bool ScreenOffTips=0;
 	int TipLenTh=K_size+1;
@@ -599,7 +588,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 	ofstream o_cov_hist(o_name.c_str());
 
 	map<int,int> cov_hist;
-	bool FE_left=0,FE_right=0;
 	ofstream o_Log("ContigsLog.txt");//,ios_base::app);
 	bool COVERAGE_STS=1;
 	uint64_t coverage=0;
@@ -626,7 +614,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 			if(bkt_ptr->kmer_info.used==0&&bkt_ptr->kmer_info.removed==0)
 			{
 				num_contigs++;
-				FE_left=0;FE_right=0;
 
 				if(COVERAGE_STS)
 				{
@@ -658,8 +645,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 				for (int it=1;it<=2;++it)
 				{
 					//1:right search,2:left;
-					bool flag=0;
-					bool Free_End=0;
 					bkt_ptr=beg_bkt_ptr;
 					t_kmer=bkt_ptr->kmer_t2;
 					string sum_str, t_str;
@@ -684,7 +669,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 						{
 							if(bkt_ptr->kmer_info.right==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -761,7 +745,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 					//left search
 							if(bkt_ptr->kmer_info.left==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -844,9 +827,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 
 						if(found==0)
 						{
-							Free_End=1;
-							flag=1;
-
 							break;
 						}
 
@@ -855,7 +835,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 
 						if((Right==1&&bkt_ptr->kmer_info.split_left==1)||(Right==0&&bkt_ptr->kmer_info.split_right==1))
 						{
-							flag=1;
 							last_bkt_ptr->kmer_info.marked=1;
 							//t_str=t_str.substr(0,t_str.size()-1);
 							t_str.clear();
@@ -869,7 +848,6 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 
 						if(bkt_ptr->kmer_info.used==1)
 						{
-							flag=1;
 							break;
 						}
 
@@ -988,7 +966,7 @@ void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_File
 }
 
 
-void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips)
+void build_contigs3(struct hashtable3 *ht,int K_size, string Contig_Filename,bool ScreenOffTips)
 {
 	//bool ScreenOffTips=0;
 	int TipLenTh=K_size+1;
@@ -1009,7 +987,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 	ofstream o_cov_hist(o_name.c_str());
 
 	map<int,int> cov_hist;
-	bool FE_left=0,FE_right=0;
 	ofstream o_Log("ContigsLog.txt");//,ios_base::app);
 	bool COVERAGE_STS=1;
 	uint64_t coverage=0;
@@ -1036,7 +1013,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 			if(bkt_ptr->kmer_info.used==0&&bkt_ptr->kmer_info.removed==0)
 			{
 				num_contigs++;
-				FE_left=0;FE_right=0;
 
 				if(COVERAGE_STS)
 				{
@@ -1068,8 +1044,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 				for (int it=1;it<=2;++it)
 				{
 					//1:right search,2:left;
-					bool flag=0;
-					bool Free_End=0;
 					bkt_ptr=beg_bkt_ptr;
 					t_kmer=bkt_ptr->kmer_t3;
 					string sum_str, t_str;
@@ -1094,7 +1068,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 						{
 							if(bkt_ptr->kmer_info.right==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -1192,7 +1165,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 					//left search
 							if(bkt_ptr->kmer_info.left==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -1274,9 +1246,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 
 						if(found==0)
 						{
-							Free_End=1;
-							flag=1;
-
 							break;
 						}
 
@@ -1285,7 +1254,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 
 						if((Right==1&&bkt_ptr->kmer_info.split_left==1)||(Right==0&&bkt_ptr->kmer_info.split_right==1))
 						{
-							flag=1;
 							last_bkt_ptr->kmer_info.marked=1;
 							//t_str=t_str.substr(0,t_str.size()-1);
 							t_str.clear();
@@ -1299,7 +1267,6 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 
 						if(bkt_ptr->kmer_info.used==1)
 						{
-							flag=1;
 							break;
 						}
 
@@ -1417,7 +1384,7 @@ void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_File
 
 }
 
-void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips)
+void build_contigs4(struct hashtable4 *ht,int K_size,string Contig_Filename,bool ScreenOffTips)
 {
 	//bool ScreenOffTips=0;
 	int TipLenTh=K_size+1;
@@ -1438,7 +1405,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 	ofstream o_cov_hist(o_name.c_str());
 
 	map<int,int> cov_hist;
-	bool FE_left=0,FE_right=0;
 	ofstream o_Log("ContigsLog.txt");//,ios_base::app);
 	bool COVERAGE_STS=1;
 	uint64_t coverage=0;
@@ -1465,7 +1431,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 			if(bkt_ptr->kmer_info.used==0&&bkt_ptr->kmer_info.removed==0)
 			{
 				num_contigs++;
-				FE_left=0;FE_right=0;
 
 				if(COVERAGE_STS)
 				{
@@ -1497,8 +1462,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 				for (int it=1;it<=2;++it)
 				{
 					//1:right search,2:left;
-					bool flag=0;
-					bool Free_End=0;
 					bkt_ptr=beg_bkt_ptr;
 					t_kmer=bkt_ptr->kmer_t4;
 					string sum_str, t_str;
@@ -1523,7 +1486,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 						{
 							if(bkt_ptr->kmer_info.right==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -1621,7 +1583,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 					//left search
 							if(bkt_ptr->kmer_info.left==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -1703,9 +1664,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 
 						if(found==0)
 						{
-							Free_End=1;
-							flag=1;
-
 							break;
 						}
 
@@ -1714,7 +1672,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 
 						if((Right==1&&bkt_ptr->kmer_info.split_left==1)||(Right==0&&bkt_ptr->kmer_info.split_right==1))
 						{
-							flag=1;
 							last_bkt_ptr->kmer_info.marked=1;
 							//t_str=t_str.substr(0,t_str.size()-1);
 							t_str.clear();
@@ -1728,7 +1685,6 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 
 						if(bkt_ptr->kmer_info.used==1)
 						{
-							flag=1;
 							break;
 						}
 
@@ -1846,7 +1802,7 @@ void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_File
 
 }
 
-void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int gap,string Contig_Filename,bool ScreenOffTips)
+void build_contigs0(struct hashtable0 *ht, int K_size, string Contig_Filename,bool ScreenOffTips)
 {
 	//bool ScreenOffTips=1;
 	int TipLenTh=100;
@@ -1864,7 +1820,6 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 	ofstream o_cov_hist(o_name.c_str());
 
 	map<int,int> cov_hist;
-	bool FE_left=0,FE_right=0;
 	ofstream o_Log("ContigsLog.txt");//,ios_base::app);
 	bool COVERAGE_STS=1;
 	uint64_t coverage=0;
@@ -1884,7 +1839,7 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 
 	struct bucket0 *bkt_ptr ,*beg_bkt_ptr,*last_bkt_ptr;
-	uint64_t beg_kmer[100],t_kmer[100],t,f_kmer[100],tt_kmer[100],hv,hash_idx;
+	uint64_t beg_kmer[100],t_kmer[100],t,f_kmer[100],hv,hash_idx;
 	o_name="Contigs_info.txt";
 	ofstream o_contig_info(o_name.c_str());//"Contigs_info.txt");
 	//char c_str[1000];
@@ -1900,8 +1855,6 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 			if(bkt_ptr->kmer_info.used==0&&bkt_ptr->kmer_info.removed==0)
 			{
 				num_contigs++;
-
-				FE_left=0;FE_right=0;
 
 				if(COVERAGE_STS)
 				{
@@ -1930,14 +1883,13 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 				int nLBranches=0,nRBranches=0;
 				uint64_t left_bits,right_bits;
 
-				bool Right=0,flag=0;
+				bool Right=0;
 
 
 				for(int it=1;it<=2;++it)
 				{
 					string sum_str,t_str;
 
-					bool Free_End=0;
 					int nBranches=0;
 					sum_str.clear();
 					t_str.clear();
@@ -1966,7 +1918,6 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 							if(bkt_ptr->kmer_info.right==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -2008,7 +1959,6 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 							if(bkt_ptr->kmer_info.left==NULL)
 							{
-								Free_End=1;
 								nBranches=0;
 								break;
 							}
@@ -2071,10 +2021,6 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 						if(found==0)
 						{
-							Free_End=1;
-
-							flag=1;
-
 							break;
 						}
 
@@ -2083,7 +2029,6 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 						if((Right==1&&bkt_ptr->kmer_info.split_left==1)||(Right==0&&bkt_ptr->kmer_info.split_right==1))
 						{
-							flag=1;
 							last_bkt_ptr->kmer_info.marked=1;
 							//t_str=t_str.substr(0,t_str.size()-1);
 							t_str.clear();
@@ -2098,7 +2043,6 @@ void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int
 
 						if(bkt_ptr->kmer_info.used==1)
 						{
-							flag=1;
 							break;
 						}
 

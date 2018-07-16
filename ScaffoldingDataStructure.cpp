@@ -56,7 +56,6 @@ void ContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_size,st
 	bool flip_c;
 	size_t nKmer=0;
 	size_t tot_Kmers=0;
-	size_t boundary_kmers=0;
 	size_t non_repeat_kmers=0,repeat_kmers=0;
 	//char c_str[1000];
 	//vector<int> contig_sz;
@@ -673,7 +672,6 @@ void ContigsRemapping0(struct hashtable0 *ht,int K_size,struct contigs_info * co
 	bool flip_c;
 	size_t nKmer=0;
 	size_t tot_Kmers=0;
-	size_t boundary_kmers=0;
 	size_t non_repeat_kmers=0,repeat_kmers=0;
 	int Kmer_arr_sz=K_size/32+1;
 	int rem1=K_size%32;
@@ -937,7 +935,6 @@ void SuperContigsRemapping(struct hashtable *ht,struct hashtable2 *ht2, int K_si
 	while(getline(Contigs_in,s1))//(Contigs_in>>s1>>ContigNo>>s2>>AvgCov>>s3>>ContLen)		//getline(inContigs,tag))
 	{
 		getline(Contigs_in,cont_s);
-		int ctg_cov=0;
 		//in_ContigsCov>>ctg_cov;
 		//contigs_info->cov_vt.push_back(ctg_cov);
 		if(cont_s[cont_s.size()-1]=='\r'||cont_s[cont_s.size()-1]=='\n')
@@ -1184,7 +1181,6 @@ void SuperContigsRemapping3(struct hashtable3 *ht,int K_size,struct contigs_info
 	while(getline(Contigs_in,s1))//(Contigs_in>>s1>>ContigNo>>s2>>AvgCov>>s3>>ContLen)		//getline(inContigs,tag))
 	{
 		getline(Contigs_in,cont_s);
-		int ctg_cov=0;
 		//in_ContigsCov>>ctg_cov;
 		//contigs_info->cov_vt.push_back(ctg_cov);
 		if(cont_s[cont_s.size()-1]=='\r'||cont_s[cont_s.size()-1]=='\n')
@@ -1368,7 +1364,6 @@ void SuperContigsRemapping4(struct hashtable4 *ht,int K_size,struct contigs_info
 	while(getline(Contigs_in,s1))//(Contigs_in>>s1>>ContigNo>>s2>>AvgCov>>s3>>ContLen)		//getline(inContigs,tag))
 	{
 		getline(Contigs_in,cont_s);
-		int ctg_cov=0;
 		//in_ContigsCov>>ctg_cov;
 		//contigs_info->cov_vt.push_back(ctg_cov);
 		if(cont_s[cont_s.size()-1]=='\r'||cont_s[cont_s.size()-1]=='\n')
@@ -1518,7 +1513,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 		if(K_size<=32)
 		{
 			uint64_t seq,f_seq,hv,hash_idx;
-			bool flip_c=0,found=0;
+			bool found=0;
 			struct bucket **ptr;
 			int gMax=100;
 			if((contig_s.size()-K_size)<100)
@@ -1531,10 +1526,8 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 				str2bitsarr(K_mer.c_str(),K_size,&seq,1);
 
 				f_seq=get_rev_comp_seq(seq,K_size);
-				flip_c=0;
 				if(seq>f_seq)
 				{
-					flip_c=1;
 					seq=f_seq;
 				}
 
@@ -1846,10 +1839,8 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 				str2bitsarr(K_mer.c_str(),K_size,&seq,1);
 
 				f_seq=get_rev_comp_seq(seq,K_size);
-				flip_c=0;
 				if(seq>f_seq)
 				{
-					flip_c=1;
 					seq=f_seq;
 				}
 
@@ -2161,7 +2152,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 			kmer_t2 seq,f_seq;
 			uint64_t hv;
 			size_t hash_idx;
-			bool flip_c=0,found=0;
+			bool found=0;
 			struct bucket2 **ptr;
 			int gMax=100;
 			if((contig_s.size()-K_size)<100)
@@ -2175,10 +2166,8 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 				str2bitsarr(K_mer.c_str(),K_size,seq.kmer,2);
 				f_seq=seq;
 				get_rev_comp_seq_arr(f_seq.kmer,K_size,2);
-				flip_c=0;
 				if(uint64_t_cmp(seq.kmer,f_seq.kmer,2)>0)
 				{
-					flip_c=1;
 					seq=f_seq;
 				}
 
@@ -2495,10 +2484,8 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 
 				f_seq=seq;
 				get_rev_comp_seq_arr(f_seq.kmer,K_size,2);
-				flip_c=0;
 				if(uint64_t_cmp(seq.kmer,f_seq.kmer,2)>0)
 				{
-					flip_c=1;
 					seq=f_seq;
 				}
 
@@ -2823,7 +2810,7 @@ void BuildContigAdjacency(hashtable *ht1, hashtable2 *ht2, struct contigs_info *
 	}
 
 	out_ctg_graph<<contigs_info->total_contigs<<endl;
-	for (int i=1;i<=contigs_info->total_contigs;++i)
+	for (unsigned int i=1;i<=contigs_info->total_contigs;++i)
 	{
 		out_ctg_graph<<i<<endl;
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
@@ -2877,7 +2864,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 		kmer_t3 seq,f_seq;
 		uint64_t hv;
 		size_t hash_idx;
-		bool flip_c=0,found=0;
+		bool found=0;
 		struct bucket3 **ptr;
 		int gMax=100;
 		if((contig_s.size()-K_size)<100)
@@ -2891,10 +2878,8 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 			str2bitsarr(K_mer.c_str(),K_size,seq.kmer,3);
 			f_seq=seq;
 			get_rev_comp_seq_arr(f_seq.kmer,K_size,3);
-			flip_c=0;
 			if(uint64_t_cmp(seq.kmer,f_seq.kmer,3)>0)
 			{
-				flip_c=1;
 				seq=f_seq;
 			}
 
@@ -3210,10 +3195,8 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 
 			f_seq=seq;
 			get_rev_comp_seq_arr(f_seq.kmer,K_size,3);
-			flip_c=0;
 			if(uint64_t_cmp(seq.kmer,f_seq.kmer,3)>0)
 			{
-				flip_c=1;
 				seq=f_seq;
 			}
 
@@ -3536,7 +3519,7 @@ void BuildContigAdjacency3(hashtable3 *ht, struct contigs_info *contigs_info,int
 	}
 
 	out_ctg_graph<<contigs_info->total_contigs<<endl;
-	for (int i=1;i<=contigs_info->total_contigs;++i)
+	for (unsigned int i=1;i<=contigs_info->total_contigs;++i)
 	{
 		out_ctg_graph<<i<<endl;
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
@@ -3587,7 +3570,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 		kmer_t4 seq,f_seq;
 		uint64_t hv;
 		size_t hash_idx;
-		bool flip_c=0,found=0;
+		bool found=0;
 		struct bucket4 **ptr;
 		int gMax=100;
 		if((contig_s.size()-K_size)<100)
@@ -3601,10 +3584,8 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 			str2bitsarr(K_mer.c_str(),K_size,seq.kmer,4);
 			f_seq=seq;
 			get_rev_comp_seq_arr(f_seq.kmer,K_size,4);
-			flip_c=0;
 			if(uint64_t_cmp(seq.kmer,f_seq.kmer,4)>0)
 			{
-				flip_c=1;
 				seq=f_seq;
 			}
 
@@ -3923,10 +3904,8 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 
 			f_seq=seq;
 			get_rev_comp_seq_arr(f_seq.kmer,K_size,4);
-			flip_c=0;
 			if(uint64_t_cmp(seq.kmer,f_seq.kmer,4)>0)
 			{
-				flip_c=1;
 				seq=f_seq;
 			}
 
@@ -4247,7 +4226,7 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 	}
 
 	out_ctg_graph<<contigs_info->total_contigs<<endl;
-	for (int i=1;i<=contigs_info->total_contigs;++i)
+	for (unsigned int i=1;i<=contigs_info->total_contigs;++i)
 	{
 		out_ctg_graph<<i<<endl;
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
@@ -4306,7 +4285,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 		uint64_t seq[100],f_seq[100];
 		uint64_t hv;
 		size_t hash_idx;
-		bool flip_c=0,found=0;
+		bool found=0;
 		struct bucket0 **ptr;
 		int gMax=100;
 		if((contig_s.size()-K_size)<100)
@@ -4321,10 +4300,8 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 
 			memcpy(f_seq,seq,Kmer_arr_sz*sizeof(uint64_t));
 			get_rev_comp_seq_arr(f_seq,K_size,Kmer_arr_sz);
-			flip_c=0;
 			if(uint64_t_cmp(seq,f_seq,Kmer_arr_sz)>0)
 			{
-				flip_c=1;
 				memcpy(seq,f_seq,Kmer_arr_sz*sizeof(uint64_t));
 			}
 
@@ -4359,7 +4336,6 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 					uint64_t t_kmer[100],f_kmer[100];
 					memcpy(t_kmer,seq,Kmer_arr_sz*sizeof(uint64_t));
 
-					uint64_t t=0;
 					bool flip_nc=0;
 					for(int j=0;j<=edge_ptr->len;++j)
 					{
@@ -4589,10 +4565,8 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 
 			memcpy(f_seq,seq,Kmer_arr_sz*sizeof(uint64_t));
 			get_rev_comp_seq_arr(f_seq,K_size,Kmer_arr_sz);
-			flip_c=0;
 			if(uint64_t_cmp(seq,f_seq,Kmer_arr_sz)>0)
 			{
-				flip_c=1;
 				memcpy(seq,f_seq,Kmer_arr_sz*sizeof(uint64_t));
 			}
 
@@ -4764,7 +4738,6 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 					uint64_t t_kmer[100],f_kmer[100];
 					memcpy(t_kmer,seq,Kmer_arr_sz*sizeof(uint64_t));
 
-					uint64_t t=0;
 					bool flip_nc=0;
 					for(int j=0;j<=edge_ptr->len;++j)
 					{
@@ -4869,7 +4842,7 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 
 
 	out_ctg_graph<<contigs_info->total_contigs<<endl;
-	for (int i=1;i<=contigs_info->total_contigs;++i)
+	for (unsigned int i=1;i<=contigs_info->total_contigs;++i)
 	{
 		out_ctg_graph<<i<<endl;
 		out_ctg_graph<<contigs_info->contig_adjacency_left[i].size()<<endl;
@@ -4905,11 +4878,10 @@ void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int
 }
 
 
-int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket* bktptr,struct bucket* obj_bktptr,int K_size, stacked_bucket &kmer_stack_beg,int max_depth,int max_dist)
+int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket* obj_bktptr,int K_size, stacked_bucket &kmer_stack_beg,int max_depth,int max_dist)
 {
 	map<bucket*,struct BFS_path_info > Visited_Path;
 	map<struct bucket* ,int > stacked_nodes;
-	struct bucket *beg_bkt= bktptr;
 	int max_stack=300;
 	int DepthTh=max_depth;//min(300/gap,20);
 	int LenTh=max_dist;
@@ -4920,9 +4892,8 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 	dist_ctgs[0].push_back(kmer_stack_beg);
 	int NBs=1;
 
-	int dist_searched=0;
 	bucket* new_node=stacked_bkt.bktptr;
-	uint64_t kmer,f_kmer;
+	uint64_t kmer;
 	if(stacked_bkt.RightSearch)
 	{
 		stacked_nodes[new_node]=1;
@@ -4984,8 +4955,6 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 			while(edge_ptr!=NULL)
 			{
 				kmer=(new_node)->kmer_t.kmer;
-				f_kmer=kmer;
-				f_kmer=get_rev_comp_seq(kmer,K_size);
 
 				int edge_len=(int)(edge_ptr->len);
 
@@ -5160,8 +5129,6 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 			while(edge_ptr!=NULL)
 			{
 				kmer=(new_node)->kmer_t.kmer;
-				f_kmer=kmer;
-				f_kmer=get_rev_comp_seq(kmer,K_size);
 				int edge_len=(int)(edge_ptr->len);
 
 				for(int g=0;g<=edge_len;++g)
@@ -5322,11 +5289,10 @@ int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket*
 
 
 
-int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct bucket2* bktptr,struct bucket2* obj_bktptr,int K_size, stacked_bucket2 &kmer_stack_beg,int max_depth,int max_dist)
+int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct bucket2* obj_bktptr,int K_size, stacked_bucket2 &kmer_stack_beg,int max_depth,int max_dist)
 {
 	map<bucket2*,struct BFS_path_info > Visited_Path;
 	map<struct bucket2* ,int > stacked_nodes;
-	struct bucket2 *beg_bkt= bktptr;
 	int max_stack=300;
 	int DepthTh=max_depth;//min(300/gap,20);
 	int LenTh=max_dist;
@@ -5337,7 +5303,6 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 	dist_ctgs[0].push_back(kmer_stack_beg);
 	int NBs=1;
 
-	int dist_searched=0;
 	bucket2* new_node=stacked_bkt.bktptr;
 	kmer_t2 kmer,f_kmer;
 	if(stacked_bkt.RightSearch)
@@ -5744,11 +5709,10 @@ int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct buck
 }
 
 
-int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct bucket3* bktptr,struct bucket3* obj_bktptr,int K_size, stacked_bucket3 &kmer_stack_beg,int max_depth,int max_dist)
+int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct bucket3* obj_bktptr,int K_size, stacked_bucket3 &kmer_stack_beg,int max_depth,int max_dist)
 {
 	map<bucket3*,struct BFS_path_info > Visited_Path;
 	map<struct bucket3* ,int > stacked_nodes;
-	struct bucket3 *beg_bkt= bktptr;
 	int max_stack=300;
 	int DepthTh=max_depth;//min(300/gap,20);
 	int LenTh=max_dist;
@@ -5759,7 +5723,6 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 	dist_ctgs[0].push_back(kmer_stack_beg);
 	int NBs=1;
 
-	int dist_searched=0;
 	bucket3* new_node=stacked_bkt.bktptr;
 	kmer_t3 kmer,f_kmer;
 	if(stacked_bkt.RightSearch)
@@ -6167,11 +6130,10 @@ int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct buck
 }
 
 
-int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct bucket4* bktptr,struct bucket4* obj_bktptr,int K_size, stacked_bucket4 &kmer_stack_beg,int max_depth,int max_dist)
+int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct bucket4* obj_bktptr,int K_size, stacked_bucket4 &kmer_stack_beg,int max_depth,int max_dist)
 {
 	map<bucket4*,struct BFS_path_info > Visited_Path;
 	map<struct bucket4* ,int > stacked_nodes;
-	struct bucket4 *beg_bkt= bktptr;
 	int max_stack=300;
 	int DepthTh=max_depth;//min(300/gap,20);
 	int LenTh=max_dist;
@@ -6182,7 +6144,6 @@ int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct buck
 	dist_ctgs[0].push_back(kmer_stack_beg);
 	int NBs=1;
 
-	int dist_searched=0;
 	bucket4* new_node=stacked_bkt.bktptr;
 	kmer_t4 kmer,f_kmer;
 	if(stacked_bkt.RightSearch)
@@ -6872,7 +6833,7 @@ void RemoveUnmappedNodes4(hashtable4 *ht,int K_size)
 }
 
 
-void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,bool ResumePE,int64_t totReads,bool MatePair)
+void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,int64_t totReads,bool MatePair)
 {
 	bool Iter_Scaffold=0;
 	if(ContigFilename=="SuperContigs.txt")
@@ -6913,14 +6874,13 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 	int64_t scaffold_len=0;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer;
 	uint64_t f_seq,hv;
 	struct kmer_t2 f_seq_t2;
 	size_t hash_idx;
 	//vector<int> contig_sz;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_1 = false,flip_2 = false, flip_0 = false;
 	size_t ht_sz;
 	if(K_size<=32)
 	{
@@ -6931,7 +6891,6 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 		ht_sz=ht2->ht_sz;
 	}
 
-	bool FAST=1;
 	map<int,vector<int> > hit_position;
 
 	contigs_info->contig_sz_vt.clear();
@@ -6963,7 +6922,6 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 	time(&beg_time);
 
 	int64_t dist_sum=0,p_cnt=0;
-	int mean_dist=0;
 	int lib_no=0;
 	if(0)//ResumePE)
 	{
@@ -7034,10 +6992,10 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 
 		string t1,t2;
-		int cont1,cont2;
-		int64_t cod1,cod2;
+		int cont1 = 0, cont2 = 0;
+		int64_t cod1 = 0, cod2 = 0;
 		int readLen1,readLen2;
-		size_t num_Reads=0;
+		int64_t num_Reads=0;
 		string kmer1,kmer2,seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n;
 		bool fq_flag=0;
 		string fq_tmp;
@@ -7074,12 +7032,9 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				//fq_tmp=t1.substr(0,5);
 			}
 
-			bool bad_flag1=0,bad_flag2=0;
-			int tag1_sz,tag2_sz;
 			if((!fq_flag&&t1[0]=='>')||(fq_flag&&nLines1%4==1))
 			{
 				nLines1%=4;
-				tag1_sz=t1.size();
 				tag_s1=t1;
 
 
@@ -7152,14 +7107,12 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			if (readLen1==0)
 			{
 				cout<<"Empty sequence!"<<endl;
-				bad_flag1=1;
 			}
 
 			for(int i=0;i<readLen1;++i)
 			{
 				if(seq_s1[i]!='A'&&seq_s1[i]!='C'&&seq_s1[i]!='G'&&seq_s1[i]!='T'&&seq_s1[i]!='N')
 				{
-					bad_flag1=1;
 					break;
 				}
 			}
@@ -7186,10 +7139,10 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				}
 			}
 			int s=0;
-			if((nN-isN)<=readLen1/2)
-			{
-				bad_flag1=1;
-			}
+			// if((nN-isN)<=readLen1/2)
+			// {
+			//     bad_flag1=1;
+			// }
 
 
 			if(isN>=0)
@@ -7238,7 +7191,6 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					//if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(t2.substr(0,5)==fq_tmp)))
 					if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(nLines2==1)))
 					{
-						tag2_sz=t2.size();
 						tag_s2=t2;
 					}
 					else
@@ -7313,14 +7265,12 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					if (readLen2==0)
 					{
 						cout<<"Empty sequence!"<<endl;
-						bad_flag2=1;
 					}
 
 					for(int i=0;i<readLen2;++i)
 					{
 						if(seq_s2[i]!='A'&&seq_s2[i]!='C'&&seq_s2[i]!='G'&&seq_s2[i]!='T'&&seq_s2[i]!='N')
 						{
-							bad_flag2=1;
 							break;
 						}
 					}
@@ -7348,10 +7298,10 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						}
 					}
 					int s=0;
-					if((nN-isN)<=readLen2/2)
-					{
-						bad_flag2=1;
-					}
+					// if((nN-isN)<=readLen2/2)
+					// {
+					//     bad_flag2=1;
+					// }
 
 
 					if(isN>=0)
@@ -7374,13 +7324,13 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					tag_s2=tag_s1;
 				}
 			}
-			if(readLen1<K_size)
-			{bad_flag1=1;}
-			if(readLen2<K_size)
-			{bad_flag2=1;}
+			// if(readLen1<K_size)
+			// {bad_flag1=1;}
+			// if(readLen2<K_size)
+			// {bad_flag2=1;}
 
 
-			int64_t pos1,pos2;
+			int64_t pos1 = 0, pos2 = 0;
 			uint64_t bits1,bits2;
 			kmer_t2 bits1_t2,bits2_t2;
 
@@ -7434,13 +7384,9 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			Init_Read(seq_s2,Read2);
 			seq_s2.clear();
 
-			tag1_sz=tag_s1.size();
-			tag2_sz=tag_s2.size();
-
-
+			/*
 			int mismatch_cnt=0;
 			bool tag_mismatch=0;
-			/*
 			if(abs(tag1_sz-tag2_sz)>2)
 			{
 				tag_mismatch=1;
@@ -7475,9 +7421,9 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 			//for non adjacent relation
 
 
-			struct bucket **ptr1_d,**ptr2_d;
-			struct bucket2 **ptr1_t2d,**ptr2_t2d;
-			bool flip_1d;
+			struct bucket **ptr1_d = NULL, **ptr2_d = NULL;
+			struct bucket2 **ptr1_t2d = NULL, **ptr2_t2d = NULL;
+			bool flip_1d = false;
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
 			{
 				if(K_size<=32)
@@ -7916,7 +7862,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							stacked_bucket.RightSearch=0;
 						}
-						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist(ht1, merge_ht1, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -7930,7 +7876,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						}
 
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
-						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist(ht1, merge_ht1, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -7958,7 +7904,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							stacked_bucket.RightSearch=0;
 						}
-						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist2(ht2, merge_ht2, *ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -7971,7 +7917,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							inward_not_found++;
 						}
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
-						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist2(ht2, merge_ht2, *ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -8061,7 +8007,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							stacked_bucket.RightSearch=0;
 						}
-						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist(ht1, merge_ht1, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -8075,7 +8021,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						}
 
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
-						pdist= BFSearchDist(ht1, merge_ht1, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist(ht1, merge_ht1, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -8103,7 +8049,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 						{
 							stacked_bucket.RightSearch=0;
 						}
-						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist2(ht2, merge_ht2, *ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -8116,7 +8062,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 							inward_not_found++;
 						}
 						stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
-						pdist= BFSearchDist2(ht2, merge_ht2, *ptr1_t2d,*ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+						pdist= BFSearchDist2(ht2, merge_ht2, *ptr2_t2d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 						if(pdist>0)
 						{
@@ -8146,19 +8092,16 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				///////
 
 
-				int64_t d1,d2,d3,d4,dist;
+				int64_t d1,d2,d3,d4;
 
 				// build adjacency info for cont1&2
 				if(flip_1==0)
 				{
 					//struct adjacent_contig_info adj_contig;
-					int Tcontig_no=cont2;
-					int Tflip=flip_2;
-					int Tadjacent=0;
 					if(flip_2==0)
 					{
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;////
-						dist=d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
+						d1=(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
 
 						o_Pdist_R<<cont1 <<" "<<cont2<<" "<<d1<<endl;//" Library: "<<lib_no<<endl;
 				//		o_Pdist_L<<cont2 <<" "<<cont1<<" "<<d1<<" Library: "<<ii<<endl;
@@ -8167,7 +8110,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					else
 					{
 						int64_t r_cod2=(int64_t)(contigs_info->contig_sz_vt[cont2])-cod2-(int64_t)K_size;
-						dist=d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
+						d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
 						//int64_t Tdist=(scaffold_len+pos2-readLen2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;////
 
 						o_Pdist_R<<cont1 <<" "<<-cont2<<" "<<d2<<endl;//" Library: "<<lib_no<<endl;
@@ -8182,14 +8125,12 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 				{
 
 					//struct adjacent_contig_info adj_contig;
-					int Tcontig_no=cont2;
-					bool Tflip=flip_2;
 
 					if(flip_2==0)
 					{
 
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod2-cod1;////
-						dist=d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
+						d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
 						o_Pdist_L<<cont1 <<" "<<-cont2<<" "<<d3<<endl;//" Library: "<<lib_no<<endl;
 						//o_Pdist_L<<cont2 <<" "<<-cont1<<" "<<d3<<" Library: "<<lib_no<<endl;
 
@@ -8198,7 +8139,7 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 					{
 						int64_t r_cod2=(int64_t)contigs_info->contig_sz_vt[cont2]-cod2-(int64_t)K_size;
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod1-r_cod2;////
-						dist=d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
+						d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
 					//	if(0)//if(Tdist<0)
 					//	{
 					//		Tdist=0;///////////////
@@ -8243,13 +8184,13 @@ void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hash
 
 
 
-void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,bool ResumePE,int64_t totReads,bool MatePair)
+void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,int64_t totReads,bool MatePair)
 {
-	bool Iter_Scaffold=0;
-	if(ContigFilename=="SuperContigs.txt")
-	{
-		Iter_Scaffold=1;
-	}
+	// bool Iter_Scaffold=0;
+	// if(ContigFilename=="SuperContigs.txt")
+	// {
+	//     Iter_Scaffold=1;
+	// }
 	int MaxDepth=300,MaxSearchLen=2000;
 	string pe_name;
 	if(MatePair==0)
@@ -8285,20 +8226,18 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 	int64_t scaffold_len=0;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer;
 	uint64_t hv;
 	struct kmer_t3 f_seq_t3;
 	size_t hash_idx;
 	//vector<int> contig_sz;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_1 = false, flip_2 = false ,flip_0 = false;
 	size_t ht_sz;
 
 	ht_sz=ht->ht_sz;
 
 
-	bool FAST=1;
 	map<int,vector<int> > hit_position;
 
 	contigs_info->contig_sz_vt.clear();
@@ -8393,10 +8332,10 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 
 
 		string t1,t2;
-		int cont1,cont2;
-		int64_t cod1,cod2;
+		int cont1 = 0, cont2 = 0;
+		int64_t cod1 = 0, cod2 = 0;
 		int readLen1,readLen2;
-		size_t num_Reads=0;
+		int64_t num_Reads=0;
 		string kmer1,kmer2,seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n;
 		bool fq_flag=0;
 		string fq_tmp;
@@ -8431,16 +8370,10 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				//fq_tmp=t1.substr(0,5);
 			}
 
-			bool bad_flag1=0,bad_flag2=0;
-			int tag1_sz,tag2_sz;
 			if((!fq_flag&&t1[0]=='>')||(fq_flag&&nLines1%4==1))
 			{
 				nLines1%=4;
-				tag1_sz=t1.size();
 				tag_s1=t1;
-
-
-
 			}
 			else
 			{
@@ -8509,14 +8442,12 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			if (readLen1==0)
 			{
 				cout<<"Empty sequence!"<<endl;
-				bad_flag1=1;
 			}
 
 			for(int i=0;i<readLen1;++i)
 			{
 				if(seq_s1[i]!='A'&&seq_s1[i]!='C'&&seq_s1[i]!='G'&&seq_s1[i]!='T'&&seq_s1[i]!='N')
 				{
-					bad_flag1=1;
 					break;
 				}
 			}
@@ -8543,10 +8474,10 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				}
 			}
 			int s=0;
-			if((nN-isN)<=readLen1/2)
-			{
-				bad_flag1=1;
-			}
+			// if((nN-isN)<=readLen1/2)
+			// {
+			//     bad_flag1=1;
+			// }
 
 
 			if(isN>=0)
@@ -8595,7 +8526,6 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					//if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(t2.substr(0,5)==fq_tmp)))
 					if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(nLines2==1)))
 					{
-						tag2_sz=t2.size();
 						tag_s2=t2;
 					}
 					else
@@ -8670,15 +8600,12 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					if (readLen2==0)
 					{
 						cout<<"Empty sequence!"<<endl;
-						bad_flag2=1;
 					}
 
 					for(int i=0;i<readLen2;++i)
 					{
 						if(seq_s2[i]!='A'&&seq_s2[i]!='C'&&seq_s2[i]!='G'&&seq_s2[i]!='T'&&seq_s2[i]!='N')
 						{
-
-							bad_flag2=1;
 							break;
 						}
 					}
@@ -8708,10 +8635,10 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						}
 					}
 					int s=0;
-					if((nN-isN)<=readLen2/2)
-					{
-						bad_flag2=1;
-					}
+					// if((nN-isN)<=readLen2/2)
+					// {
+					//     bad_flag2=1;
+					// }
 
 
 					if(isN>=0)
@@ -8734,13 +8661,13 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					tag_s2=tag_s1;
 				}
 			}
-			if(readLen1<K_size)
-			{bad_flag1=1;}
-			if(readLen2<K_size)
-			{bad_flag2=1;}
+			// if(readLen1<K_size)
+			// {bad_flag1=1;}
+			// if(readLen2<K_size)
+			// {bad_flag2=1;}
 
 
-			int64_t pos1,pos2;
+			int64_t pos1 = 0, pos2 = 0;
 			kmer_t3 bits1_t3,bits2_t3;
 
 			num_Reads++;
@@ -8788,13 +8715,9 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 			Init_Read(seq_s2,Read2);
 			seq_s2.clear();
 
-			tag1_sz=tag_s1.size();
-			tag2_sz=tag_s2.size();
-
-
+			/*
 			int mismatch_cnt=0;
 			bool tag_mismatch=0;
-			/*
 			if(abs(tag1_sz-tag2_sz)>2)
 			{
 				tag_mismatch=1;
@@ -8828,9 +8751,9 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 
 
 
-			struct bucket3 **ptr1_d,**ptr2_d;
+			struct bucket3 **ptr1_d = NULL, **ptr2_d = NULL;
 			//struct bucket2 **ptr1_t2d,**ptr2_t2d;
-			bool flip_1d;
+			bool flip_1d = false;
 
 			//for non adjacent relation
 
@@ -9119,7 +9042,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					{
 						stacked_bucket.RightSearch=0;
 					}
-					pdist= BFSearchDist3(ht, merge_ht, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+					pdist= BFSearchDist3(ht, merge_ht, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 
 					if(pdist>0)
 					{
@@ -9132,7 +9055,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 						inward_not_found++;
 					}
 					stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
-					pdist= BFSearchDist3(ht, merge_ht, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+					pdist= BFSearchDist3(ht, merge_ht, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 					if(pdist>0)
 					{
 						ignore=1;
@@ -9148,19 +9071,16 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				if(ignore==1)
 				{continue;}
 
-				int64_t d1,d2,d3,d4,dist;
+				int64_t d1,d2,d3,d4;
 
 				// build adjacency info for cont1&2
 				if(flip_1==0)
 				{
 					//struct adjacent_contig_info adj_contig;
-					int Tcontig_no=cont2;
-					int Tflip=flip_2;
-					int Tadjacent=0;
 					if(flip_2==0)
 					{
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;////
-						dist=d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
+						d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
 
 						o_Pdist_R<<cont1 <<" "<<cont2<<" "<<d1<<endl;//" Library: "<<lib_no<<endl;
 				//		o_Pdist_L<<cont2 <<" "<<cont1<<" "<<d1<<" Library: "<<ii<<endl;
@@ -9169,7 +9089,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					else
 					{
 						int64_t r_cod2=(int64_t)(contigs_info->contig_sz_vt[cont2])-cod2-(int64_t)K_size;
-						dist=d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
+						d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
 						//int64_t Tdist=(scaffold_len+pos2-readLen2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;////
 
 						o_Pdist_R<<cont1 <<" "<<-cont2<<" "<<d2<<endl;//" Library: "<<lib_no<<endl;
@@ -9184,14 +9104,12 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 				{
 
 					//struct adjacent_contig_info adj_contig;
-					int Tcontig_no=cont2;
-					bool Tflip=flip_2;
 
 					if(flip_2==0)
 					{
 
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod2-cod1;////
-						dist=d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
+						d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
 						o_Pdist_L<<cont1 <<" "<<-cont2<<" "<<d3<<endl;//" Library: "<<lib_no<<endl;
 						//o_Pdist_L<<cont2 <<" "<<-cont1<<" "<<d3<<" Library: "<<lib_no<<endl;
 
@@ -9200,7 +9118,7 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 					{
 						int64_t r_cod2=(int64_t)contigs_info->contig_sz_vt[cont2]-cod2-(int64_t)K_size;
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod1-r_cod2;////
-						dist=d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
+						d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
 					//	if(0)//if(Tdist<0)
 					//	{
 					//		Tdist=0;///////////////
@@ -9239,13 +9157,12 @@ void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,
 
 }
 
-void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,bool ResumePE,int64_t totReads,bool MatePair)
+void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,int64_t totReads,bool MatePair)
 {
-	bool Iter_Scaffold=0;
-	if(ContigFilename=="SuperContigs.txt")
-	{
-		Iter_Scaffold=1;
-	}
+	// if(ContigFilename=="SuperContigs.txt")
+	// {
+	//     Iter_Scaffold=1;
+	// }
 	int MaxDepth=300,MaxSearchLen=2000;
 	string pe_name;
 	if(MatePair==0)
@@ -9279,20 +9196,17 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 	int64_t scaffold_len=0;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer;
 	uint64_t hv;
 	struct kmer_t4 f_seq_t4;
 	size_t hash_idx;
 	//vector<int> contig_sz;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_1 = false, flip_2 = false ,flip_0 = false;
 	size_t ht_sz;
 
 	ht_sz=ht->ht_sz;
 
-
-	bool FAST=1;
 	map<int,vector<int> > hit_position;
 
 	contigs_info->contig_sz_vt.clear();
@@ -9391,10 +9305,10 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 
 
 		string t1,t2;
-		int cont1,cont2;
-		int64_t cod1,cod2;
+		int cont1 = 0, cont2 = 0;
+		int64_t cod1 = 0,cod2 = 0;
 		int readLen1,readLen2;
-		size_t num_Reads=0;
+		int64_t num_Reads=0;
 		string kmer1,kmer2,seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n;
 		bool fq_flag=0;
 		string fq_tmp;
@@ -9430,16 +9344,10 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				//fq_tmp=t1.substr(0,5);
 			}
 
-			bool bad_flag1=0,bad_flag2=0;
-			int tag1_sz,tag2_sz;
 			if((!fq_flag&&t1[0]=='>')||(fq_flag&&nLines1%4==1))
 			{
 				nLines1%=4;
-				tag1_sz=t1.size();
 				tag_s1=t1;
-
-
-
 			}
 			else
 			{
@@ -9508,14 +9416,12 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			if (readLen1==0)
 			{
 				cout<<"Empty sequence!"<<endl;
-				bad_flag1=1;
 			}
 
 			for(int i=0;i<readLen1;++i)
 			{
 				if(seq_s1[i]!='A'&&seq_s1[i]!='C'&&seq_s1[i]!='G'&&seq_s1[i]!='T'&&seq_s1[i]!='N')
 				{
-					bad_flag1=1;
 					break;
 				}
 			}
@@ -9540,10 +9446,10 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				}
 			}
 			int s=0;
-			if((nN-isN)<=readLen1/2)
-			{
-				bad_flag1=1;
-			}
+			// if((nN-isN)<=readLen1/2)
+			// {
+			//     bad_flag1=1;
+			// }
 
 
 			if(isN>=0)
@@ -9592,7 +9498,6 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					//if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(t2.substr(0,5)==fq_tmp)))
 					if(((!fq_flag)&&t2[0]=='>')||((fq_flag)&&(nLines2==1)))
 					{
-						tag2_sz=t2.size();
 						tag_s2=t2;
 					}
 					else
@@ -9667,15 +9572,12 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					if (readLen2==0)
 					{
 						cout<<"Empty sequence!"<<endl;
-						bad_flag2=1;
 					}
 
 					for(int i=0;i<readLen2;++i)
 					{
 						if(seq_s2[i]!='A'&&seq_s2[i]!='C'&&seq_s2[i]!='G'&&seq_s2[i]!='T'&&seq_s2[i]!='N')
 						{
-
-							bad_flag2=1;
 							break;
 						}
 					}
@@ -9705,10 +9607,10 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						}
 					}
 					int s=0;
-					if((nN-isN)<=readLen2/2)
-					{
-						bad_flag2=1;
-					}
+					// if((nN-isN)<=readLen2/2)
+					// {
+					//     bad_flag2=1;
+					// }
 
 
 					if(isN>=0)
@@ -9731,13 +9633,13 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					tag_s2=tag_s1;
 				}
 			}
-			if(readLen1<K_size)
-			{bad_flag1=1;}
-			if(readLen2<K_size)
-			{bad_flag2=1;}
+			// if(readLen1<K_size)
+			// {bad_flag1=1;}
+			// if(readLen2<K_size)
+			// {bad_flag2=1;}
 
 
-			int64_t pos1,pos2;
+			int64_t pos1 = 0, pos2 = 0;
 			kmer_t4 bits1_t4,bits2_t4;
 
 			num_Reads++;
@@ -9784,13 +9686,9 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			Init_Read(seq_s2,Read2);
 			seq_s2.clear();
 
-			tag1_sz=tag_s1.size();
-			tag2_sz=tag_s2.size();
-
-
+			/*
 			int mismatch_cnt=0;
 			bool tag_mismatch=0;
-			/*
 			if(abs(tag1_sz-tag2_sz)>2)
 			{
 				tag_mismatch=1;
@@ -9827,8 +9725,8 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 			//	cout<<num_Reads<<endl;
 
 
-			struct bucket4 **ptr1_d,**ptr2_d;
-			bool flip_1d;
+			struct bucket4 **ptr1_d = NULL,**ptr2_d = NULL;
+			bool flip_1d = false;
 
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
 			{
@@ -10122,7 +10020,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					{
 						stacked_bucket.RightSearch=0;
 					}
-					pdist= BFSearchDist4(ht, merge_ht, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+					pdist= BFSearchDist4(ht, merge_ht, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 					if(pdist>0)
 					{
 						ignore=1;
@@ -10134,7 +10032,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 						inward_not_found++;
 					}
 					stacked_bucket.RightSearch=!stacked_bucket.RightSearch;
-					pdist= BFSearchDist4(ht, merge_ht, *ptr1_d,*ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
+					pdist= BFSearchDist4(ht, merge_ht, *ptr2_d,K_size, stacked_bucket,MaxDepth,MaxSearchLen);
 					if(pdist>0)
 					{
 						ignore=1;
@@ -10150,19 +10048,16 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				if(ignore==1)
 				{continue;}
 
-				int64_t d1,d2,d3,d4,dist;
+				int64_t d1,d2,d3,d4;
 
 				// build adjacency info for cont1&2
 				if(flip_1==0)
 				{
 					//struct adjacent_contig_info adj_contig;
-					int Tcontig_no=cont2;
-					int Tflip=flip_2;
-					int Tadjacent=0;
 					if(flip_2==0)
 					{
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;////
-						dist=d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
+						d1=(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
 
 						o_Pdist_R<<cont1 <<" "<<cont2<<" "<<d1<<endl;//" Library: "<<lib_no<<endl;
 				//		o_Pdist_L<<cont2 <<" "<<cont1<<" "<<d1<<" Library: "<<ii<<endl;
@@ -10171,7 +10066,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					else
 					{
 						int64_t r_cod2=(int64_t)(contigs_info->contig_sz_vt[cont2])-cod2-(int64_t)K_size;
-						dist=d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
+						d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
 						//int64_t Tdist=(scaffold_len+pos2-readLen2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;////
 
 						o_Pdist_R<<cont1 <<" "<<-cont2<<" "<<d2<<endl;//" Library: "<<lib_no<<endl;
@@ -10186,14 +10081,11 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 				{
 
 					//struct adjacent_contig_info adj_contig;
-					int Tcontig_no=cont2;
-					bool Tflip=flip_2;
-
 					if(flip_2==0)
 					{
 
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod2-cod1;////
-						dist=d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
+						d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
 						o_Pdist_L<<cont1 <<" "<<-cont2<<" "<<d3<<endl;//" Library: "<<lib_no<<endl;
 						//o_Pdist_L<<cont2 <<" "<<-cont1<<" "<<d3<<" Library: "<<lib_no<<endl;
 
@@ -10202,7 +10094,7 @@ void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,
 					{
 						int64_t r_cod2=(int64_t)contigs_info->contig_sz_vt[cont2]-cod2-(int64_t)K_size;
 						//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod1-r_cod2;////
-						dist=d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
+						d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
 					//	if(0)//if(Tdist<0)
 					//	{
 					//		Tdist=0;///////////////
@@ -10285,11 +10177,8 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 	int max_stack=300;
 	int DepthTh=max_depth;//min(300/gap,20);
 	//int LenTh=1000;
-	int TipLenTh=100;
 
-	int dist_searched_t=0;
 	int DistVar=1000;
-	int DistVarFactor=2;
 	bool RIGHT=0;
 	int new_node=ctg_stack.front();
 
@@ -10342,7 +10231,6 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 			{
 				map<int, struct adjacent_contig_info>::iterator n_ctg_it=ctg_it;
 				n_ctg_it++;
-				int ctg_no=ctg_it->first;
 				nRB++;
 				ctg_it=n_ctg_it;
 			}
@@ -10360,11 +10248,8 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 
 			//so at least one ctg on the right
 
-			dist_searched_t=Visited_Path[abs(new_node)].len;
 			map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
 			map<int,int> marked_ctgs;
-
-
 
 			for(dist_ctg_it=dist_ctg.begin();dist_ctg_it!=dist_ctg.end();)
 			{
@@ -10379,7 +10264,6 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 					lit2++;
 					n_lit=lit2;
 					n_lit++;
-					int dist0=*lit2;
 
 					int DistVar2=DistVar;
 
@@ -10427,7 +10311,7 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 
 				int nxt_ctg=ctg_it->first;
 
-				int is_marked=0,is_unitig;
+				int is_marked=0;
 
 				if(marked_ctgs.count(abs(nxt_ctg)))
 				{
@@ -10671,7 +10555,6 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 
 				map<int, struct adjacent_contig_info>::iterator n_ctg_it=ctg_it;
 				n_ctg_it++;
-				int ctg_no=ctg_it->first;
 
 				nLB++;
 
@@ -10690,7 +10573,6 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 
 
 
-			dist_searched_t=Visited_Path[abs(new_node)].len;
 			map<int,list<int> >::iterator dist_ctg_it,dist_ctg_it_n;
 			map<int,int> marked_ctgs;
 
@@ -10708,7 +10590,6 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 					lit2++;
 					n_lit=lit2;
 					n_lit++;
-					int dist0=*lit2;
 
 					int DistVar2=DistVar;
 
@@ -11023,13 +10904,12 @@ void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,ma
 }
 
 
-void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,struct contigs_info * contigs_info,string ContigFilename,int LinkCovTh,int UniqueLenTh,int ExpCov)
+void ResolvingRepeatsPE(vector<int> &insert_sz_vt,struct contigs_info * contigs_info,string ContigFilename,int LinkCovTh,int UniqueLenTh,int ExpCov)
 {
 	bool MatePair=0;
 	bool Iter_Scaffold=0;
 	map<int,int> Unitigs;
 	int LinkCovTh0=1;
-	int LinkCovTh1=max(LinkCovTh/2,2);
 
 	string pe_name="InsertSizeEst.txt";
 	string uniqueness_name="UniqueContigs.txt";
@@ -11042,7 +10922,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 	if(insert_sz_vt.size()>0)
 	{
 		MatePair=1;
-		for(int i=0;i!=insert_sz_vt.size();++i)
+		for(unsigned int i=0;i!=insert_sz_vt.size();++i)
 		{
 			if(insert_sz_vt[i]<=10000)
 			{MatePair=0;}
@@ -11062,7 +10942,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		DistVar=10000;
 		DistVar0=5000;
 	}
-	int DistVarFactor=2;
 
 	vector<int> ins_est_vt;
 	while(in_pe_info>>str>>ins_est)
@@ -11092,9 +10971,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		contigs_info->c_info_vt.resize(contigs_info->total_contigs+1);
 
 		cout<<"Loading adjacent info. left. "<<i<<endl;
-		int cont1,cont2,dist;
+		int cont1 = 0,cont2 = 0, dist;
 		int nr=0;
-
 		time_t timer = time(NULL);
 
 		while(in_sc_l>>cont1>>cont2>>dist)
@@ -11260,7 +11138,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 	cout<<"Removing weak links..."<<endl;
 
-	for(int i=1;i<=contigs_info->total_contigs;++i)
+	for(unsigned int i=1;i<=contigs_info->total_contigs;++i)
 	{
 
 		map<int,scaffold_contig_info>::iterator s_adj_it,s_adj_it_n;
@@ -11369,9 +11247,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 	//contigs_info->scaffolds.resize(1);
 	//contigs_info->gaps_in_scaffolds.resize(1);
 
-	int break_points=0;
-	int ambiguous_points=0;
-	int gap_points=0;
 
 	ofstream o_unique(uniqueness_name.c_str());
 
@@ -11552,7 +11427,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 			{
 				int beg_ctg=contig_no;
 				int current_ctg=beg_ctg;
-				int last_unique_ctg=beg_ctg;
 				int nxt_ctg;
 				map<int,int> searched_ctgs;
 				nxt_ctg=beg_ctg;
@@ -11562,7 +11436,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 				int NextUnitig=0,Dist2NextUnitig=0;
 
 				//right search
-				bool Right,RightUnitig;
+				bool Right,RightUnitig = true;
 				if(it==1)
 				{
 					Right=1;
@@ -11659,8 +11533,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 								}
 							}
-							last_unique_ctg=current_ctg;
-
 						}
 						else
 						{
@@ -11713,7 +11585,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									lit2++;
 									n_lit=lit2;
 									n_lit++;
-									int dist0=*lit2;
 
 									int DistVar2=DistVar;
 
@@ -11798,7 +11669,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								lit2++;
 								n_lit=lit2;
 								n_lit++;
-								int dist0=*lit2;
 
 								int DistVar2=DistVar;
 
@@ -11856,8 +11726,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							}
 						}
 
-						bool rep_solver=0;
-
 						if(marked_cnt==0)
 						{
 							map<int,int> key_unitigs;
@@ -11882,7 +11750,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										lit2++;
 										n_lit=lit2;
 										n_lit++;
-										int dist0=*lit2;
 
 										int DistVar2=DistVar;
 
@@ -12016,18 +11883,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_right_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 										{
 											if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -12036,13 +11903,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -12054,7 +11921,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_right_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
@@ -12116,19 +11983,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_left_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 										{
 											if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													left_ctgs.push_back(tmp_vt[jj]);
 
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -12137,13 +12004,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -12155,7 +12022,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_left_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 										{
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
@@ -12207,7 +12074,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										lit2++;
 										n_lit=lit2;
 										n_lit++;
-										int dist0=*lit2;
 
 										int DistVar2=DistVar;
 
@@ -12346,18 +12212,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_right_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 										{
 											if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -12366,13 +12232,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -12384,7 +12250,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_right_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
@@ -12448,18 +12314,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_left_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 										{
 											if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -12468,13 +12334,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -12486,7 +12352,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_left_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 										{
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
@@ -12543,7 +12409,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												lit2++;
 												n_lit=lit2;
 												n_lit++;
-												int dist0=*lit2;
 
 												int DistVar2=DistVar;
 
@@ -12679,18 +12544,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											if(node_cov.size()==1)
 											{
-												for(int ii=0;ii<t_right_ctgs.size();++ii)
+												for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 												{
 													if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 															right_ctgs.push_back(tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_right_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 														{
 															right_ctgs.push_back(t_right_ctgs[jj]);
 														}
@@ -12699,13 +12564,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 															right_ctgs.push_back(-tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_right_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 														{
 															right_ctgs.push_back(t_right_ctgs[jj]);
 														}
@@ -12717,7 +12582,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 											else
 											{
-												for(int jj=0;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -12776,18 +12641,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											if(node_cov.size()==1)
 											{
-												for(int ii=0;ii<t_left_ctgs.size();++ii)
+												for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 												{
 													if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 															left_ctgs.push_back(tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_left_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 														{
 															left_ctgs.push_back(t_left_ctgs[jj]);
 														}
@@ -12796,13 +12661,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 															left_ctgs.push_back(-tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_left_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 														{
 															left_ctgs.push_back(t_left_ctgs[jj]);
 														}
@@ -12814,7 +12679,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 											else
 											{
-												for(int jj=0;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -12866,7 +12731,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								if(UniqueNxt&&contigs_info->c_info_vt[-nxt_ctg].used)
 								{
 
-									UniqueNxt=contigs_info->c_info_vt[-nxt_ctg].unique=0;
+									contigs_info->c_info_vt[-nxt_ctg].unique=0;
+									UniqueNxt=0;
 								//	break;
 								}
 
@@ -12889,7 +12755,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								if(it==1)
 								{
-									for (int ii=0;ii<t_right_ctgs.size();++ii)
+									for (unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 									{
 										right_ctgs.push_back(t_right_ctgs[ii]);
 										contigs_info->c_info_vt[abs(t_right_ctgs[ii])].used=1;
@@ -12898,7 +12764,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								}
 								else
 								{
-									for (int ii=0;ii<t_left_ctgs.size();++ii)
+									for (unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 									{
 										left_ctgs.push_back(t_left_ctgs[ii]);
 										contigs_info->c_info_vt[abs(t_left_ctgs[ii])].used=1;
@@ -12933,7 +12799,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										lit2++;
 										n_lit=lit2;
 										n_lit++;
-										int dist0=*lit2;
 
 										int DistVar2=DistVar;
 
@@ -13069,18 +12934,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_right_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 										{
 											if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -13089,14 +12954,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -13108,7 +12973,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_right_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
@@ -13165,19 +13030,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_left_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 										{
 											if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -13186,14 +13051,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -13205,7 +13070,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_left_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 										{
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
@@ -13355,7 +13220,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									lit2++;
 									n_lit=lit2;
 									n_lit++;
-									int dist0=*lit2;
 
 									int DistVar2=DistVar;
 
@@ -13440,7 +13304,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								lit2++;
 								n_lit=lit2;
 								n_lit++;
-								int dist0=*lit2;
 
 								int DistVar2=DistVar;
 
@@ -13501,7 +13364,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							}
 						}
 
-						bool rep_solver=0;
 						if(marked_cnt==0)
 						{
 							map<int,int> key_unitigs;
@@ -13525,7 +13387,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										lit2++;
 										n_lit=lit2;
 										n_lit++;
-										int dist0=*lit2;
 
 										int DistVar2=DistVar;
 
@@ -13659,19 +13520,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_right_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 										{
 											if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -13680,14 +13541,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -13699,7 +13560,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_right_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
@@ -13756,19 +13617,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_left_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 										{
 											if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -13777,14 +13638,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -13796,7 +13657,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_left_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 										{
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
@@ -13843,7 +13704,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										lit2++;
 										n_lit=lit2;
 										n_lit++;
-										int dist0=*lit2;
 
 										int DistVar2=DistVar;
 
@@ -13969,19 +13829,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_right_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 										{
 											if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -13990,14 +13850,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -14009,7 +13869,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_right_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
@@ -14066,19 +13926,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_left_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 										{
 											if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -14087,14 +13947,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -14106,7 +13966,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_left_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 										{
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
@@ -14163,7 +14023,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 												lit2++;
 												n_lit=lit2;
 												n_lit++;
-												int dist0=*lit2;
 
 												int DistVar2=DistVar;
 
@@ -14291,19 +14150,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											if(node_cov.size()==1)
 											{
-												for(int ii=0;ii<t_right_ctgs.size();++ii)
+												for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 												{
 													if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 
 															right_ctgs.push_back(tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_right_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 														{
 															right_ctgs.push_back(t_right_ctgs[jj]);
 														}
@@ -14312,14 +14171,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 
 															right_ctgs.push_back(-tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_right_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 														{
 															right_ctgs.push_back(t_right_ctgs[jj]);
 														}
@@ -14331,7 +14190,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 											else
 											{
-												for(int jj=0;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -14388,19 +14247,19 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 											if(node_cov.size()==1)
 											{
-												for(int ii=0;ii<t_left_ctgs.size();++ii)
+												for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 												{
 													if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 
 															left_ctgs.push_back(tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_left_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 														{
 															left_ctgs.push_back(t_left_ctgs[jj]);
 														}
@@ -14409,14 +14268,14 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 													if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 													{
 														vector<int> tmp_vt=(*node_cov.begin()).second;
-														for(int jj=1;jj<tmp_vt.size()-1;++jj)
+														for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 														{
 															if(UniqueCurrent&&jj==1)
 															{continue;}
 
 															left_ctgs.push_back(-tmp_vt[jj]);
 														}
-														for(int jj=ii;jj<t_left_ctgs.size();++jj)
+														for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 														{
 															left_ctgs.push_back(t_left_ctgs[jj]);
 														}
@@ -14428,7 +14287,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											}
 											else
 											{
-												for(int jj=0;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -14499,7 +14358,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							{
 								if(it==1)
 								{
-									for (int ii=0;ii<t_right_ctgs.size();++ii)
+									for (unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 									{
 										right_ctgs.push_back(t_right_ctgs[ii]);
 										contigs_info->c_info_vt[abs(t_right_ctgs[ii])].used=1;
@@ -14508,7 +14367,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 								}
 								else
 								{
-									for (int ii=0;ii<t_left_ctgs.size();++ii)
+									for (unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 									{
 										left_ctgs.push_back(t_left_ctgs[ii]);
 										contigs_info->c_info_vt[abs(t_left_ctgs[ii])].used=1;
@@ -14545,7 +14404,6 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 										lit2++;
 										n_lit=lit2;
 										n_lit++;
-										int dist0=*lit2;
 
 										int DistVar2=DistVar;
 
@@ -14673,18 +14531,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_right_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_right_ctgs.size();++ii)
 										{
 											if(t_right_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													right_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -14693,13 +14551,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_right_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													right_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_right_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_right_ctgs.size();++jj)
 												{
 													right_ctgs.push_back(t_right_ctgs[jj]);
 												}
@@ -14711,7 +14569,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_right_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_right_ctgs.size();++jj)
 										{
 											right_ctgs.push_back(t_right_ctgs[jj]);
 										}
@@ -14768,18 +14626,18 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 									if(node_cov.size()==1)
 									{
-										for(int ii=0;ii<t_left_ctgs.size();++ii)
+										for(unsigned int ii=0;ii<t_left_ctgs.size();++ii)
 										{
 											if(t_left_ctgs[ii]==((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													left_ctgs.push_back(tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -14788,13 +14646,13 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 											if(t_left_ctgs[ii]==-((*node_cov.begin()).first))
 											{
 												vector<int> tmp_vt=(*node_cov.begin()).second;
-												for(int jj=1;jj<tmp_vt.size()-1;++jj)
+												for(unsigned int jj=1;jj<tmp_vt.size()-1;++jj)
 												{
 													if(UniqueCurrent&&jj==1)
 													{continue;}
 													left_ctgs.push_back(-tmp_vt[jj]);
 												}
-												for(int jj=ii;jj<t_left_ctgs.size();++jj)
+												for(unsigned int jj=ii;jj<t_left_ctgs.size();++jj)
 												{
 													left_ctgs.push_back(t_left_ctgs[jj]);
 												}
@@ -14806,7 +14664,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 									}
 									else
 									{
-										for(int jj=0;jj<t_left_ctgs.size();++jj)
+										for(unsigned int jj=0;jj<t_left_ctgs.size();++jj)
 										{
 											left_ctgs.push_back(t_left_ctgs[jj]);
 										}
@@ -14878,7 +14736,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 				//add weak contigs.
 				//cout<<"adding weak ctgs."<<endl;
-				for(int j=0;j<unitigs_vt.size();++j)
+				for(unsigned int j=0;j<unitigs_vt.size();++j)
 				{
 					int ctg_no=unitigs_vt[j];
 
@@ -15009,7 +14867,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 				map<int,int>::iterator unitig_it;
 				//for(unitig_it=unitig_dist.begin();unitig_it!=unitig_dist.end();++unitig_it)
-				for(int j=0;j<unitigs_vt.size();++j)
+				for(unsigned int j=0;j<unitigs_vt.size();++j)
 				{
 					ctgs_for_second_round[unitigs_vt[j]]=unitig_dist[abs(unitigs_vt[j])];
 
@@ -15177,7 +15035,7 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 		//empty_vt.resize(0);
 		//contigs_info->gaps_in_scaffolds.push_back(empty_vt);
 		int scf_len=0;
-		for(int j=0;j<(int)ctgs_vt.size();++j)
+		for(unsigned int j=0;j<ctgs_vt.size();++j)
 		{
 		//	if(1)//abs(ctgs_vt[j])==662)
 		//	{cout<<ctgs_vt[j];}
@@ -15266,11 +15124,8 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 							if(gap_sz<150&&gap_sz>-150)
 							{
 
-								int start_pos=codB+K_size+codE-codB;
-								if(start_pos<0)
-								{
-									start_pos=0;
-								}
+								unsigned int start_pos=codB+K_size+codE-codB;
+
 								if(start_pos>(contigs_info->contigs_str[cur_ctg].size()))
 								{
 									start_pos=(contigs_info->contigs_str[cur_ctg].size());
@@ -15574,23 +15429,10 @@ void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,s
 
 void ConstructContigGraph(struct hashtable *ht1,struct hashtable *merge_ht1, int K_size,contigs_info * contigs_info,string ContigFilename)
 {
-
-	time_t beg_time,read_time;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer,str,seq_s;
-	uint64_t f_seq,hv;
-	size_t hash_idx;
-	bool found;
-	bool flip_1,flip_2,flip_0;
-	size_t ht_sz;
-	size_t numReads=0;
-	struct hashtable2 ht2,merge_ht2;
-
-	int boundary=0,removed=0,bridge=0;
-
-	ht_sz=ht1->ht_sz;
+	struct hashtable2 ht2;
 
 	cout<<"Contigs remapping."<<endl;
 	if(ContigFilename=="Contigs.txt")
@@ -15609,29 +15451,14 @@ void ConstructContigGraph(struct hashtable *ht1,struct hashtable *merge_ht1, int
 
 void ConstructContigGraph0(struct hashtable0 *ht,struct hashtable0 *merge_ht, int K_size, contigs_info * contigs_info,string ContigFilename)
 {
-
-	time_t beg_time,read_time;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer,str,seq_s;
-	uint64_t f_seq,hv;
-	size_t hash_idx;
-	bool found;
-	bool flip_1,flip_2,flip_0;
-	size_t ht_sz;
-	size_t numReads=0;
-
 
 	int Kmer_arr_sz=K_size/32+1;
 	int rem1=K_size%32;
 	if(rem1==0)
 	{Kmer_arr_sz--;}
-
-	int boundary=0,removed=0,bridge=0;
-
-	ht_sz=ht->ht_sz;
-
 
 	cout<<"Contigs remapping."<<endl;
 	if(ContigFilename=="Contigs.txt")

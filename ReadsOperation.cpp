@@ -23,7 +23,7 @@ void SavingReadsTable(reads_table *reads_table)
 		o_reads_table.write((char*) block_ptr,reads_table->BytesPerBlock);
 
 	}
-	for(int i=0;i<reads_table->read_len_vt.size();++i)
+	for(unsigned int i=0;i<reads_table->read_len_vt.size();++i)
 	{
 		o_reads_table_info<<reads_table->read_len_vt[i];
 	}
@@ -87,21 +87,19 @@ void LoadingReadsTable(reads_table *reads_table)
 void CollectingNonContainedReads(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename)
 {
 
-	time_t beg_time,read_time;
+	time_t beg_time;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer,str,seq_s;
 	uint64_t f_seq,hv;
 	struct kmer_t2 f_seq_t2;
 	size_t hash_idx;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_0;
 	size_t ht_sz;
 	size_t numReads=0;
 	ofstream out_reads("reads_temp.txt");
 
-	int boundary=0,removed=0,bridge=0;
 	if(K_size<=32)
 	{
 		ht_sz=ht1->ht_sz;
@@ -129,29 +127,21 @@ void CollectingNonContainedReads(struct hashtable *ht1,struct hashtable *merge_h
 	//cout<<"Collecting informative reads."<<endl;
 	time(&beg_time);
 
-	int64_t dist_sum=0,p_cnt=0;
-	int mean_dist=0;
 	int lib_no=0;
 
 	for(size_t ii=0;ii<filenames_vt.size();ii++)
 	{
 		lib_no++;
 
-		dist_sum=0,p_cnt=0;
 		cout<<"Processing library: "<<ii<<endl;
 		ifstream in_reads;
 		in_reads.open(filenames_vt[ii].c_str());
 
-		struct read_t Read1,Read2;
+		struct read_t Read1;
 
 		Read1.read_bits =(uint64_t*) malloc(1000000/4+100);
-		Read2.read_bits =(uint64_t*) malloc(1000000/4+100);
-
-		int nLines1=0,nLines2=0;
-
 
 		bool fq_flag=0;
-
 
 		getline(in_reads,str);
 		if(fq_flag==0&&str[0]=='@')
@@ -269,7 +259,6 @@ void CollectingNonContainedReads(struct hashtable *ht1,struct hashtable *merge_h
 
 
 			uint64_t bits1;
-			int contig_no=-1;
 			bool output_current_read=0;
 
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
@@ -453,21 +442,20 @@ void CollectingNonContainedReads(struct hashtable *ht1,struct hashtable *merge_h
 void CollectingNonContainedReads0(struct hashtable0 *ht0,struct hashtable0 *merge_ht0, int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename)
 {
 
-	time_t beg_time,read_time;
+	time_t beg_time;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer,str,seq_s;
 	uint64_t hv;
 	uint64_t f_seq[100];
 	size_t hash_idx;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_0;
 	size_t ht_sz;
 	size_t numReads=0;
 	ofstream out_reads("reads_temp.txt");
 
-	int boundary=0,removed=0,bridge=0;
+	int removed=0;
 
 	int Kmer_arr_sz=K_size/32+1;
 	int rem1=K_size%32;
@@ -488,26 +476,19 @@ void CollectingNonContainedReads0(struct hashtable0 *ht0,struct hashtable0 *merg
 	//cout<<"Collecting informative reads."<<endl;
 	time(&beg_time);
 
-	int64_t dist_sum=0,p_cnt=0;
-	int mean_dist=0;
 	int lib_no=0;
 
 	for(size_t ii=0;ii<filenames_vt.size();ii++)
 	{
 		lib_no++;
 
-		dist_sum=0,p_cnt=0;
 		cout<<"Processing library: "<<ii<<endl;
 		ifstream in_reads;
 		in_reads.open(filenames_vt[ii].c_str());
 
-		struct read_t Read1,Read2;
+		struct read_t Read1;
 
 		Read1.read_bits =(uint64_t*) malloc(1000000/4+100);
-		Read2.read_bits =(uint64_t*) malloc(1000000/4+100);
-
-		int nLines1=0,nLines2=0;
-
 
 		bool fq_flag=0;
 
@@ -628,7 +609,6 @@ void CollectingNonContainedReads0(struct hashtable0 *ht0,struct hashtable0 *merg
 
 
 			//uint64_t bits1;
-			int contig_no=-1;
 			bool output_current_read=0;
 
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
@@ -718,7 +698,7 @@ int BFSearchGapCloser_ctg(struct contigs_info *contigs_info,int max_depth,int ma
 	SuperRead->PathFound=0;
 	SuperRead->PathsCnt=0;
 	bool correct=1;
-	for(int i=0;i<ctgs_in_current_read.size()-1;++i)
+	for(unsigned int i=0;i<ctgs_in_current_read.size()-1;++i)
 	{
 		int current_ctg=ctgs_in_current_read[i];
 		int next_ctg=ctgs_in_current_read[i+1];
@@ -762,7 +742,6 @@ int BFSearchGapCloser_ctg(struct contigs_info *contigs_info,int max_depth,int ma
 	dist_ctgs[0].push_back(beg_ctg);
 	int NBs=1;
 
-	int dist_searched=0;
 	int new_node=beg_ctg;
 
 	stacked_nodes[new_node]=1;
@@ -982,23 +961,20 @@ int BFSearchGapCloser_ctg(struct contigs_info *contigs_info,int max_depth,int ma
 
 }
 
-void ConstuctRefinedContigGraph(struct hashtable *ht1, struct hashtable *merge_ht1,int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
+void ConstuctRefinedContigGraph(struct hashtable *ht1, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
 {
-	time_t beg_time, read_time;
+	time_t beg_time;
 	string in_fname = ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs = 0;
 	string tag, s, kmer, str, seq_s;
 	uint64_t f_seq, hv;
-	struct kmer_t2 f_seq_t2;
 	size_t hash_idx;
 	bool found;
-	bool flip_1, flip_2, flip_0;
-	size_t ht_sz;
+	bool flip_0;
+	size_t ht_sz = 0;
 	size_t numReads = 0;
 	ofstream out_refined_graph("RefinedContigGraph.txt");
 	map<vector<int>, map<string, int> > temp_map;
-	int boundary = 0, removed = 0, bridge = 0;
 	if (K_size <= 32)
 	{
 		ht_sz = ht1->ht_sz;
@@ -1024,26 +1000,19 @@ void ConstuctRefinedContigGraph(struct hashtable *ht1, struct hashtable *merge_h
 	//cout<<"Collecting informative reads."<<endl;
 	time(&beg_time);
 
-	int64_t dist_sum = 0, p_cnt = 0;
-	int mean_dist = 0;
 	int lib_no = 0;
 
 	for (size_t ii = 0; ii<filenames_vt.size(); ii++)
 	{
 		lib_no++;
 
-		dist_sum = 0, p_cnt = 0;
 		cout << "Processing library: " << ii << endl;
 		ifstream in_reads;
 		in_reads.open(filenames_vt[ii].c_str());
 
-		struct read_t Read1, Read2;
+		struct read_t Read1;
 
 		Read1.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
-		Read2.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
-
-		int nLines1 = 0, nLines2 = 0;
-
 
 		bool fq_flag = 0;
 
@@ -1168,10 +1137,7 @@ void ConstuctRefinedContigGraph(struct hashtable *ht1, struct hashtable *merge_h
 			LongReadContigIndex LongReadContigIndex;
 
 			uint64_t bits1;
-			int contig_no = -1;
-			bool output_current_read = 0;
 			vector<int> ctgs_vt, cod_vt, pos_vt, offset_vt;
-			bool bubble_flag = 0;
 			for (int i = 0; i<Read1.readLen - K_size + 1; ++i)
 			{
 				if (K_size <= 32)
@@ -1271,7 +1237,7 @@ void ConstuctRefinedContigGraph(struct hashtable *ht1, struct hashtable *merge_h
 				final_ctgs_vt.push_back(ctgs_vt[0]);
 				final_cod_vt.push_back(cod_vt[0]);
 				final_offset_vt.push_back(offset_vt[0]);
-				for (int i = 1; i<ctgs_vt.size(); ++i)
+				for (unsigned int i = 1; i<ctgs_vt.size(); ++i)
 				{
 
 					//split the cases for easier debugging
@@ -1297,10 +1263,10 @@ void ConstuctRefinedContigGraph(struct hashtable *ht1, struct hashtable *merge_h
 				}
 			}
 
-			if (final_ctgs_vt.size()>1)
-			{
-				output_current_read = 1;
-			}
+			// if (final_ctgs_vt.size()>1)
+			// {
+			//     output_current_read = 1;
+			// }
 
 
 
@@ -1440,19 +1406,17 @@ void ConstuctRefinedContigGraph(struct hashtable *ht1, struct hashtable *merge_h
 
 }
 
-void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge_ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
+void ConstuctRefinedContigGraph0(struct hashtable0 *ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
 {
 
-	time_t beg_time, read_time;
+	time_t beg_time;
 	string in_fname = ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs = 0;
 	string tag, s, kmer, str, seq_s;
-	uint64_t f_seq, hv;
-	struct kmer_t2 f_seq_t2;
+	uint64_t hv;
 	size_t hash_idx;
 	bool found;
-	bool flip_1, flip_2, flip_0;
+	bool flip_0;
 	size_t ht_sz;
 	size_t numReads = 0;
 	ofstream out_refined_graph("RefinedContigGraph.txt");
@@ -1464,8 +1428,6 @@ void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge
 	{
 		Kmer_arr_sz--;
 	}
-
-	int boundary = 0, removed = 0, bridge = 0;
 
 	ht_sz = ht->ht_sz;
 
@@ -1483,26 +1445,19 @@ void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge
 
 	time(&beg_time);
 
-	int64_t dist_sum = 0, p_cnt = 0;
-	int mean_dist = 0;
 	int lib_no = 0;
 
 	for (size_t ii = 0; ii<filenames_vt.size(); ii++)
 	{
 		lib_no++;
 
-		dist_sum = 0, p_cnt = 0;
 		cout << "Processing library: " << ii << endl;
 		ifstream in_reads;
 		in_reads.open(filenames_vt[ii].c_str());
 
-		struct read_t Read1, Read2;
+		struct read_t Read1;
 
 		Read1.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
-		Read2.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
-
-		int nLines1 = 0, nLines2 = 0;
-
 
 		bool fq_flag = 0;
 
@@ -1626,10 +1581,7 @@ void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge
 			seq_s.clear();
 			LongReadContigIndex LongReadContigIndex;
 
-			int contig_no = -1;
-			bool output_current_read = 0;
 			vector<int> ctgs_vt, cod_vt, pos_vt, offset_vt;
-			bool bubble_flag = 0;
 			for (int i = 0; i<Read1.readLen - K_size + 1; ++i)
 			{
 
@@ -1732,7 +1684,7 @@ void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge
 				final_ctgs_vt.push_back(ctgs_vt[0]);
 				final_cod_vt.push_back(cod_vt[0]);
 				final_offset_vt.push_back(offset_vt[0]);
-				for (int i = 1; i<ctgs_vt.size(); ++i)
+				for (unsigned int i = 1; i<ctgs_vt.size(); ++i)
 				{
 
 					//split the cases for easier debugging
@@ -1758,10 +1710,10 @@ void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge
 				}
 			}
 
-			if (final_ctgs_vt.size()>1)
-			{
-				output_current_read = 1;
-			}
+			// if (final_ctgs_vt.size()>1)
+			// {
+			//     output_current_read = 1;
+			// }
 
 
 
@@ -1901,26 +1853,24 @@ void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge
 }
 
 
-void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename)
+void CollectingNonContainedReadsSlow(struct hashtable *ht1, struct hashtable2 *ht2, int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename)
 {
 
-	time_t beg_time,read_time;
+	time_t beg_time;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer,str,seq_s;
 	uint64_t f_seq,hv;
 	struct kmer_t2 f_seq_t2;
 	size_t hash_idx;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_0;
 	size_t ht_sz;
 	size_t numReads=0;
 
 	ofstream out_refined_graph("RefinedContigGraph.txt");
 	map<vector<int>, map<string,int> > temp_map;
 
-	int boundary=0,removed=0,bridge=0;
 	if(K_size<=32)
 	{
 		ht_sz=ht1->ht_sz;
@@ -1949,21 +1899,18 @@ void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *mer
 	//cout<<"Collecting informative reads."<<endl;
 	time(&beg_time);
 
-	int64_t dist_sum=0,p_cnt=0;
-	int mean_dist=0;
 	int lib_no=0;
 
 	for(size_t ii=0;ii<filenames_vt.size();ii++)
 	{
 		lib_no++;
 
-		dist_sum=0,p_cnt=0;
 		cout<<"Processing library: "<<ii<<endl;
 		ifstream in_reads;
 		in_reads.open(filenames_vt[ii].c_str());
 		string file = filenames_vt[ii];
 		int file_beg = 0;
-		for (int c = 0; c < file.size(); ++c)
+		for (unsigned int c = 0; c < file.size(); ++c)
 		{
 			if (file[c] == '\\'||file[c]=='/')
 			{
@@ -1977,13 +1924,9 @@ void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *mer
 		ofstream out_reads(Name1.c_str());
 		ofstream out_reads_info(Name2.c_str());;
 		cout << "Creating: " << Name1 << endl;
-		struct read_t Read1,Read2;
+		struct read_t Read1;
 
 		Read1.read_bits =(uint64_t*) malloc(1000000/4+100);
-		Read2.read_bits =(uint64_t*) malloc(1000000/4+100);
-
-		int nLines1=0,nLines2=0;
-
 
 		bool fq_flag=0;
 
@@ -2102,10 +2045,7 @@ void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *mer
 			LongReadContigIndex LongReadContigIndex;
 
 			uint64_t bits1;
-			int contig_no=-1;
-			bool output_current_read=0;
 			vector<int> ctgs_vt,cod_vt,pos_vt,offset_vt;
-			bool bubble_flag=0;
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
 			{
 				if(K_size<=32)
@@ -2286,7 +2226,7 @@ void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *mer
 				final_ctgs_vt.push_back(ctgs_vt[0]);
 				final_cod_vt.push_back(cod_vt[0]);
 				final_offset_vt.push_back(offset_vt[0]);
-				for (int i=1;i<ctgs_vt.size();++i)
+				for (unsigned int i=1;i<ctgs_vt.size();++i)
 				{
 
 					//split the cases for easier debugging
@@ -2312,10 +2252,10 @@ void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *mer
 				}
 			}
 
-			if(final_ctgs_vt.size()>1)
-			{
-				output_current_read=1;
-			}
+			// if(final_ctgs_vt.size()>1)
+			// {
+			//     output_current_read=1;
+			// }
 
 			if(0)//output_current_read)
 			{
@@ -2324,7 +2264,7 @@ void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *mer
 				//out_reads << read_str << endl;
 				out_reads_info << tag << endl;
 
-				for (int i = 0; i<final_ctgs_vt.size(); ++i)
+				for (unsigned int i = 0; i<final_ctgs_vt.size(); ++i)
 				{
 					out_reads_info << final_offset_vt[i]<<", " << final_ctgs_vt[i] << "," << contigs_info->contig_sz_vt[abs(final_ctgs_vt[i])] << ", " << endl;
 				}
@@ -2469,19 +2409,17 @@ void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *mer
 
 }
 
-void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *merge_ht, int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename)
+void CollectingNonContainedReadsSlow0(struct hashtable0 *ht, int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename)
 {
 
-	time_t beg_time,read_time;
+	time_t beg_time;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer,str,seq_s;
-	uint64_t f_seq,hv;
-	struct kmer_t2 f_seq_t2;
+	uint64_t hv;
 	size_t hash_idx;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_0;
 	size_t ht_sz;
 	size_t numReads=0;
 
@@ -2492,8 +2430,6 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 	int rem1=K_size%32;
 	if(rem1==0)
 	{Kmer_arr_sz--;}
-
-	int boundary=0,removed=0,bridge=0;
 
 	ht_sz=ht->ht_sz;
 
@@ -2511,21 +2447,18 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 
 	time(&beg_time);
 
-	int64_t dist_sum=0,p_cnt=0;
-	int mean_dist=0;
 	int lib_no=0;
 
 	for(size_t ii=0;ii<filenames_vt.size();ii++)
 	{
 		lib_no++;
 
-		dist_sum=0,p_cnt=0;
 		cout<<"Processing library: "<<ii<<endl;
 		ifstream in_reads;
 		in_reads.open(filenames_vt[ii].c_str());
 		string file = filenames_vt[ii];
 		int file_beg = 0;
-		for (int c = 0; c < file.size(); ++c)
+		for (unsigned int c = 0; c < file.size(); ++c)
 		{
 			if (file[c] == '\\' || file[c] == '/')
 			{
@@ -2541,13 +2474,9 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 		ofstream out_reads_info(Name2.c_str());;
 		cout <<"Creating: "<< Name1 << endl;
 
-		struct read_t Read1,Read2;
+		struct read_t Read1;
 
 		Read1.read_bits =(uint64_t*) malloc(1000000/4+100);
-		Read2.read_bits =(uint64_t*) malloc(1000000/4+100);
-
-		int nLines1=0,nLines2=0;
-
 
 		bool fq_flag=0;
 
@@ -2672,10 +2601,7 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 			seq_s.clear();
 			LongReadContigIndex LongReadContigIndex;
 
-			int contig_no=-1;
-			bool output_current_read=0;
 			vector<int> ctgs_vt, cod_vt, pos_vt, offset_vt;
-			bool bubble_flag=0;
 			for(int i=0;i<Read1.readLen-K_size+1;++i )
 			{
 
@@ -2794,7 +2720,7 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 				final_ctgs_vt.push_back(ctgs_vt[0]);
 				final_cod_vt.push_back(cod_vt[0]);
 				final_offset_vt.push_back(offset_vt[0]);
-				for (int i = 1; i<ctgs_vt.size(); ++i)
+				for (unsigned int i = 1; i<ctgs_vt.size(); ++i)
 				{
 
 					//split the cases for easier debugging
@@ -2820,10 +2746,10 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 				}
 			}
 
-			if(final_ctgs_vt.size()>1)
-			{
-				output_current_read=1;
-			}
+			// if(final_ctgs_vt.size()>1)
+			// {
+			//     output_current_read=1;
+			// }
 
 			if(0)//output_current_read)
 			{
@@ -2833,7 +2759,7 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 				//out_reads << read_str << endl;
 				out_reads_info << tag << endl;
 
-				for (int i = 0; i<final_ctgs_vt.size(); ++i)
+				for (unsigned int i = 0; i<final_ctgs_vt.size(); ++i)
 				{
 					out_reads_info << final_offset_vt[i] << ", " << final_ctgs_vt[i] << "," << contigs_info->contig_sz_vt[abs(final_ctgs_vt[i])] << ", " << endl;
 				}
@@ -2976,20 +2902,18 @@ void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *m
 
 
 
-void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
+void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable2 *ht2, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
 {
 
-	time_t beg_time, read_time;
+	time_t beg_time;
 	string in_fname = ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs = 0;
 
 	uint64_t f_seq, hv;
 	size_t hash_idx;
 	bool found;
-	bool flip_1, flip_2, flip_0;
+	bool flip_0;
 	size_t ht_sz;
-	size_t numReads = 0;
 	ofstream out_pairs("NonContainedPairs.txt"), out_pairs_info("NonContainedPairs_info.txt");;
 	ofstream out_contained_pairs_info("ContainedPairs_info.txt");
 	uint64_t insert_size_sum = 0;
@@ -3004,14 +2928,11 @@ void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable *me
 	ContigsRemapping(ht1, ht2, K_size, contigs_info, ContigFilename, 0);
 	time(&beg_time);
 
-	int64_t dist_sum = 0, p_cnt = 0;
-	int mean_dist = 0;
 	int lib_no = 0;
 
 	for (size_t ii = 0; ii<filenames_vt.size(); ii+=2)
 	{
 		lib_no++;
-		dist_sum = 0, p_cnt = 0;
 		cout << "Processing libraries: " << ii + 1 << " and " << ii + 2<< endl;
 		ifstream in_pair1,in_pair2;
 		in_pair1.open(filenames_vt[ii].c_str());
@@ -3021,7 +2942,6 @@ void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable *me
 		Read1.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
 		Read2.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
 
-		int nLines1 = 0, nLines2 = 0;
 		string tag1, qs1, n_tag1, tag2, qs2, n_tag2, seq_s1, seq_s2;
 		string QS_s1, QS_s2;
 
@@ -3093,8 +3013,6 @@ void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable *me
 			LongReadContigIndex LongReadContigIndex1, LongReadContigIndex2;
 
 			uint64_t bits1;
-			int contig_no = -1;
-			bool output_current_pair= 0;
 
 			for (int i = 0; i<Read1.readLen - K_size + 1; ++i)
 			{
@@ -3474,21 +3392,19 @@ void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable *me
 
 }
 
-void CollectingNonContainedPairsSlow0(struct hashtable0 *ht, struct hashtable0 *merge_ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
+void CollectingNonContainedPairsSlow0(struct hashtable0 *ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename)
 {
 
-	time_t beg_time, read_time;
+	time_t beg_time;
 	string in_fname = ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs = 0;
 
-	uint64_t f_seq, hv;
+	uint64_t hv;
 
 	size_t hash_idx;
 	bool found;
-	bool flip_1, flip_2, flip_0;
+	bool flip_0;
 	size_t ht_sz;
-	size_t numReads = 0;
 	ofstream out_pairs("NonContainedPairs.txt"), out_pairs_info("NonContainedPairs_info.txt");;
 	ofstream out_contained_pairs_info("ContainedPairs_info.txt");
 	uint64_t insert_size_sum = 0;
@@ -3502,8 +3418,6 @@ void CollectingNonContainedPairsSlow0(struct hashtable0 *ht, struct hashtable0 *
 	{
 		Kmer_arr_sz--;
 	}
-
-	int boundary = 0, removed = 0, bridge = 0;
 
 	ht_sz = ht->ht_sz;
 
@@ -3519,15 +3433,11 @@ void CollectingNonContainedPairsSlow0(struct hashtable0 *ht, struct hashtable0 *
 
 	time(&beg_time);
 
-	int64_t dist_sum = 0, p_cnt = 0;
-	int mean_dist = 0;
 	int lib_no = 0;
 
 	for (size_t ii = 0; ii<filenames_vt.size(); ii+=2)
 	{
 		lib_no++;
-
-		dist_sum = 0, p_cnt = 0;
 
 		cout << "Processing libraries: " << ii + 1 << " and " << ii + 2 << endl;
 		ifstream in_pair1, in_pair2;
@@ -3539,11 +3449,7 @@ void CollectingNonContainedPairsSlow0(struct hashtable0 *ht, struct hashtable0 *
 		Read1.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
 		Read2.read_bits = (uint64_t*)malloc(1000000 / 4 + 100);
 
-		int nLines1 = 0, nLines2 = 0;
-
-
 		bool fq_flag = 0;
-
 
 		string tag1, qs1, n_tag1, tag2, qs2, n_tag2, seq_s1, seq_s2;
 		string QS_s1, QS_s2;
@@ -4148,7 +4054,7 @@ void BacktrackBubbleRemoval_read(reads_overlap_info *reads_overlap_info,int last
 }
 
 
-void BFSearchBubbleRemoval_read(reads_overlap_info *reads_overlap_info,reads_table *reads_table,int beg_read,int max_depth,int max_dist)
+void BFSearchBubbleRemoval_read(reads_overlap_info *reads_overlap_info,int beg_read,int max_depth)
 {
 	map<int,struct BFS_reads_info > Visited_Path;
 	map<int, int > stacked_nodes;
@@ -4159,7 +4065,6 @@ void BFSearchBubbleRemoval_read(reads_overlap_info *reads_overlap_info,reads_tab
 	map<int, list<int> > dist_reads;//neighborset
 	dist_reads[0].push_back(beg_read);
 	int NBs=1;
-	int dist_searched=0;
 
 	int new_node=abs(beg_read);
 	if(beg_read>0)
@@ -4500,7 +4405,7 @@ void BFSearchBubbleRemoval_read(reads_overlap_info *reads_overlap_info,reads_tab
 
 
 
-void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
+void ConstructReadsOverlaps(string reads_info_name)
 {
 	//
 	ofstream out_extended_reads("Extended_reads.txt");
@@ -4614,13 +4519,10 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 	reads_overlap_info.contained_vt.resize(n_selected_reads+1);
 	reads_overlap_info.used_vt.resize(n_selected_reads+1);
 
-	for (int i=0;i<read_contig_index.size();++i)
+	for (unsigned int i=0;i<read_contig_index.size();++i)
 	{
-
 		if(EXACT)
 		{
-
-
 			for (int round1=1;round1<=2;++round1)
 			{
 				//front/rear overlap
@@ -4629,7 +4531,7 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 				if(round1==2)
 				{
 					reverse(current_read.begin(),current_read.end());
-					for (int j=0;j<current_read.size();++j)
+					for (unsigned int j=0;j<current_read.size();++j)
 					{
 						current_read[j]=-current_read[j];
 					}
@@ -4637,10 +4539,10 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 				}
 
 
-				for (int r=0;r<contig_in_reads[abs(current_read[0])].size();++r)
+				for (unsigned int r=0;r<contig_in_reads[abs(current_read[0])].size();++r)
 				{
 					int read_idx=contig_in_reads[abs(current_read[0])][r];
-					if(read_idx-1==i)
+					if((unsigned int)read_idx-1==i)
 					{
 						continue;
 					}
@@ -4651,16 +4553,16 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 						if(round2==2)
 						{
 							reverse(ctgs_vt.begin(),ctgs_vt.end());
-							for (int j=0;j<ctgs_vt.size();++j)
+							for (unsigned int j=0;j<ctgs_vt.size();++j)
 							{
 								ctgs_vt[j]=-ctgs_vt[j];
 							}
 						}
-						for (int j=0;j<ctgs_vt.size();++j)
+						for (unsigned int j=0;j<ctgs_vt.size();++j)
 						{
-							int pos=0;
+							unsigned int pos=0;
 							bool overlap=1;
-							for(int k=j;k!=ctgs_vt.size();++k)
+							for(unsigned int k=j;k!=ctgs_vt.size();++k)
 							{
 								if (current_read[pos]!=ctgs_vt[k])
 								{
@@ -4685,7 +4587,7 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 								}
 
 
-								for(int k=0;k<j;++k)
+								for(unsigned int k=0;k<j;++k)
 								{
 									edge.push_back(ctgs_vt[k]);
 								}
@@ -4703,7 +4605,7 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 									{
 										//flip
 										reverse(edge.begin(),edge.end());
-										for(int k=0;k<edge.size();++k)
+										for(unsigned int k=0;k<edge.size();++k)
 										{
 											edge[k]=-edge[k];
 										}
@@ -4718,7 +4620,7 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 									{
 										//flip
 										reverse(edge.begin(),edge.end());
-										for(int k=0;k<edge.size();++k)
+										for(unsigned int k=0;k<edge.size();++k)
 										{
 											edge[k]=-edge[k];
 										}
@@ -4747,7 +4649,7 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 
 	}
 
-	for(int i=0;i<reads_overlap_info.right_overlaps.size();++i)
+	for(unsigned int i=0;i<reads_overlap_info.right_overlaps.size();++i)
 	{
 		map<int32_t, vector<int32_t> >::iterator temp_it1,temp_it2;
 		for(temp_it1=reads_overlap_info.right_overlaps[i].begin();temp_it1!=reads_overlap_info.right_overlaps[i].end(); )
@@ -4774,10 +4676,9 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 
 	}
 
-	int max_dist=20;
 	int max_depth=20;
 
-	for(int i=1;i<reads_overlap_info.contained_vt.size();++i)
+	for(unsigned int i=1;i<reads_overlap_info.contained_vt.size();++i)
 	{
 		cout<<i<<endl;
 		int beg_read=i;
@@ -4785,19 +4686,19 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 		{
 			if(reads_overlap_info.right_overlaps[i].size()>1)
 			{
-				BFSearchBubbleRemoval_read(&reads_overlap_info,reads_table, beg_read, max_depth, max_dist);
+				BFSearchBubbleRemoval_read(&reads_overlap_info, beg_read, max_depth);
 			}
 			cout<<"l"<<endl;
 			if(reads_overlap_info.left_overlaps[i].size()>1)
 			{
-				BFSearchBubbleRemoval_read(&reads_overlap_info,reads_table, -beg_read, max_depth, max_dist);
+				BFSearchBubbleRemoval_read(&reads_overlap_info, -beg_read, max_depth);
 			}
 		}
 	}
 
 	cout<<"Overlap graph constructed"<<endl;
 
-	for(int read_idx=1;read_idx<reads_overlap_info.contained_vt.size();++read_idx)
+	for(unsigned int read_idx=1;read_idx<reads_overlap_info.contained_vt.size();++read_idx)
 	{
 		vector<int> left_ext,right_ext,extended_read;
 		if(reads_overlap_info.contained_vt[read_idx]==0&&reads_overlap_info.used_vt[read_idx]==0)
@@ -4831,7 +4732,7 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 								break;
 							}
 							vector<int> edge=reads_overlap_info.right_overlaps[abs(current_read)].begin()->second;
-							for(int e=0;e<edge.size();++e)
+							for(unsigned int e=0;e<edge.size();++e)
 							{
 								if(it==1)
 								{
@@ -4859,7 +4760,7 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 								}
 								vector<int> edge=reads_overlap_info.left_overlaps[abs(current_read)].begin()->second;
 
-								for(int e=0;e<edge.size();++e)
+								for(unsigned int e=0;e<edge.size();++e)
 								{
 									if(it==1)
 									{
@@ -4888,17 +4789,17 @@ void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table)
 				}
 			}
 
-			for(int jj=0;jj<left_ext.size();++jj)
+			for(unsigned int jj=0;jj<left_ext.size();++jj)
 			{
 				extended_read.push_back(left_ext[jj]);
 				out_extended_reads<<left_ext[jj]<<" ";
 			}
-			for(int jj=0;jj<read_contig_index[read_idx-1].size();++jj)
+			for(unsigned int jj=0;jj<read_contig_index[read_idx-1].size();++jj)
 			{
 				extended_read.push_back(read_contig_index[read_idx-1][jj]);
 				out_extended_reads<<read_contig_index[read_idx-1][jj]<<" ";
 			}
-			for(int jj=0;jj<right_ext.size();++jj)
+			for(unsigned int jj=0;jj<right_ext.size();++jj)
 			{
 				extended_read.push_back(right_ext[jj]);
 				out_extended_reads<<right_ext[jj]<<" ";
@@ -5643,7 +5544,7 @@ int BFSearchGapCloser(struct hashtable* ht,struct hashtable* merge_ht, struct bu
 }
 */
 
-int BFSearchGapCloser_v2(struct hashtable* ht,struct hashtable* merge_ht, uint64_t beg_kmer,uint64_t end_kmer,int K_size,int max_depth,int max_dist,SuperRead_t *SuperRead, search_info *search_info)
+int BFSearchGapCloser_v2(struct hashtable* ht, uint64_t beg_kmer,uint64_t end_kmer,int K_size,int max_depth,int max_dist,SuperRead_t *SuperRead)
 {
 
 	map<uint64_t,struct BFS_path_info_v2 > Visited_Path;
@@ -5658,9 +5559,8 @@ int BFSearchGapCloser_v2(struct hashtable* ht,struct hashtable* merge_ht, uint64
 	dist_kmers[0].push_back(beg_kmer);
 	int NBs=1;
 
-	int dist_searched=0;
 	uint64_t new_node=beg_kmer;
-	uint64_t kmer,f_kmer;
+	uint64_t kmer;
 	stacked_nodes[new_node]=1;
 	//search direction
 
@@ -5727,7 +5627,6 @@ int BFSearchGapCloser_v2(struct hashtable* ht,struct hashtable* merge_ht, uint64
 		}
 		if(RIGHT)
 		{
-			bool r_found=0;
 			struct edge_node *edge_ptr;
 			edge_ptr=(*current_ptr)->kmer_info.right;
 			if(edge_ptr==NULL)
@@ -5748,7 +5647,7 @@ int BFSearchGapCloser_v2(struct hashtable* ht,struct hashtable* merge_ht, uint64
 				}
 
 
-				uint64_t kmer2,f_kmer2,next_kmer;
+				uint64_t next_kmer;
 				next_kmer=kmer;
 
 				if(next_kmer==end_kmer)
@@ -5797,18 +5696,12 @@ int BFSearchGapCloser_v2(struct hashtable* ht,struct hashtable* merge_ht, uint64
 		}
 		else
 		{
-
-
-			bool l_found=0;
 			struct edge_node *edge_ptr;
 			edge_ptr=(*current_ptr)->kmer_info.left;
 			if(edge_ptr==NULL)
 			{
 				continue;
 			}
-
-
-
 
 			while(edge_ptr!=NULL)
 			{
@@ -5916,22 +5809,19 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 {
 
 	ofstream o_log;
-	int lib_cnt=1;
 	string pe_name;
 	pe_name="InsertSizeEst.txt";
 	o_log.open(pe_name.c_str());
-	time_t beg_time,read_time;
+	time_t beg_time;
 	int64_t scaffold_len=0;
 	string in_fname=ContigFilename;
 	ifstream Contigs_in(in_fname.c_str());
-	size_t num_Contigs=0;
 	string tag,s,kmer;
 	uint64_t f_seq,hv;
-	struct kmer_t2 f_seq_t2;
 	size_t hash_idx;
 	//vector<int> contig_sz;
 	bool found;
-	bool flip_1,flip_2,flip_0;
+	bool flip_1 = false,flip_2,flip_0;
 	size_t ht_sz;
 
 	ht_sz=ht1->ht_sz;
@@ -5939,7 +5829,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 	size_t pair_gaps=0;
 	size_t ambiguous_pairs=0;
 
-	bool FAST=1;
 	map<int,vector<int> > hit_position;
 	contigs_info->contig_sz_vt.clear();
 	contigs_info->contig_sz_vt.push_back(0);
@@ -5966,7 +5855,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 	time(&beg_time);
 
 	int64_t dist_sum=0,p_cnt=0;
-	int mean_dist=0;
 	int lib_no=0;
 	for(size_t ii=0;ii<filenames_vt.size();ii+=2)
 	{
@@ -5995,9 +5883,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 		int flip_cnt=0,non_flip_cnt=0;
 		bool flip_library=0,flip_determined=0;
 		int inward_cnt=0,outward_cnt=0;
-		bool inward_library=0,orientation_determined=0,outward_library=0;
-		bool SINGLE_READ=0;
-		size_t n_pairs=0;
+		bool inward_library=0,outward_library=0;
 		int stable_insert_size=-10000;
 
 		struct bucket **ptr1,**ptr2;
@@ -6025,18 +5911,16 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 			if(filenames_vt[ii]==filenames_vt[ii+1])
 			{
 				in_pair1.open(filenames_vt[ii].c_str());
-				SINGLE_READ=1;
 			}
 			else
 			{
 				in_pair1.open(filenames_vt[ii].c_str());
 				in_pair2.open(filenames_vt[ii+1].c_str());
-				SINGLE_READ=0;
 			}
 
 			string t1,t2;
 			int cont1,cont2;
-			int64_t cod1,cod2;
+			int64_t cod1 = 0,cod2;
 			int readLen1,readLen2;
 			size_t num_Reads=0;
 			string kmer1,kmer2,seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n;
@@ -6048,8 +5932,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 			Read1.read_bits =(uint64_t*) malloc(100000+100);
 			Read2.read_bits =(uint64_t*) malloc(100000+100);
 
-			int nLines1=0,nLines2=0;
-			bool read_success1=1,read_success2=1;
+			bool read_success1=1;
 			read_success1=(bool) getline(in_pair1,t1);
 
 			if(read_success1==0)
@@ -6080,12 +5963,12 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 				if(fq_flag)
 				{
 					read_success1=get_a_fastq_read(in_pair1,tag1,seq_s1,QS_s1);
-					read_success2=get_a_fastq_read(in_pair2,tag2,seq_s2,QS_s2);
+					get_a_fastq_read(in_pair2,tag2,seq_s2,QS_s2);
 				}
 				else
 				{
 					read_success1=get_a_fasta_read(in_pair1,tag1,seq_s1,n_tag1);
-					read_success2=get_a_fasta_read(in_pair2,tag2,seq_s2,n_tag2);
+					get_a_fasta_read(in_pair2,tag2,seq_s2,n_tag2);
 				}
 
 				good_read1=basic_quality_check(seq_s1);
@@ -6101,7 +5984,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 
 
 
-				int64_t pos1,pos2;
+				int64_t pos1 = 0,pos2;
 				uint64_t bits1,bits2;
 
 				num_Reads++;
@@ -6141,8 +6024,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 					}
 
 					bool found1=0,found2=0;
-					struct bucket **ptr1_d,**ptr2_d;
-					bool flip_1d;
 					for(int i=0;i<Read1.readLen-K_size+1;++i )
 					{
 
@@ -6166,9 +6047,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 							found1=1;
 							if((*ptr1)->kmer_info.removed==0)
 							{
-								ptr1_d=ptr1;
-
-								flip_1d=flip_0;
 								cod1=(*ptr1)->kmer_info.cod;
 								cont1=(*ptr1)->kmer_info.contig_no;
 								flip_1=(*ptr1)->kmer_info.flip^flip_0;
@@ -6211,7 +6089,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 							found2=1;
 							if((*ptr2)->kmer_info.removed==0)
 							{
-								ptr2_d=ptr2;
 								cod2=(*ptr2)->kmer_info.cod;
 								cont2=(*ptr2)->kmer_info.contig_no;
 								flip_2=(*ptr2)->kmer_info.flip^flip_0;
@@ -6243,7 +6120,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 					}
 
 
-					if((flip_cnt>1000|non_flip_cnt>1000)&((flip_cnt>non_flip_cnt/2)|(flip_cnt/2<non_flip_cnt)))
+					if(((flip_cnt>1000)|(non_flip_cnt>1000))&((flip_cnt>non_flip_cnt/2)|(flip_cnt/2<non_flip_cnt)))
 					{
 						flip_library=0;
 						if(flip_cnt>non_flip_cnt/2)
@@ -6271,8 +6148,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 					}
 
 					bool found1=0,found2=0;
-					struct bucket **ptr1_d,**ptr2_d;
-					bool flip_1d;
 					for(int i=0;i<Read1.readLen-K_size+1;++i )
 					{
 
@@ -6296,9 +6171,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 							found1=1;
 							if((*ptr1)->kmer_info.removed==0)
 							{
-								ptr1_d=ptr1;
-
-								flip_1d=flip_0;
 								cod1=(*ptr1)->kmer_info.cod;
 								cont1=(*ptr1)->kmer_info.contig_no;
 								flip_1=(*ptr1)->kmer_info.flip^flip_0;
@@ -6341,7 +6213,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 							found2=1;
 							if((*ptr2)->kmer_info.removed==0)
 							{
-								ptr2_d=ptr2;
 								cod2=(*ptr2)->kmer_info.cod;
 								cont2=(*ptr2)->kmer_info.contig_no;
 								flip_2=(*ptr2)->kmer_info.flip^flip_0;
@@ -6387,20 +6258,17 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 					}
 
 
-					if((inward_cnt>1000|outward_cnt>1000)&((outward_cnt>inward_cnt/2)|(outward_cnt/2<inward_cnt)))
+					if(((inward_cnt>1000)|(outward_cnt>1000))&((outward_cnt>inward_cnt/2)|(outward_cnt/2<inward_cnt)))
 					{
 						inward_library=0;
 						outward_library=0;
 						if(inward_cnt>outward_cnt/2)
 						{
 							inward_library=1;
-							orientation_determined=1;
-
 						}
 						else
 						{
 							outward_library=1;
-							orientation_determined=1;
 						}
 						cout<<"Orientation determined: ";
 						if(inward_library==1)
@@ -6428,8 +6296,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 
 					bool found1=0,found2=0;
 
-					struct bucket **ptr1_d,**ptr2_d;
-
 					if(inward_library)
 					{
 						int Read_arr_sz=Read2.readLen/32+1;
@@ -6448,7 +6314,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 						get_rev_comp_seq_arr(Read1.read_bits,Read1.readLen,Read_arr_sz);
 					}
 
-					bool flip_1d;
 					for(int i=0;i<Read1.readLen-K_size+1;++i )
 					{
 
@@ -6470,13 +6335,9 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 						found=look_up_in_a_list(bits1,&ptr1);
 						if(found)
 						{
-
 							found1=1;
 							if((*ptr1)->kmer_info.removed==0)
 							{
-								ptr1_d=ptr1;
-
-								flip_1d=flip_0;
 								cod1=(*ptr1)->kmer_info.cod;
 								cont1=(*ptr1)->kmer_info.contig_no;
 								flip_1=(*ptr1)->kmer_info.flip^flip_0;
@@ -6523,7 +6384,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 							found2=1;
 							if((*ptr2)->kmer_info.removed==0)
 							{
-								ptr2_d=ptr2;
 								cod2=(*ptr2)->kmer_info.cod;
 								cont2=(*ptr2)->kmer_info.contig_no;
 								flip_2=(*ptr2)->kmer_info.flip^flip_0;
@@ -6542,7 +6402,6 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 					{
 						continue;
 					}
-					bool ignore=0;
 
 					if(cont1==cont2&&flip_1==flip_2)
 					{
@@ -6553,7 +6412,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 						o_Pdist<<pdist<<endl;
 						p_cnt++;
 
-						if(stable_insert_size>0&(abs(pdist-stable_insert_size)>stable_insert_size/3))
+						if((stable_insert_size>0)&(abs(pdist-stable_insert_size)>stable_insert_size/3))
 						{output_current_pair=1;}
 						if(p_cnt>1000)
 						{
@@ -6571,21 +6430,16 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 					{
 						output_current_pair=1;
 
-						int pdist=-10000;
-
-						int64_t d1,d2,d3,d4,dist;
+						int64_t d1,d2,d3,d4;
 
 						// build adjacency info for cont1&2
 						if(flip_1==0)
 						{
 							//struct adjacent_contig_info adj_contig;
-							int Tcontig_no=cont2;
-							int Tflip=flip_2;
-							int Tadjacent=0;
 							if(flip_2==0)
 							{
 								//int64_t Tdist=(scaffold_len-readLen2+pos2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;////
-								dist=d1=	(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
+								d1=(scaffold_len-(int64_t)readLen2+pos2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-cod2;
 
 								o_Pdist_R<<cont1 <<" "<<cont2<<" "<<d1<<endl;//" Library: "<<lib_no<<endl;
 						//		o_Pdist_L<<cont2 <<" "<<cont1<<" "<<d1<<" Library: "<<ii<<endl;
@@ -6594,7 +6448,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 							else
 							{
 								int64_t r_cod2=(int64_t)(contigs_info->contig_sz_vt[cont2])-cod2-(int64_t)K_size;
-								dist=d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
+								d2=(scaffold_len+pos2-(int64_t)readLen2-pos1)-((int64_t)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;
 								//int64_t Tdist=(scaffold_len+pos2-readLen2)-((int)contigs_info->contig_sz_vt[cont1]-cod1)-r_cod2;////
 
 								o_Pdist_R<<cont1 <<" "<<-cont2<<" "<<d2<<endl;//" Library: "<<lib_no<<endl;
@@ -6609,14 +6463,12 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 						{
 
 							//struct adjacent_contig_info adj_contig;
-							int Tcontig_no=cont2;
-							bool Tflip=flip_2;
 
 							if(flip_2==0)
 							{
 
 								//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod2-cod1;////
-								dist=d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
+								d3=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod2-cod1-(int64_t)K_size;
 								o_Pdist_L<<cont1 <<" "<<-cont2<<" "<<d3<<endl;//" Library: "<<lib_no<<endl;
 								//o_Pdist_L<<cont2 <<" "<<-cont1<<" "<<d3<<" Library: "<<lib_no<<endl;
 
@@ -6625,7 +6477,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 							{
 								int64_t r_cod2=(int64_t)contigs_info->contig_sz_vt[cont2]-cod2-(int64_t)K_size;
 								//int64_t Tdist=(scaffold_len-readLen2+pos2)-cod1-r_cod2;////
-								dist=d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
+								d4=(scaffold_len-(int64_t)readLen2+pos2-pos1)-cod1-(int64_t)K_size-r_cod2;
 
 								o_Pdist_L<<cont1 <<" "<<cont2<<" "<<d4<<endl;//" Library: "<<lib_no<<endl;
 								//o_Pdist_R<<cont2 <<" "<<cont1<<" "<<d4<<" Library: "<<lib_no<<endl;
@@ -6662,12 +6514,9 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 						o_pair1_nc<<tag1<<endl<<pair1_cstr<<endl;
 						o_pair2_nc<<tag2<<endl<<pair2_cstr<<endl;
 
-						stacked_bucket kmer_stack_beg;
 						int max_depth=300;
 						int max_dist=250;
 
-						kmer_stack_beg.bktptr=*ptr1;
-						kmer_stack_beg.RightSearch=RightSearch;
 						if(!RightSearch)
 						{
 							//search_info.Flip_End=!search_info.Flip_End;
@@ -6695,7 +6544,7 @@ void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_h
 						//cout<<num_Reads<<endl;
 //						int gap_dist = BFSearchGapCloser(ht1,merge_ht1, *ptr1, *ptr2,K_size, kmer_stack_beg, max_depth,max_dist,&SuperRead,&search_info);
 
-						int gap_dist = BFSearchGapCloser_v2(ht1,merge_ht1, beg_kmer, end_kmer,K_size, max_depth,max_dist,&SuperRead,&search_info);
+						int gap_dist = BFSearchGapCloser_v2(ht1, beg_kmer, end_kmer,K_size, max_depth,max_dist,&SuperRead);
 						if(SuperRead.extension.size()>0)
 						{
 							SuperReadStr=seq_s1.substr(0,pos1)+temp_cstr+SuperRead.extension+seq_s2.substr(pos2+K_size,seq_s2.size());

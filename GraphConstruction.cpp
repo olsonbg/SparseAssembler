@@ -504,19 +504,18 @@ void Sparse_Kmer_Graph_Construction(struct read_t *read,struct hashtable *ht,int
 	int rem=readLen%32;
 	if(rem==0)
 	{Read_arr_sz--;}
-	int tot_bits=Read_arr_sz*64;
 	size_t ht_sz=ht->ht_sz;
 
-	bool flip_beg,flip_end,found,found_bf;
+	bool flip_beg = false,flip_end = false,found,found_bf;
 	size_t hash_idx;
 	uint64_t seq,f_seq,hv;
 	int saved_kmers=0;
 
 	//bucket ** bktptr;
-	bucket ** bktptr_beg;
-	bucket ** bktptr_end;
+	bucket ** bktptr_beg = NULL;
+	bucket ** bktptr_end = NULL;
 
-	int beg=0,end=0,end_bf=0;
+	int beg=0,end=0;
 
 	int first_found=-1,first_found_bf=-1;;
 
@@ -896,7 +895,7 @@ void Sparse_Kmer_Graph_Construction(struct read_t *read,struct hashtable *ht,int
 					struct edge_node **edge_node_p2p=&((*(bktptr_end))->kmer_info.left);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&(((*edge_node_p2p)->len+1)==edge_len))
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&(((*edge_node_p2p)->len+(uint64_t)1)==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -920,7 +919,7 @@ void Sparse_Kmer_Graph_Construction(struct read_t *read,struct hashtable *ht,int
 					struct edge_node **edge_node_p2p=&((*(bktptr_end))->kmer_info.right);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&(((*edge_node_p2p)->len+1)==edge_len))
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&(((*edge_node_p2p)->len+(uint64_t)1)==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -957,7 +956,7 @@ void Sparse_Kmer_Graph_Construction(struct read_t *read,struct hashtable *ht,int
 					struct edge_node **edge_node_p2p=&((*(bktptr_beg))->kmer_info.left);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&((*edge_node_p2p)->len+1)==edge_len)
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&(((*edge_node_p2p)->len+(uint64_t)1)==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -982,7 +981,7 @@ void Sparse_Kmer_Graph_Construction(struct read_t *read,struct hashtable *ht,int
 					struct edge_node **edge_node_p2p=&((*(bktptr_beg))->kmer_info.right);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&((*edge_node_p2p)->len+1)==edge_len)
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&(((*edge_node_p2p)->len+(uint64_t)1)==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -1048,19 +1047,18 @@ void Sparse_Kmer_Graph_Construction0(struct read_t *read,struct hashtable0 *ht, 
 	if(rem1==0)
 	{Kmer_arr_sz--;}
 
-	int tot_bits=Read_arr_sz*64;
 	size_t ht_sz=ht->ht_sz;
 
-	bool flip_beg,flip_end,found,found_bf;
+	bool flip_beg = false,flip_end = false,found,found_bf;
 	size_t hash_idx;
-	uint64_t seq[100],f_seq[100],temp_bits[100],hv;
+	uint64_t seq[100],f_seq[100],hv;
 	int saved_kmers=0;
 
 	//bucket ** bktptr;
-	bucket0 ** bktptr_beg;
+	bucket0 ** bktptr_beg = NULL;
 	bucket0 ** bktptr_end;
 
-	int beg=0,end=0,end_bf=0;
+	int beg=0,end=0;
 
 	int first_found=-1,first_found_bf=-1;;
 
@@ -1445,7 +1443,7 @@ void Sparse_Kmer_Graph_Construction0(struct read_t *read,struct hashtable0 *ht, 
 			{
 
 				uint64_t edge_bits,edge_bits_rc;
-				size_t edge_len=end-beg;
+				uint64_t edge_len=end-beg;
 				get_sub_arr(read->read_bits,read->readLen,beg,edge_len,&edge_bits);
 				edge_bits_rc=get_rev_comp_seq(edge_bits,edge_len);
 
@@ -1455,7 +1453,7 @@ void Sparse_Kmer_Graph_Construction0(struct read_t *read,struct hashtable0 *ht, 
 					struct edge_node **edge_node_p2p=&((*(bktptr_end))->kmer_info.left);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&(((*edge_node_p2p)->len+1)==edge_len))
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&(((*edge_node_p2p)->len+(uint64_t)1)==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -1479,7 +1477,7 @@ void Sparse_Kmer_Graph_Construction0(struct read_t *read,struct hashtable0 *ht, 
 					struct edge_node **edge_node_p2p=&((*(bktptr_end))->kmer_info.right);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&(((*edge_node_p2p)->len+1)==edge_len))
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&(((*edge_node_p2p)->len+(uint64_t)1)==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -1516,7 +1514,7 @@ void Sparse_Kmer_Graph_Construction0(struct read_t *read,struct hashtable0 *ht, 
 					struct edge_node **edge_node_p2p=&((*(bktptr_beg))->kmer_info.left);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&((*edge_node_p2p)->len+1)==edge_len)
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits_rc&&((*edge_node_p2p)->len+(uint64_t)1==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -1541,7 +1539,7 @@ void Sparse_Kmer_Graph_Construction0(struct read_t *read,struct hashtable0 *ht, 
 					struct edge_node **edge_node_p2p=&((*(bktptr_beg))->kmer_info.right);
 					while((*edge_node_p2p)!=NULL)
 					{
-						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&((*edge_node_p2p)->len+1)==edge_len)
+						if((*edge_node_p2p)->edge==(uint64_t)edge_bits&&((*edge_node_p2p)->len+(uint64_t)1==edge_len))
 						{
 							if((*edge_node_p2p)->edge_cov<0xf)
 							{(*edge_node_p2p)->edge_cov++;}
@@ -1599,7 +1597,6 @@ void Sparse_Kmer_Graph_Construction2(struct read_t *read,struct hashtable2 *ht,i
 	{Read_arr_sz--;}
 
 	int Kmer_arr_sz=2;//K_size/32+1;
-	int tot_bits=Read_arr_sz*64;
 	size_t ht_sz=ht->ht_sz;
 	bool flip[5000],found[5000];
 	size_t hash_idx[5000];
@@ -2075,7 +2072,6 @@ void Sparse_Kmer_Graph_Construction3(struct read_t *read,struct hashtable3 *ht,i
 
 	int Kmer_arr_sz=3;
 
-	int tot_bits=Read_arr_sz*64;
 	size_t ht_sz=ht->ht_sz;
 	bool flip[1000],found[1000];
 	size_t hash_idx[1000];
@@ -2473,7 +2469,6 @@ void Sparse_Kmer_Graph_Construction4(struct read_t *read,struct hashtable4 *ht,i
 
 	int Kmer_arr_sz=4;
 
-	int tot_bits=Read_arr_sz*64;
 	size_t ht_sz=ht->ht_sz;
 	bool flip[1000],found[1000];
 	size_t hash_idx[1000];
@@ -2851,18 +2846,7 @@ void Sparse_Kmer_Graph_Construction4(struct read_t *read,struct hashtable4 *ht,i
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int64_t *bucket_count,int K_size,int gap,BF_info * BF_info ,int round,int ref_pos,struct read_index *read_index)
+void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int64_t *bucket_count,int K_size,int gap,BF_info * BF_info ,int round,struct read_index *read_index)
 {
 	int readLen=read->readLen;
 	int OverlappingKmers=readLen-K_size+1;
@@ -2883,19 +2867,17 @@ void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int
 	int rem=readLen%32;
 	if(rem==0)
 	{Read_arr_sz--;}
-	int tot_bits=Read_arr_sz*64;
 	size_t ht_sz=ht->ht_sz;
 
-	bool flip_beg,flip_end,found,found_bf;
+	bool flip_end = false,found,found_bf;
 	size_t hash_idx;
 	uint64_t seq,f_seq,hv;
 	int saved_kmers=0;
 
 	//bucket ** bktptr;
-	bucket ** bktptr_beg;
-	bucket ** bktptr_end;
+	bucket ** bktptr_end = NULL;
 
-	int beg=0,end=0,end_bf=0;
+	int beg=0,end=0;
 
 	int first_found=-1,first_found_bf=-1;;
 
@@ -3133,7 +3115,6 @@ void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int
 				{
 					found_bf=1;
 					beg=end;
-					bktptr_beg=bktptr_end;
 					saved_kmers++;
 					continue;
 				}
@@ -3225,7 +3206,6 @@ void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int
 
 				beg=end;
 				saved_kmers++;
-				bktptr_beg=bktptr_end;
 				continue;
 			}
 			else
@@ -3243,7 +3223,6 @@ void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int
 				if(((struct bucket_r1*) *(bktptr_end))->kmer_info.cov1<0xffff)
 				{((struct bucket_r1*) *(bktptr_end))->kmer_info.cov1++;}
 				beg=end;
-				bktptr_beg=bktptr_end;
 				continue;
 			}
 			else
@@ -3279,9 +3258,6 @@ void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int
 			}
 		}
 		beg=end;
-		bktptr_beg=bktptr_end;
-		flip_beg=flip_end;
-
 	}
 
 
@@ -3452,11 +3428,7 @@ void SwitchBuckets4(hashtable4 *ht4,int K_size)
 
 }
 
-
-
-
-
-void SwitchBuckets0(hashtable0 *ht0,int K_size)
+void SwitchBuckets0(hashtable0 *ht0)
 {
 	size_t ht_sz;
 
@@ -3499,11 +3471,9 @@ void OutputSparseKmers(hashtable *ht,int K_size,bool Bloom)
 	o_kmers.open(o_kmers_name.c_str());
 
 	bucket * bktptr=NULL;
-	struct edge_node *edge_ptr;
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		while(bktptr!=NULL)
 		{
@@ -3538,7 +3508,6 @@ void OutputSparseKmers2(hashtable2 *ht,int K_size,bool Bloom)
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		while(bktptr!=NULL)
 		{
@@ -3573,7 +3542,6 @@ void OutputSparseKmers3(hashtable3 *ht,int K_size,bool Bloom)
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		while(bktptr!=NULL)
 		{
@@ -3607,7 +3575,6 @@ void OutputSparseKmers4(hashtable4 *ht,int K_size,bool Bloom)
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		while(bktptr!=NULL)
 		{
@@ -4205,7 +4172,6 @@ void SavingSparseKmerIndex(hashtable *ht,read_index * read_index, string &fname)
 	ofstream o_cov("CovHist.txt");
 
 	o_reads_idx<<read_index->repeat_maps.size();
-	size_t read_idx_sz=read_index->repeat_maps.size();
 	for(size_t i=0;i<read_index->repeat_maps.size();++i)
 	{
 		size_t repeat_cnt=0;
@@ -4253,7 +4219,6 @@ void LoadingSparseKmerIndex(hashtable *ht,read_index * read_index, string &fname
 	strValue << s.c_str();
 	strValue >> ht_sz;
 	Init_HT(ht,ht_sz);
-	struct edge_node **edge_p2p;
 	for(size_t i=0;i<ht_sz;++i)
 	{
 		int list_sz;
@@ -4966,7 +4931,6 @@ void FreeSparseKmerGraph(struct hashtable *ht)
 	edge_node *edgeptr,*n_edgeptr;
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		while(bktptr!=NULL)
 		{
@@ -5004,7 +4968,6 @@ void FreeSparseKmerGraph2(struct hashtable2 *ht)
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		edge_node *edgeptr,*n_edgeptr;
 		while(bktptr!=NULL)
@@ -5042,7 +5005,6 @@ void FreeSparseKmerGraph3(struct hashtable3 *ht)
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		edge_node *edgeptr,*n_edgeptr;
 		while(bktptr!=NULL)
@@ -5080,7 +5042,6 @@ void FreeSparseKmerGraph4(struct hashtable4 *ht)
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		edge_node *edgeptr,*n_edgeptr;
 		while(bktptr!=NULL)
@@ -5119,7 +5080,6 @@ void FreeSparseKmerGraph0(struct hashtable0 *ht,key_table *key_table)
 
 	for(size_t i=0;i<ht->ht_sz;++i)
 	{
-		size_t list_sz=0;
 		bktptr=ht->store_pos[i];
 		edge_node *edgeptr,*n_edgeptr;
 		while(bktptr!=NULL)
@@ -5172,7 +5132,6 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 
 	for(size_t jj=0;jj<in_filenames_vt.size();++jj)
 	{
-		uint64_t nLines=0;
 		int seq_sz=0;
 
 		bool fq_flag=0;
@@ -5228,7 +5187,6 @@ void ScanDataset(vector<string > & in_filenames_vt,uint64_t *tot_bases,uint64_t 
 
 
 			bool bad_flag=0;
-			int numN=0;
 			for(int i=0;i<seq_sz;++i)
 			{
 				if(seq_s[i]!='A'&&seq_s[i]!='C'&&seq_s[i]!='G'&&seq_s[i]!='T'&&seq_s[i]!='N')

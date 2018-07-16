@@ -69,13 +69,13 @@ void BuildContigAdjacency4(hashtable4 *ht, struct contigs_info *contigs_info,int
 
 void BuildContigAdjacency0(hashtable0 *ht, struct contigs_info *contigs_info,int K_size, string ContigFilename);
 
-int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket* bktptr,struct bucket* obj_bktptr,int K_size, stacked_bucket &kmer_stack_beg,int max_depth,int max_dist);
+int BFSearchDist(struct hashtable* ht,struct hashtable* merge_ht, struct bucket* obj_bktptr,int K_size, stacked_bucket &kmer_stack_beg,int max_depth,int max_dist);
 
-int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct bucket2* bktptr,struct bucket2* obj_bktptr,int K_size, stacked_bucket2 &kmer_stack_beg,int max_depth,int max_dist);
+int BFSearchDist2(struct hashtable2* ht,struct hashtable2* merge_ht, struct bucket2* obj_bktptr,int K_size, stacked_bucket2 &kmer_stack_beg,int max_depth,int max_dist);
 
-int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct bucket3* bktptr,struct bucket3* obj_bktptr,int K_size, stacked_bucket3 &kmer_stack_beg,int max_depth,int max_dist);
+int BFSearchDist3(struct hashtable3* ht,struct hashtable3* merge_ht, struct bucket3* obj_bktptr,int K_size, stacked_bucket3 &kmer_stack_beg,int max_depth,int max_dist);
 
-int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct bucket4* bktptr,struct bucket4* obj_bktptr,int K_size, stacked_bucket4 &kmer_stack_beg,int max_depth,int max_dist);
+int BFSearchDist4(struct hashtable4* ht,struct hashtable4* merge_ht, struct bucket4* obj_bktptr,int K_size, stacked_bucket4 &kmer_stack_beg,int max_depth,int max_dist);
 
 void AppendMergeHT(hashtable *ht,hashtable *merge_ht);
 
@@ -93,17 +93,17 @@ void RemoveUnmappedNodes3(hashtable3 *ht,int K_size);
 
 void RemoveUnmappedNodes4(hashtable4 *ht,int K_size);
 
-void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,bool ResumePE,int64_t totReads,bool MatePair);
+void ContigGapEst(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,int64_t totReads,bool MatePair);
 
-void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,bool ResumePE,int64_t totReads,bool MatePair);
+void ContigGapEst3(struct hashtable3 *ht,struct hashtable3 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,int64_t totReads,bool MatePair);
 
-void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,bool ResumePE,int64_t totReads,bool MatePair);
+void ContigGapEst4(struct hashtable4 *ht,struct hashtable4 *merge_ht,int K_size,vector<int> &insert_sz_vt,vector<string>& filenames_vt,vector<bool> &LongLib,struct contigs_info * contigs_info,string ContigFilename,int64_t totReads,bool MatePair);
 
 bool BackCheckLoop_ctg(int new_ctg,int end_node, map<int,struct BFS_path_info_ctg > & Visited_Path );
 
 void BFSearchPathFinder(struct contigs_info *contigs_info,list<int> ctg_stack,map<int,list<int> > &dist_ctg,map<int,int > & unitig_dist,int dist_searched,map<int,vector<int> > &node_cov,int max_depth,bool GapClosingMode,bool MatePair);
 
-void ResolvingRepeatsPE(vector<int> &insert_sz_vt,vector<string>& filenames_vt,struct contigs_info * contigs_info,string ContigFilename,int LinkCovTh,int UniqueLenTh,int ExpCov);
+void ResolvingRepeatsPE(vector<int> &insert_sz_vt,struct contigs_info * contigs_info,string ContigFilename,int LinkCovTh,int UniqueLenTh,int ExpCov);
 
 void ConstructContigGraph(struct hashtable *ht1,struct hashtable *merge_ht1, int K_size,contigs_info * contigs_info,string ContigFilename);
 

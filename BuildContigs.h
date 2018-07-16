@@ -22,16 +22,16 @@ void MarkBranches4(hashtable4 *ht);
 void MarkBranches0(hashtable0 *ht);
 
 // produce the contigs, single end assembly complete
-void build_contigs(struct hashtable *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips);
+void build_contigs(struct hashtable *ht,int K_size, string Contig_Filename,bool ScreenOffTips);
 
-void build_contigs2(struct hashtable2 *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips);
+void build_contigs2(struct hashtable2 *ht,int K_size, string Contig_Filename,bool ScreenOffTips);
 
 
-void build_contigs3(struct hashtable3 *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips);
+void build_contigs3(struct hashtable3 *ht,int K_size, string Contig_Filename,bool ScreenOffTips);
 
-void build_contigs4(struct hashtable4 *ht,int K_size, int gap,string Contig_Filename,bool ScreenOffTips);
+void build_contigs4(struct hashtable4 *ht,int K_size, string Contig_Filename,bool ScreenOffTips);
 
-void build_contigs0(struct hashtable0 *ht, key_table *key_table, int K_size, int gap,string Contig_Filename,bool ScreenOffTips);
+void build_contigs0(struct hashtable0 *ht, int K_size, string Contig_Filename,bool ScreenOffTips);
 
 #endif
 

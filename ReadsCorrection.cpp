@@ -44,15 +44,11 @@ inline void replace_one_nc(uint64_t * bitsarr_in,int bitsarr_len,int begin_pos,u
 
 }
 
-int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable2 *ht2,size_t *CovTh,size_t *CorrTh,int K_size,int gap,int *last_correct,bool SEARCH_RIGHT)
+int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable2 *ht2,size_t *CovTh,size_t *CorrTh,int K_size,int *last_correct,bool SEARCH_RIGHT)
 {
 
-	bool CORRECTABLE=1;
 	bool SELECT_OPTIMAL=0;
-	bool CORRECT=1;
-	bool ALLOW_WEAK_COV=1;
 	bool BFS=1;
-	bool Cov_Search=0;
 
 
 //	char ch[100];
@@ -67,18 +63,15 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 		ht_sz=ht2->ht_sz;
 	}
 
-	int offset_nt[1000][2];
 	//int dubious_nt[500][2];
 	int correction_cnt=0;
 
-	int most_cov=0;
+	size_t most_cov=0;
 	int first_edges_cnt=0;
 	bool first_edge_found=0;
 	edge_node *opt_edge=NULL,*first_edge=NULL;
 	//uint64_t opt_edge_bits=0;
 	//int opt_edge_len=0;
-	int optimal_choice=-1;
-	int opt_it1=-1,opt_it2=-1;
 
 	int OverlapKmers=read->readLen-K_size+1;
 
@@ -331,10 +324,9 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 							if((!SELECT_OPTIMAL)&&most_cov>=*CovTh)
 							{
-								CORRECTABLE=0;return -1;
+								return -1;
 							}
 							most_cov=(*ptr)->kmer_info.cov1;
-							optimal_choice=correction_cnt;
 							opt_edge=edge_ptr;
 							correction_cnt++;
 
@@ -469,11 +461,10 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 								if((!SELECT_OPTIMAL)&&most_cov>=*CovTh)
 								{
-									CORRECTABLE=0;return -1;
+									return -1;
 								}
 
 								most_cov=(*ptr)->kmer_info.cov1;
-								optimal_choice=correction_cnt;
 								opt_edge=edge_ptr;
 								correction_cnt++;
 							}
@@ -506,11 +497,8 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 		if(!SEARCH_RIGHT)
 		{
 			//search left
-			uint64_t tt;
-			struct kmer_t2 temp_t2;
 
 			//int correction_cnt=0;
-
 
 			//////////////////////////////BFS
 			for (int round=0;round<=2;++round)
@@ -712,10 +700,9 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 							if((!SELECT_OPTIMAL)&&most_cov>=*CovTh)
 							{
-								CORRECTABLE=0;return -1;
+								return -1;
 							}
 							most_cov=(*ptr)->kmer_info.cov1;
-							optimal_choice=correction_cnt;
 							opt_edge=edge_ptr;
 							correction_cnt++;
 
@@ -857,10 +844,9 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 
 								if((!SELECT_OPTIMAL)&&most_cov>=*CovTh)
 								{
-									CORRECTABLE=0;return -1;
+									return -1;
 								}
 								most_cov=(*ptr)->kmer_info.cov1;
-								optimal_choice=correction_cnt;
 								opt_edge=edge_ptr;
 								correction_cnt++;
 
@@ -894,13 +880,11 @@ int BFsearch_denoising(struct read_t *read,struct hashtable *ht,struct hashtable
 	}
 	if(correction_cnt>1)//correction_cnt==0||
 	{
-		CORRECTABLE=0;
 		return -1;
 	}
 	if(correction_cnt==0&&first_edge_found&&(first_edges_cnt==1))
 	{
 		return -1;
-		CORRECTABLE=1;
 		opt_edge=first_edge;
 
 		if(!SEARCH_RIGHT)
@@ -1069,10 +1053,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 {
 //	bool DISPLAY_SPLIT=0;
 	bool Seq_Pad=0;
-	bool CORRECTABLE=1;
 	bool DETAILED_CHECK=1;
-	bool SELECT_OPTIMAL=0;
-	bool CORRECT=1;
 	bool ALLOW_WEAK_COV=1;
 	bool SEARCH_LEFT=0,SEARCH_RIGHT=0;
 
@@ -1094,7 +1075,6 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 	int rem=readLen%32;
 	if(rem==0)
 	{Read_arr_sz--;}
-	int tot_bits=Read_arr_sz*64;
 	size_t ht_sz;
 	if(K_size<=32)
 	{
@@ -1114,15 +1094,12 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 	memset(read->error_nt,1,sizeof(read->error_nt));
 
 	uint64_t seq[1000],f_seq[1000],hv[1000];
-	uint64_t temp_bits[1000];
 	struct kmer_t2 seq_t2[1000],f_seq_t2[1000];
 
 	bucket ** bktptr[1000];
 	bucket2 ** bktptr_t2[1000];
-	char c_str[1000];
 
 	int first_correct=-1,last_correct=-1;
-	int first_error=-1,second_error=-1;
 	//#pragma omp parallel for
 	for (int j=0;j<OverlapKmers;j++)
 	{
@@ -1176,8 +1153,6 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 				hash_idx[j]=(size_t) (hv[j]%ht_sz);
 			}
 		}
-		struct bucket ** ptr;
-		struct bucket2 ** ptr_t2;
 		if(K_size<=32)
 		{
 			bktptr[j]= &(ht->store_pos[hash_idx[j]]);
@@ -1368,7 +1343,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 			if(SPLIT)
 			{
-				l_success=BFsearch_denoising(read,ht,ht2,CovTh,CorrTh,K_size,gap,&first_correct,0);
+				l_success=BFsearch_denoising(read,ht,ht2,CovTh,CorrTh,K_size,&first_correct,0);
 				if(l_success>0)
 				{(*correction_cnt)++;}
 			}
@@ -1454,8 +1429,6 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 
 
-				struct bucket ** ptr;
-				struct bucket2 ** ptr_t2;
 				if(K_size<=32)
 				{
 				bktptr[j]= &(ht->store_pos[hash_idx[j]]);
@@ -1682,7 +1655,7 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 			if(SPLIT)
 			{
-				r_success=BFsearch_denoising(read,ht,ht2,CovTh,CorrTh,K_size,gap,&last_correct,1);
+				r_success=BFsearch_denoising(read,ht,ht2,CovTh,CorrTh,K_size,&last_correct,1);
 				if(r_success>0)
 				{(*correction_cnt)++;}
 			}
@@ -1779,8 +1752,6 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 						}
 					}
 
-					struct bucket ** ptr;
-					struct bucket2 ** ptr_t2;
 					if(K_size<=32)
 					{
 					bktptr[j]= &(ht->store_pos[hash_idx[j]]);
@@ -1881,7 +1852,6 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 	if(first_correct==-1)
 	{
-		CORRECTABLE=0;
 		return 0;
 	}
 	bool start_print=0;
@@ -1931,13 +1901,11 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 
 
-			bool SPLIT=0;
-
 			if(Padding)
 			{
 
 				int correction_cnt=0;
-				edge_node *opt_edge;
+				edge_node *opt_edge = NULL;
 				int opt_pad_len=0;
 
 				for (int round=1;round<=1;++round)
@@ -2113,13 +2081,11 @@ bool Sparse_Denoising(struct read_t *read,struct hashtable *ht,struct hashtable2
 
 
 
-			bool SPLIT=0;
-
 			if(Padding)
 			{
 
 				int correction_cnt=0;
-				edge_node *opt_edge;
+				edge_node *opt_edge = NULL;
 				int opt_pad_len=0;
 
 				for (int round=1;round<=1;++round)

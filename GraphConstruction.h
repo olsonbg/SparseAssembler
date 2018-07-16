@@ -67,7 +67,7 @@ void Sparse_Kmer_Graph_Construction3(struct read_t *read,struct hashtable3 *ht,i
 
 void Sparse_Kmer_Graph_Construction4(struct read_t *read,struct hashtable4 *ht,int64_t *bucket_count,int64_t *edge_cnt,int K_size,int gap,BF_info * BF_info,int round);
 
-void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int64_t *bucket_count,int K_size,int gap,BF_info * BF_info ,int round,int ref_pos,struct read_index *read_index);
+void Sparse_Kmer_Index_Construction(struct read_t *read,struct hashtable *ht,int64_t *bucket_count,int K_size,int gap,BF_info * BF_info ,int round,struct read_index *read_index);
 
 //convert the bucket type from round 1 to round 2. The buckets in round 2 are more expensive
 void SwitchBuckets(hashtable *ht,hashtable2 *ht2,int K_size);
@@ -76,11 +76,7 @@ void SwitchBuckets3(hashtable3 *ht3,int K_size);
 
 void SwitchBuckets4(hashtable4 *ht4,int K_size);
 
-
-
-
-
-void SwitchBuckets0(hashtable0 *ht0,int K_size);
+void SwitchBuckets0(hashtable0 *ht0);
 
 void OutputSparseKmers(hashtable *ht,int K_size,bool Bloom);
 

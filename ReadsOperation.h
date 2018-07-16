@@ -116,18 +116,18 @@ void CollectingNonContainedReads0(struct hashtable0 *ht0,struct hashtable0 *merg
 
 int BFSearchGapCloser_ctg(struct contigs_info *contigs_info,int max_depth,int max_dist,vector<int> &ctgs_in_current_read,SuperRead_ctg *SuperRead);
 
-void ConstuctRefinedContigGraph(struct hashtable *ht1, struct hashtable *merge_ht1,int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
+void ConstuctRefinedContigGraph(struct hashtable *ht1, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
 
-void ConstuctRefinedContigGraph0(struct hashtable0 *ht, struct hashtable0 *merge_ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
+void ConstuctRefinedContigGraph0(struct hashtable0 *ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
 
 
-void CollectingNonContainedReadsSlow(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename);
+void CollectingNonContainedReadsSlow(struct hashtable *ht1, struct hashtable2 *ht2, int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename);
 
-void CollectingNonContainedReadsSlow0(struct hashtable0 *ht,struct hashtable0 *merge_ht, int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename);
+void CollectingNonContainedReadsSlow0(struct hashtable0 *ht, int K_size,vector<string>& filenames_vt, contigs_info * contigs_info,string ContigFilename);
 
-void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
+void CollectingNonContainedPairsSlow(struct hashtable *ht1, struct hashtable2 *ht2, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
 
-void CollectingNonContainedPairsSlow0(struct hashtable0 *ht, struct hashtable0 *merge_ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
+void CollectingNonContainedPairsSlow0(struct hashtable0 *ht, int K_size, vector<string>& filenames_vt, contigs_info * contigs_info, string ContigFilename);
 
 
 bool isSimplePath_read(reads_overlap_info *reads_overlap_info,int current_read,map<int,struct BFS_reads_info > &Visited_Path , map<int, int > &stacked_nodes);
@@ -136,11 +136,11 @@ void BreakLinks_read( reads_overlap_info *reads_overlap_info, map<int, int > &st
 
 void BacktrackBubbleRemoval_read(reads_overlap_info *reads_overlap_info,int last_read,int beg_read,map<int,struct BFS_reads_info > & Visited_Path , map<int ,int > &stacked_nodes);
 
-void BFSearchBubbleRemoval_read(reads_overlap_info *reads_overlap_info,reads_table *reads_table,int beg_read,int max_depth,int max_dist);
+void BFSearchBubbleRemoval_read(reads_overlap_info *reads_overlap_info,int beg_read,int max_depth);
 
-void ConstructReadsOverlaps(string reads_info_name,reads_table* reads_table);
+void ConstructReadsOverlaps(string reads_info_name);
 
-int BFSearchGapCloser_v2(struct hashtable* ht,struct hashtable* merge_ht, uint64_t beg_kmer,uint64_t end_kmer,int K_size,int max_depth,int max_dist,SuperRead_t *SuperRead, search_info *search_info);
+int BFSearchGapCloser_v2(struct hashtable* ht, uint64_t beg_kmer,uint64_t end_kmer,int K_size,int max_depth,int max_dist,SuperRead_t *SuperRead);
 
 void CollectingNonContainedPairs(struct hashtable *ht1,struct hashtable *merge_ht1, struct hashtable2 *ht2, struct hashtable2 *merge_ht2,int K_size,vector<string>& filenames_vt,struct contigs_info * contigs_info,string ContigFilename);
 

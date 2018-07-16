@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 	/*
 	string reads_info_name="NonContainedReads_info.txt";
 	reads_table reads_table0;
-	ConstructReadsOverlaps( reads_info_name,&reads_table0);
+	ConstructReadsOverlaps( reads_info_name);
 	*/
 	//debug
 
@@ -88,10 +88,8 @@ int main(int argc, char* argv[])
 	char QS_base='!';
 	bool BUILD_GRAPH=1;
 
-	bool BFS=1,BUILD_SCAFFOLDS=0,BUILD_CONTIGS=1,ResumePE=0,LOAD_GRAPH=0,LOAD_GRAPH1=0,GET_BRANCHES_INFO=0,BUILD_CONTIG_GRAPH=0,RESUME=0,BUILD_LONG_CONTIGS=0,Resolving_Branches_PE=0,SC_Rev_Comp=0,BUILD_SUPER_CONTIGS=0,LOAD_PE_DIST=0,SINGLE=0,Minimizer=0,Compress=0,KmerTable=0;
-	uint8_t SpuriousTh=0;
+	bool BFS=1,BUILD_CONTIGS=1,LOAD_GRAPH=0,LOAD_GRAPH1=0,Resolving_Branches_PE=0,LOAD_PE_DIST=0,Minimizer=0,Compress=0,KmerTable=0;
 	int NodeCovTh=1,EdgeCovTh=0,LinkCovTh=5,PathCovTh=-1,PathSim=5,MaxDepth=15,UniqueLenTh=150,TrimN=10,TrimLen=1000000000,TrimQual=-1;
-	bool OLC=0;
 	bool DBG2OLC=0;
 	int ExpCov=0;
 	//parameters for the bloom filter
@@ -101,7 +99,6 @@ int main(int argc, char* argv[])
 	double BF_FalsePositive=0.001;
 	double two=2;
 	bool Iter_Scaffold=0,MP_Scaffold=0;
-	bool CollectNonContainedReads=0;
 	//parameters for error correction
 	size_t CovTh=5,CorrTh=5;
 	bool Hybrid=0;
@@ -192,13 +189,13 @@ int main(int argc, char* argv[])
 			continue;
 		}
 
-		if(strcmp(argv[i],"RS")==0)
-		{
-			i++;
-			RESUME=atoi(argv[i]);
+		// if(strcmp(argv[i],"RS")==0)
+		// {
+		//     i++;
+		//     RESUME=atoi(argv[i]);
 
-			continue;
-		}
+		//     continue;
+		// }
 		if(strcmp(argv[i],"ExpCov")==0)
 		{
 			i++;
@@ -255,12 +252,12 @@ int main(int argc, char* argv[])
 			LOAD_GRAPH1=atoi(argv[i]);
 			continue;
 		}
-		if(strcmp(argv[i],"Single")==0)
-		{
-			i++;
-			SINGLE=atoi(argv[i]);
-			continue;
-		}
+		// if(strcmp(argv[i],"Single")==0)
+		// {
+		//     i++;
+		//     SINGLE=atoi(argv[i]);
+		//     continue;
+		// }
 		if(strcmp(argv[i],"LDPE")==0)
 		{
 			i++;
@@ -346,12 +343,12 @@ int main(int argc, char* argv[])
 			EdgeCovTh=atoi(argv[i]);
 			continue;
 		}
-		if(strcmp(argv[i],"RSPE")==0)
-		{
-			i++;
-			ResumePE=atoi(argv[i]);
-			continue;
-		}
+		// if(strcmp(argv[i],"RSPE")==0)
+		// {
+		//     i++;
+		//     ResumePE=atoi(argv[i]);
+		//     continue;
+		// }
 		if(strcmp(argv[i],"LinkCovTh")==0)
 		{
 			i++;
@@ -542,7 +539,7 @@ int main(int argc, char* argv[])
 	}
 
 	vector<int> N50_lst,TotLength_lst,MaxLen_lst;
-	if (NodeCovTh > 0 & PathCovTh < 0)
+	if ( (NodeCovTh > 0) & (PathCovTh < 0) )
 	{
 		PathCovTh = NodeCovTh * 10;
 	}
@@ -649,7 +646,7 @@ int main(int argc, char* argv[])
 		time(&beg_time);
 		int64_t bucket_count=0,edge_cnt=0;
 
-		uint64_t KmerEstNo;
+		uint64_t KmerEstNo = 0;
 
 		struct BF_info BF_info;
 		BF_info.Bloom=0;
@@ -681,10 +678,10 @@ int main(int argc, char* argv[])
 				{
 					AvgLen=(tot_bases/numReads);
 
-					int mod=tot_bases%numReads;
+					unsigned int mod=tot_bases%numReads;
 					if(mod>(numReads/2))
 					{AvgLen++;}
-					if(tot_bases/GenomeSize>Coverage)
+					if((int)(tot_bases/GenomeSize)>Coverage)
 					{Coverage=tot_bases/GenomeSize;}
 
 					o_Log<<"AvgLen: "<<AvgLen<<endl;
@@ -830,7 +827,6 @@ int main(int argc, char* argv[])
 			struct read_t read;
 			read.read_bits =(uint64_t*) malloc(MaxReadLen/4+100);
 
-			int readLen;
 			string seq_s,str,tag1,tag2;
 			//2 rounds to build the graph
 			numReads=0;
@@ -847,7 +843,6 @@ int main(int argc, char* argv[])
 
 				for(size_t jj=0;jj<in_filenames_vt.size();++jj)
 				{
-					uint64_t nLines=0;
 					int seq_sz=0;
 
 					cout<<jj+1<<"/"<<in_filenames_vt.size()<<" files."<<endl;
@@ -943,7 +938,7 @@ int main(int argc, char* argv[])
 								QS_s.resize(QS_s.size()-1);
 							}
 							strcpy(QS_seq,QS_s.c_str());
-							if(QS_s.size()>seq_sz)
+							if((int)QS_s.size()>seq_sz)
 							{
 								QS_s.resize(seq_sz);
 							}
@@ -1039,7 +1034,6 @@ int main(int argc, char* argv[])
 						read.readLen=seq_s.size();
 
 						seq_s.clear();
-						size_t b2=bucket_count;
 						if(read.readLen<K_size+gap)
 						{seq_s.clear();continue;}
 
@@ -1048,18 +1042,14 @@ int main(int argc, char* argv[])
 						///jump to here, the graph construction begins:
 						//if(numReads==4902)
 						//cout<<numReads<<endl;
-						int ref_pos=0;
 						//read.read_idx=numReads;
-
-
-
 
 						if(MemoryEfficient&(K_size<=32))
 						{
 							uint64_t OverlapKmers=read.readLen-K_size+1;
 							TotalSamplings+=OverlapKmers;
 							Sparse_Kmer_Graph_Construction(&read,&ht,&bucket_count,&edge_cnt, K_size,gap,&BF_info,round);
-							//Sparse_Kmer_Index_Construction(&read,&ht,&bucket_count, K_size,gap,&BF_info,round,ref_pos,&read_index);
+							//Sparse_Kmer_Index_Construction(&read,&ht,&bucket_count, K_size,gap,&BF_info,round,&read_index);
 						}
 						else
 						{
@@ -1123,7 +1113,7 @@ int main(int argc, char* argv[])
 				if(numReads>0&&round==1)
 				{
 					int rlen=tot_bases/numReads;
-					int mod=tot_bases%numReads;
+					unsigned int mod=tot_bases%numReads;
 					if(mod>(numReads))
 					{rlen++;}
 
@@ -1175,13 +1165,13 @@ int main(int argc, char* argv[])
 
 						if(Bloom&&(NodeCovTh>0))
 						{
-							RemovingWeakNodes0_r1(&ht0, K_size,NodeCovTh-1, &bucket_count);
+							RemovingWeakNodes0_r1(&ht0, NodeCovTh-1, &bucket_count);
 						}
 						else
 						{
-							RemovingWeakNodes0_r1(&ht0, K_size,NodeCovTh, &bucket_count);
+							RemovingWeakNodes0_r1(&ht0, NodeCovTh, &bucket_count);
 						}
-						SwitchBuckets0(&ht0,K_size);
+						SwitchBuckets0(&ht0);
 
 
 					}
@@ -1250,10 +1240,6 @@ int main(int argc, char* argv[])
 
 
 			//free(read.read_bits);
-
-			uint64_t MeanCov=TotalSamplings/GenomeSize;
-
-
 		}
 
 		hashtable merge_ht;
@@ -1422,12 +1408,11 @@ int main(int argc, char* argv[])
 
 			string seq1,seq2,str,tag1,tag2,seq_s;
 
-			uint64_t nLines=0;
 			int seq_sz=0;
 
 			time_t timer = time(NULL);
 
-			for(int jj=0;jj<single_filenames_vt.size();++jj)
+			for(unsigned int jj=0;jj<single_filenames_vt.size();++jj)
 			{
 
 				if( !get_first_line(&str, in_filenames_vt[jj].c_str()) )
@@ -1446,8 +1431,6 @@ int main(int argc, char* argv[])
 					cout<< "Error opening file\n";
 					return(0);
 				};
-				nLines=0;
-
 
 				string t_filename;
 			//	t_filename=p1_filenames_vt[jj];
@@ -1544,7 +1527,7 @@ int main(int argc, char* argv[])
 							QS_s.resize(QS_s.size()-1);
 						}
 						strcpy(QS_seq,QS_s.c_str());
-						if(QS_s.size()>seq_sz)
+						if(QS_s.size()>(unsigned int)seq_sz)
 						{
 							QS_s.resize(seq_sz);
 						}
@@ -1634,7 +1617,6 @@ int main(int argc, char* argv[])
 					Init_Read(seq1,read1);
 					strcpy(read1.tag,tag1.c_str());
 					seq1.clear();
-					size_t b2=bucket_count;
 
 					if(read1.readLen<K_size)
 					{continue;}
@@ -1643,16 +1625,11 @@ int main(int argc, char* argv[])
 					int success_dn=0;
 					if(K_size<=32)
 					{
-						uint64_t OverlapKmers=read1.readLen-K_size+1;
-
 						success_dn=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-
 					}
 					else
 					{
-						uint64_t OverlapKmers=read1.readLen-K_size+1;
 						success_dn=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-
 					}
 					bool start_print=0;
 					if(success_dn)
@@ -1708,7 +1685,7 @@ int main(int argc, char* argv[])
 
 			timer = time(NULL);
 
-			for(int jj=0;jj<p1_filenames_vt.size();jj+=1)
+			for(unsigned int jj=0;jj<p1_filenames_vt.size();jj+=1)
 			{
 
 				ifstream in_pair1(p1_filenames_vt[jj].c_str());
@@ -1732,7 +1709,8 @@ int main(int argc, char* argv[])
 				string denoised_name3="Denoised_Single_"+t_filename;
 
 			//	t_filename=p2_filenames_vt[jj];
-				s,t=0;
+				s=0;
+				t=0;
 				for(s=(int) p2_filenames_vt[jj].size()-1;s>=0;--s)
 				{
 					if((p2_filenames_vt[jj][s]== '\\' )||( p2_filenames_vt[jj][s]=='/'))
@@ -1753,25 +1731,14 @@ int main(int argc, char* argv[])
 				cout<<"Processing file: "<<p1_filenames_vt[jj]<<" & "<<p2_filenames_vt[jj]<<endl;
 				//while(getline(infile,seq)&&seq.size()!=0)
 
-				bool tag_mismatch=0;
-				char lastLineFC1='0',lastLineFC2='0';
-
 				bool fq_flag=0;
-				uint64_t nLines1=0,nLines2=0;
-
 
 				string seq_s1,seq_s2,tag_s1,tag_s1n,tag_s2,tag_s2n,str1,str2;
 				int seq1_sz,seq2_sz;
 				string fq_tmp;
 
-				struct read_t Read1,Read2;
-
-				Read1.read_bits =(uint64_t*) malloc(MaxReadLen/4+100);
-				Read2.read_bits =(uint64_t*) malloc(MaxReadLen/4+100);
-
 
 				int readLen1,readLen2;
-				nLines1=0,nLines2=0;
 
 				getline(in_pair1,str);
 				if(fq_flag==0&&str[0]=='@')
@@ -1854,7 +1821,7 @@ int main(int argc, char* argv[])
 								QS_s1.resize(QS_s1.size()-1);
 							}
 							strcpy(QS_seq1,QS_s1.c_str());
-							if(QS_s1.size()>seq1_sz)
+							if(QS_s1.size()>(unsigned int)seq1_sz)
 							{
 								QS_s1.resize(seq1_sz);
 							}
@@ -1972,7 +1939,7 @@ int main(int argc, char* argv[])
 								QS_s2.resize(QS_s2.size()-1);
 							}
 							strcpy(QS_seq2,QS_s2.c_str());
-							if(QS_s2.size()>seq2_sz)
+							if(QS_s2.size()>(unsigned int)seq2_sz)
 							{
 								QS_s2.resize(seq2_sz);
 							}
@@ -2065,50 +2032,30 @@ int main(int argc, char* argv[])
 						Init_Read(seq_s1,read1);
 						strcpy(read1.tag,tag_s1.c_str());
 						seq_s1.clear();
-						size_t b2=bucket_count;
 						if(K_size<=32)
 						{
-							uint64_t OverlapKmers=read1.readLen-K_size+1;
-
 							success_dn1=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-
-
 						}
 						else
 						{
-							uint64_t OverlapKmers=read1.readLen-K_size+1;
-
 							success_dn1=Sparse_Denoising(&read1,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-
 						}
 					}
 
 
 					if(bad_flag2==0)
 					{
-
-
-
 						Init_Read(seq_s2,read2);
 						strcpy(read2.tag,tag_s2.c_str());
 						seq_s2.clear();
-						size_t b2=bucket_count;
-
 
 						if(K_size<=32)
 						{
-							uint64_t OverlapKmers=read2.readLen-K_size+1;
-
 							success_dn2=Sparse_Denoising(&read2,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-
 						}
 						else
 						{
-							uint64_t OverlapKmers=read2.readLen-K_size+1;
-
 							success_dn2=Sparse_Denoising(&read2,&ht,&ht2,&CovTh,&CorrTh, K_size, gap,&correction_cnt,Hybrid);
-
-
 						}
 					}
 
@@ -2275,10 +2222,6 @@ int main(int argc, char* argv[])
 			if(BFS&&(!Iter_Scaffold))
 			{
 				cout<<"Graph simplification..."<<endl;
-				size_t TipsRemoved=0;
-				int TipLenTh=100;
-
-
 
 				string Contig_Filename="Contigs.txt";
 
@@ -2332,23 +2275,23 @@ int main(int argc, char* argv[])
 						//use the below:
 						if(MemoryEfficient&(K_size<=32))
 						{
-							GraphSimplification(&ht,&merge_ht,&ht2, &merge_ht2,K_size, gap,PathCovTh,depth,PathSim);
+							GraphSimplification(&ht,&merge_ht,&ht2, &merge_ht2,K_size, PathCovTh,depth,PathSim);
 
 						}
 						else
 						{
-							GraphSimplification0(&ht0,&merge_ht0,K_size, gap,PathCovTh,depth,PathSim);
+							GraphSimplification0(&ht0,&merge_ht0,K_size,PathCovTh,depth,PathSim);
 
 							/*
 							if(K_size<=96)
 							{
-								GraphSimplification3(&ht3,&merge_ht3, K_size, gap,PathCovTh,depth,PathSim);
+								GraphSimplification3(&ht3,&merge_ht3, K_size,PathCovTh,depth,PathSim);
 							}
 							else
 							{
 								if(K_size<=128)
 								{
-									GraphSimplification4(&ht4,&merge_ht4, K_size, gap,PathCovTh,depth,PathSim);
+									GraphSimplification4(&ht4,&merge_ht4, K_size, PathCovTh,depth,PathSim);
 								}
 							}
 							*/
@@ -2460,29 +2403,29 @@ int main(int argc, char* argv[])
 				if(MemoryEfficient&(K_size<=32))
 				{
 
-					build_contigs(&ht,K_size, gap,Contig_Filename,ScreenOffTips);
+					build_contigs(&ht,K_size, Contig_Filename,ScreenOffTips);
 
 				}
 				else
 				{
 
-					build_contigs0(&ht0,&key_table,K_size, gap,Contig_Filename,ScreenOffTips);
+					build_contigs0(&ht0,K_size, Contig_Filename,ScreenOffTips);
 					/*
 					if(K_size<=64)
 					{
-						build_contigs2(&ht2,K_size, gap,Contig_Filename,ScreenOffTips);
+						build_contigs2(&ht2,K_size, Contig_Filename,ScreenOffTips);
 					}
 					else
 					{
 						if(K_size<=96)
 						{
-							build_contigs3(&ht3,K_size, gap,Contig_Filename,ScreenOffTips);
+							build_contigs3(&ht3,K_size, Contig_Filename,ScreenOffTips);
 						}
 						else
 						{
 							if(K_size<=128)
 							{
-								build_contigs4(&ht4,K_size, gap,Contig_Filename,ScreenOffTips);
+								build_contigs4(&ht4,K_size, Contig_Filename,ScreenOffTips);
 							}
 						}
 					}
@@ -2567,14 +2510,14 @@ int main(int argc, char* argv[])
 				if(MemoryEfficient&(K_size<=32))
 				{
 
-					CollectingNonContainedReadsSlow(&ht,&merge_ht, &ht2, &merge_ht2,K_size, in_filenames_vt,&contigs_info,Contig_Filename);
+					CollectingNonContainedReadsSlow(&ht, &ht2,K_size, in_filenames_vt,&contigs_info,Contig_Filename);
 
 				}
 				else
 				{
 
 
-					CollectingNonContainedReadsSlow0(&ht0,&merge_ht0,K_size, in_filenames_vt,&contigs_info,Contig_Filename);
+					CollectingNonContainedReadsSlow0(&ht0,K_size, in_filenames_vt,&contigs_info,Contig_Filename);
 
 				}
 
@@ -2586,16 +2529,11 @@ int main(int argc, char* argv[])
 					cout << "Collecting non-contained pairs" << endl;
 					if (MemoryEfficient&(K_size <= 32))
 					{
-
-						CollectingNonContainedPairsSlow(&ht, &merge_ht, &ht2, &merge_ht2, K_size, p_filenames_vt, &contigs_info, Contig_Filename);
-
+						CollectingNonContainedPairsSlow(&ht, &ht2, K_size, p_filenames_vt, &contigs_info, Contig_Filename);
 					}
 					else
 					{
-
-
-						CollectingNonContainedPairsSlow0(&ht0, &merge_ht0, K_size, in_filenames_vt, &contigs_info, Contig_Filename);
-
+						CollectingNonContainedPairsSlow0(&ht0, K_size, in_filenames_vt, &contigs_info, Contig_Filename);
 					}
 
 				}
@@ -2608,7 +2546,7 @@ int main(int argc, char* argv[])
 				sp_filenames_vt=p_filenames_vt;
 				SingleOutwardLib=OutwardLib;
 
-				for(int f=0;f<in_filenames_vt.size();++f)
+				for(unsigned int f=0;f<in_filenames_vt.size();++f)
 				{
 					sp_filenames_vt.push_back(in_filenames_vt[f]);
 					sp_filenames_vt.push_back(in_filenames_vt[f]);
@@ -2626,19 +2564,19 @@ int main(int argc, char* argv[])
 					if(K_size<=64)
 					{
 
-						ContigGapEst(&ht,&merge_ht, &ht2,&merge_ht2, K_size,insert_sz_vt, p_filenames_vt,OutwardLib,&contigs_info,ContigFilename,ResumePE,totReads,MatePair);
+						ContigGapEst(&ht,&merge_ht, &ht2,&merge_ht2, K_size,insert_sz_vt, p_filenames_vt,OutwardLib,&contigs_info,ContigFilename,totReads,MatePair);
 					}
 					else
 					{
 						if(K_size<=96)
 						{
-							ContigGapEst3(&ht3,&merge_ht3, K_size,insert_sz_vt, p_filenames_vt,OutwardLib,&contigs_info,ContigFilename,ResumePE,totReads,MatePair);
+							ContigGapEst3(&ht3,&merge_ht3, K_size,insert_sz_vt, p_filenames_vt,OutwardLib,&contigs_info,ContigFilename,totReads,MatePair);
 						}
 						else
 						{
 							if(K_size<=128)
 							{
-								ContigGapEst4(&ht4,&merge_ht4, K_size,insert_sz_vt, p_filenames_vt,OutwardLib,&contigs_info,ContigFilename,ResumePE,totReads,MatePair);
+								ContigGapEst4(&ht4,&merge_ht4, K_size,insert_sz_vt, p_filenames_vt,OutwardLib,&contigs_info,ContigFilename,totReads,MatePair);
 							}
 						}
 					}
@@ -2698,7 +2636,7 @@ int main(int argc, char* argv[])
 
 				if(ExpCov==0)
 				{cout<<"Error! Expected contig coverage (ExpCov) is not given."<<endl;return -1;}
-				ResolvingRepeatsPE( insert_sz_vt, p_filenames_vt, &contigs_info,ContigFilename,LinkCovTh,UniqueLenTh,ExpCov);
+				ResolvingRepeatsPE( insert_sz_vt, &contigs_info,ContigFilename,LinkCovTh,UniqueLenTh,ExpCov);
 
 			}
 
@@ -2720,19 +2658,19 @@ int main(int argc, char* argv[])
 
 					if(K_size<=64)
 					{
-						ContigGapEst(&ht,&merge_ht, &ht2,&merge_ht2, K_size,insert_sz_vt, mp_filenames_vt,OutwardLibMP,&scaffolds_info,ContigFilename,ResumePE,totReads,MatePair);
+						ContigGapEst(&ht,&merge_ht, &ht2,&merge_ht2, K_size,insert_sz_vt, mp_filenames_vt,OutwardLibMP,&scaffolds_info,ContigFilename,totReads,MatePair);
 					}
 					else
 					{
 						if(K_size<=96)
 						{
-							ContigGapEst3(&ht3,&merge_ht3, K_size,insert_sz_vt, mp_filenames_vt,OutwardLibMP,&scaffolds_info,ContigFilename,ResumePE,totReads,MatePair);
+							ContigGapEst3(&ht3,&merge_ht3, K_size,insert_sz_vt, mp_filenames_vt,OutwardLibMP,&scaffolds_info,ContigFilename,totReads,MatePair);
 						}
 						else
 						{
 							if(K_size<=128)
 							{
-								ContigGapEst4(&ht4,&merge_ht4, K_size,insert_sz_vt, mp_filenames_vt,OutwardLibMP,&scaffolds_info,ContigFilename,ResumePE,totReads,MatePair);
+								ContigGapEst4(&ht4,&merge_ht4, K_size,insert_sz_vt, mp_filenames_vt,OutwardLibMP,&scaffolds_info,ContigFilename,totReads,MatePair);
 							}
 						}
 					}
@@ -2805,7 +2743,7 @@ int main(int argc, char* argv[])
 
 				if(ExpCov==0)
 				{cout<<"Error! Expected contig coverage (ExpCov) is not given."<<endl;return -1;}
-				ResolvingRepeatsPE( insert_sz_vt, mp_filenames_vt, &scaffolds_info,ContigFilename,LinkCovTh,UniqueLenTh,ExpCov);
+				ResolvingRepeatsPE( insert_sz_vt, &scaffolds_info,ContigFilename,LinkCovTh,UniqueLenTh,ExpCov);
 
 			}
 
@@ -2823,7 +2761,7 @@ int main(int argc, char* argv[])
 		o_N50.open("N50_lst.txt");
 		o_max_ctg.open("MaxLen_lst.txt");
 		o_tot_len.open("TotLen_lst.txt");
-		for(int i=0;i<N50_lst.size();++i)
+		for(unsigned int i=0;i<N50_lst.size();++i)
 		{
 			o_N50<<N50_lst[i]<<endl;
 			o_max_ctg<<MaxLen_lst[i]<<endl;
